@@ -1,0 +1,124 @@
+---
+import { url } from '../../lib/url';
+---
+<footer>
+  <div class="footer-top">
+    <div class="footer-headline fraunces">
+      Top scores.<br />
+      <em>Top schools.</em>
+    </div>
+    <a href={url('/v5/book/')} class="footer-cta">
+      Schedule a consult →
+    </a>
+  </div>
+
+  <div class="footer-rule"></div>
+
+  <div class="footer-meta">
+    <div class="footer-meta-block">
+      <span class="meta-label">Programs</span>
+      <a href={url('/v5/#services')}>AP</a>
+      <a href={url('/v5/#services')}>SAT</a>
+      <a href={url('/v5/#services')}>ACT</a>
+      <a href={url('/v5/#services')}>College Counseling</a>
+    </div>
+    <div class="footer-meta-block">
+      <span class="meta-label">Athenaeum</span>
+      <a href={url('/v5/#approach')}>Approach</a>
+      <a href={url('/v5/#faculty')}>Faculty</a>
+      <a href={url('/v5/book/')}>Apply</a>
+    </div>
+    <div class="footer-meta-block">
+      <span class="meta-label">Contact</span>
+      <a href="mailto:hello@athenaeum.co">hello@athenaeum.co</a>
+      <a href={url('/privacy')}>Privacy</a>
+      <a href={url('/terms')}>Terms</a>
+    </div>
+    <div class="footer-meta-block">
+      <span class="meta-label">Index</span>
+      <span class="meta-text">© MMXXVI · Athenaeum & Co.</span>
+      <span class="meta-text">All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  footer {
+    background: var(--v5-bg);
+    border-top: 1px solid var(--v5-border);
+    padding: 5rem 2.5rem 3rem;
+    color: var(--v5-text);
+  }
+  .footer-top {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 3rem;
+    padding-bottom: 3rem;
+  }
+  .footer-headline {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 0.9;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+  }
+  .footer-headline em {
+    color: var(--v5-accent);
+    font-style: italic;
+  }
+  .footer-cta {
+    border-bottom: 1px solid var(--v5-text);
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--v5-text);
+    padding-bottom: 0.3rem;
+    transition: all 0.2s;
+  }
+  .footer-cta:hover {
+    color: var(--v5-accent);
+    border-color: var(--v5-accent);
+  }
+  .footer-rule {
+    max-width: 1400px;
+    margin: 0 auto;
+    height: 1px;
+    background: var(--v5-border);
+  }
+  .footer-meta {
+    max-width: 1400px;
+    margin: 2.5rem auto 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+  .footer-meta-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+  .meta-label {
+    font-family: "Inter", sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--v5-accent);
+    margin-bottom: 0.4rem;
+  }
+  .footer-meta-block a {
+    color: var(--v5-text-muted);
+    font-size: 0.92rem;
+    transition: color 0.15s;
+  }
+  .footer-meta-block a:hover { color: var(--v5-text); }
+  .meta-text {
+    color: var(--v5-text-faint);
+    font-size: 0.85rem;
+  }
+  @media (max-width: 768px) {
+    .footer-top { flex-direction: column; align-items: flex-start; }
+    .footer-meta { grid-template-columns: 1fr 1fr; }
+  }
+</style>

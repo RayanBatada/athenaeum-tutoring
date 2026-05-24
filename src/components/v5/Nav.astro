@@ -1,0 +1,87 @@
+---
+import { url } from '../../lib/url';
+const links = [
+  { href: url('/v5/#services'), label: 'Programs' },
+  { href: url('/v5/#approach'), label: 'Approach' },
+  { href: url('/v5/#faculty'),  label: 'Faculty' },
+];
+---
+<nav>
+  <a href={url('/v5/')} class="brand">
+    <span class="brand-mark">A.</span>
+    <span class="brand-name fraunces">Athenaeum</span>
+  </a>
+  <ul class="nav-links">
+    {links.map((link) => (
+      <li><a href={link.href}>{link.label}</a></li>
+    ))}
+  </ul>
+  <a href={url('/v5/book/')} class="nav-cta">Book a Consult</a>
+</nav>
+
+<style>
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 1.3rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-bottom: 1px solid var(--v5-border);
+  }
+  .brand {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    color: var(--v5-text);
+  }
+  .brand-mark {
+    font-family: "Inter", sans-serif;
+    font-weight: 800;
+    font-size: 1.05rem;
+    letter-spacing: -0.03em;
+    color: var(--v5-accent);
+  }
+  .brand-name {
+    font-size: 1.55rem;
+    letter-spacing: -0.02em;
+    font-weight: 500;
+    font-style: italic;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2.2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--v5-text-muted);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--v5-accent); }
+  .nav-cta {
+    background: var(--v5-accent);
+    color: var(--v5-bg);
+    padding: 0.7rem 1.3rem;
+    border-radius: 0;
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    transition: all 0.2s;
+  }
+  .nav-cta:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 var(--v5-text);
+  }
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.2rem; }
+    .nav-links { display: none; }
+  }
+</style>

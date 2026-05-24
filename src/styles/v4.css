@@ -1,0 +1,63 @@
+/* V4 — Onyx (modern dark SaaS) */
+
+[data-variant='v4'] {
+  --v4-bg: #0a0a0c;
+  --v4-bg-elevated: #15161a;
+  --v4-bg-card: #16171c;
+  --v4-bg-card-hover: #1c1d23;
+  --v4-text: #ededf0;
+  --v4-text-muted: rgba(237, 237, 240, 0.62);
+  --v4-text-faint: rgba(237, 237, 240, 0.4);
+  --v4-border: rgba(237, 237, 240, 0.08);
+  --v4-border-strong: rgba(237, 237, 240, 0.14);
+  --v4-accent: #a78bfa;
+  --v4-accent-hover: #8b6df0;
+  --v4-accent-soft: rgba(167, 139, 250, 0.16);
+  --v4-mint: #5eead4;
+}
+
+[data-variant='v4'] body {
+  background: var(--v4-bg);
+  color: var(--v4-text);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+}
+
+[data-variant='v4'] body::after {
+  display: none;
+}
+
+[data-variant='v4'] * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+[data-variant='v4'] a {
+  color: var(--v4-text);
+  text-decoration: none;
+}
+
+[data-variant='v4'] h1,
+[data-variant='v4'] h2,
+[data-variant='v4'] h3,
+[data-variant='v4'] h4 {
+  font-family: "Inter", -apple-system, sans-serif;
+  letter-spacing: -0.03em;
+  font-feature-settings: "ss01", "ss03", "cv11";
+}
+
+[data-variant='v4'] .v4-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-variant='v4'] .v4-reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}

@@ -1,0 +1,702 @@
+---
+import { getCollection } from 'astro:content';
+import PageLayout from '../../layouts/v4/PageLayout.astro';
+import { services } from '../../data/services';
+import { homepageFAQs } from '../../data/faqs';
+import { reasons } from '../../data/why-different';
+import { url } from '../../lib/url';
+
+const tutors = (await getCollection('tutors')).slice(0, 4);
+const topReasons = reasons.slice(0, 6);
+const universities = ['Harvard', 'Yale', 'Princeton', 'Columbia', 'Brown', 'Cornell', 'UPenn', 'MIT', 'Stanford'];
+---
+<PageLayout title="Athenaeum — One-on-one Ivy League tutoring.">
+  <!-- Hero with aurora gradient -->
+  <section class="hero">
+    <div class="aurora">
+      <div class="aurora-blob a1"></div>
+      <div class="aurora-blob a2"></div>
+      <div class="aurora-blob a3"></div>
+    </div>
+
+    <div class="hero-inner">
+      <div class="hero-pill v4-reveal">
+        <span class="pill-dot"></span>
+        One-on-one · Top Ivy League tutors
+      </div>
+      <h1 class="hero-title v4-reveal">
+        Test prep & college counseling,<br />
+        <span class="gradient-text">done right.</span>
+      </h1>
+      <p class="hero-sub v4-reveal">
+        One-on-one tutoring taught by current students from Harvard, Yale, Princeton, and Columbia.
+        Custom lesson plans. Hand-graded homework. Built around your timeline.
+      </p>
+      <div class="hero-cta v4-reveal">
+        <a href={url('/v4/book/')} class="btn-primary">Schedule Free Consult</a>
+        <a href="#services" class="btn-ghost">Explore services →</a>
+      </div>
+      <div class="hero-trust v4-reveal">
+        <span><span class="check">✓</span> 30-min free consult</span>
+        <span><span class="check">✓</span> First-week money-back</span>
+        <span><span class="check">✓</span> No long-term contracts</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- University strip -->
+  <section class="logos">
+    <span class="logos-label">TUTORS FROM</span>
+    <div class="logos-row">
+      {universities.map((u) => <span>{u}</span>)}
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="section">
+    <div class="section-head v4-reveal">
+      <span class="eyebrow">Services</span>
+      <h2>Pick your test, or your college list.</h2>
+      <p>Four programs. One-on-one. Tailored to where your student is starting and where they need to be.</p>
+    </div>
+    <div class="services-grid v4-reveal">
+      {services.map((s) => (
+        <div class="service-card">
+          <div class="service-tag">{s.cadence}</div>
+          <h3>{s.longName}</h3>
+          <p>{s.blurb}</p>
+          <ul class="service-topics">
+            {s.topics.slice(0, 3).map((t) => <li>{t}</li>)}
+          </ul>
+          <div class="service-foot">
+            <span class="service-price">From ${s.startingAtHourly}/hr</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Approach -->
+  <section id="approach" class="section section-elevated">
+    <div class="section-head v4-reveal">
+      <span class="eyebrow">Approach</span>
+      <h2>How we're different.</h2>
+      <p>What separates Athenaeum from a big tutoring chain.</p>
+    </div>
+    <div class="approach-grid v4-reveal">
+      {topReasons.map((r) => (
+        <div class="approach-card">
+          <div class="approach-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h4>{r.title}{r.titleSerif && <> {r.titleSerif}</>}</h4>
+          <p>{r.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="section">
+    <div class="section-head v4-reveal">
+      <span class="eyebrow">How it works</span>
+      <h2>From first consult to test day.</h2>
+    </div>
+    <div class="how-grid v4-reveal">
+      {[
+        { num: '01', t: 'Free 30-min consult', d: 'A quick call: what test, current level, target score, timeline. We recommend the right tutor match.' },
+        { num: '02', t: 'Get matched', d: 'Within a week, you meet your tutor and start the diagnostic week.' },
+        { num: '03', t: 'Weekly 1-on-1s', d: 'Weekly sessions, hand-graded homework, practice tests, and a test-day strategy session.' },
+      ].map((s) => (
+        <div class="how-step">
+          <div class="how-num">{s.num}</div>
+          <h4>{s.t}</h4>
+          <p>{s.d}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Faculty -->
+  <section id="faculty" class="section section-elevated">
+    <div class="section-head v4-reveal">
+      <span class="eyebrow">Faculty</span>
+      <h2>Taught by people who recently sat these exams.</h2>
+      <p>Every tutor is a current Ivy League or peer-university student who scored at the top of the exam they teach.</p>
+    </div>
+    <div class="faculty-grid v4-reveal">
+      {tutors.map((t) => (
+        <div class="faculty-card">
+          <div class={`faculty-avatar ${t.data.cardGradient}`}>
+            <span>{t.data.monogram}</span>
+          </div>
+          <h4>{t.data.name}</h4>
+          <p class="faculty-school">{t.data.school} {t.data.classYear}</p>
+          <p class="faculty-subjects">{t.data.subjects.slice(0, 3).join(' · ')}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="section">
+    <div class="section-head center v4-reveal">
+      <span class="eyebrow">FAQ</span>
+      <h2>Frequently asked.</h2>
+    </div>
+    <div class="faq-wrap v4-reveal">
+      {homepageFAQs.map((item) => (
+        <details class="faq-item">
+          <summary>
+            <span set:html={item.question.replace(/<span class='serif'>/g, '<em>').replace(/<\/span>/g, '</em>')} />
+            <span class="faq-chevron">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </span>
+          </summary>
+          <div class="faq-body">{item.answer}</div>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="final-cta">
+    <div class="aurora final-aurora">
+      <div class="aurora-blob a1"></div>
+      <div class="aurora-blob a2"></div>
+    </div>
+    <div class="final-cta-inner v4-reveal">
+      <h2>Reserve your <span class="gradient-text">free consult.</span></h2>
+      <p>30 minutes. No commitment. We'll tell you honestly if Athenaeum is the right fit.</p>
+      <a href={url('/v4/book/')} class="btn-primary lg">Schedule Free Consult</a>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  /* ───────── Hero ───────── */
+  .hero {
+    position: relative;
+    padding: 7rem 2rem 5rem;
+    overflow: hidden;
+    text-align: center;
+  }
+  .aurora {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .aurora-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.5;
+  }
+  .aurora-blob.a1 {
+    width: 480px; height: 480px;
+    top: -100px; left: 15%;
+    background: radial-gradient(circle, var(--v4-accent), transparent 70%);
+  }
+  .aurora-blob.a2 {
+    width: 400px; height: 400px;
+    top: 0; right: 5%;
+    background: radial-gradient(circle, var(--v4-mint), transparent 70%);
+    opacity: 0.3;
+  }
+  .aurora-blob.a3 {
+    width: 320px; height: 320px;
+    bottom: -100px; left: 50%;
+    transform: translateX(-50%);
+    background: radial-gradient(circle, var(--v4-accent), transparent 70%);
+    opacity: 0.25;
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 920px;
+    margin: 0 auto;
+  }
+  .hero-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    background: var(--v4-bg-elevated);
+    border: 1px solid var(--v4-border);
+    color: var(--v4-text-muted);
+    padding: 0.45rem 1rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 1.8rem;
+  }
+  .pill-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--v4-accent);
+    box-shadow: 0 0 0 4px var(--v4-accent-soft);
+  }
+  .hero-title {
+    font-size: clamp(2.5rem, 6.5vw, 5rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.04;
+    margin-bottom: 1.5rem;
+  }
+  .gradient-text {
+    background: linear-gradient(135deg, var(--v4-accent) 0%, var(--v4-mint) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  .hero-sub {
+    font-size: 1.2rem;
+    color: var(--v4-text-muted);
+    max-width: 660px;
+    margin: 0 auto 2.2rem;
+    line-height: 1.55;
+  }
+  .hero-cta {
+    display: inline-flex;
+    gap: 0.8rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Buttons (used across page) */
+  .btn-primary {
+    background: var(--v4-text);
+    color: var(--v4-bg);
+    padding: 0.85rem 1.4rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.98rem;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 32px -10px rgba(255, 255, 255, 0.18);
+  }
+  .btn-primary.lg {
+    padding: 1.05rem 1.8rem;
+    font-size: 1.05rem;
+  }
+  .btn-ghost {
+    color: var(--v4-text-muted);
+    font-weight: 500;
+    padding: 0.85rem 0.4rem;
+    transition: color 0.15s;
+  }
+  .btn-ghost:hover { color: var(--v4-text); }
+
+  .hero-trust {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    color: var(--v4-text-faint);
+    font-size: 0.88rem;
+  }
+  .hero-trust .check {
+    color: var(--v4-mint);
+    font-weight: 700;
+    margin-right: 0.3rem;
+  }
+
+  /* ───────── Logos ───────── */
+  .logos {
+    text-align: center;
+    padding: 2.5rem 2rem 4rem;
+    border-bottom: 1px solid var(--v4-border);
+  }
+  .logos-label {
+    display: block;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    color: var(--v4-text-faint);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+  .logos-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2.2rem;
+  }
+  .logos-row span {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--v4-text-muted);
+    letter-spacing: -0.01em;
+  }
+
+  /* ───────── Sections ───────── */
+  .section {
+    padding: 6.5rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .section.section-elevated {
+    background: var(--v4-bg-elevated);
+    max-width: none;
+    margin: 0;
+    border-top: 1px solid var(--v4-border);
+    border-bottom: 1px solid var(--v4-border);
+  }
+  .section.section-elevated > * {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .section-head {
+    margin-bottom: 3.5rem;
+    max-width: 720px;
+  }
+  .section-head.center {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .eyebrow {
+    display: inline-block;
+    background: var(--v4-bg-elevated);
+    border: 1px solid var(--v4-border);
+    color: var(--v4-accent);
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin-bottom: 1.2rem;
+  }
+  .section.section-elevated .eyebrow {
+    background: var(--v4-bg);
+  }
+  .section-head h2 {
+    font-size: clamp(2rem, 4.5vw, 3.2rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 0.85rem;
+  }
+  .section-head p {
+    font-size: 1.1rem;
+    color: var(--v4-text-muted);
+    line-height: 1.55;
+  }
+
+  /* ───────── Services ───────── */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.2rem;
+  }
+  .service-card {
+    background: var(--v4-bg-card);
+    border: 1px solid var(--v4-border);
+    border-radius: 16px;
+    padding: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    min-height: 340px;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    padding: 1px;
+    background: linear-gradient(135deg, transparent, var(--v4-accent), transparent);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  .service-card:hover {
+    background: var(--v4-bg-card-hover);
+    transform: translateY(-3px);
+  }
+  .service-card:hover::before { opacity: 1; }
+
+  .service-tag {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--v4-accent);
+    margin-bottom: 0.6rem;
+  }
+  .service-card h3 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.65rem;
+    color: var(--v4-text);
+  }
+  .service-card p {
+    font-size: 0.92rem;
+    color: var(--v4-text-muted);
+    line-height: 1.55;
+    margin-bottom: 1.1rem;
+    flex-grow: 1;
+  }
+  .service-topics {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.1rem;
+  }
+  .service-topics li {
+    font-size: 0.85rem;
+    color: var(--v4-text-muted);
+    padding: 0.4rem 0;
+    border-top: 1px solid var(--v4-border);
+  }
+  .service-topics li:first-child { border-top: none; }
+  .service-foot {
+    border-top: 1px solid var(--v4-border);
+    padding-top: 1rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--v4-text);
+  }
+
+  /* ───────── Approach ───────── */
+  .approach-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  .approach-card {
+    background: var(--v4-bg-card);
+    border: 1px solid var(--v4-border);
+    border-radius: 14px;
+    padding: 1.8rem;
+  }
+  .approach-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    background: var(--v4-accent-soft);
+    color: var(--v4-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.1rem;
+  }
+  .approach-icon svg { width: 18px; height: 18px; }
+  .approach-card h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin-bottom: 0.4rem;
+  }
+  .approach-card p {
+    font-size: 0.93rem;
+    color: var(--v4-text-muted);
+    line-height: 1.55;
+  }
+
+  /* ───────── How ───────── */
+  .how-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+  }
+  .how-step {
+    background: var(--v4-bg-card);
+    border: 1px solid var(--v4-border);
+    border-radius: 16px;
+    padding: 1.8rem;
+  }
+  .how-num {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--v4-accent);
+    margin-bottom: 1.1rem;
+  }
+  .how-step h4 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 0.6rem;
+  }
+  .how-step p {
+    font-size: 0.94rem;
+    color: var(--v4-text-muted);
+    line-height: 1.55;
+  }
+
+  /* ───────── Faculty ───────── */
+  .faculty-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+  .faculty-card {
+    text-align: center;
+    padding: 1.2rem;
+  }
+  .faculty-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 0 auto 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--v4-bg);
+    position: relative;
+  }
+  .faculty-avatar::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--v4-accent), var(--v4-mint));
+    z-index: -1;
+    opacity: 0.5;
+  }
+  .faculty-avatar.lime      { background: linear-gradient(135deg, #6d28d9, #a78bfa); }
+  .faculty-avatar.tangerine { background: linear-gradient(135deg, #ea580c, #fb923c); }
+  .faculty-avatar.plum      { background: linear-gradient(135deg, #4338ca, #6366f1); }
+  .faculty-avatar.ink       { background: linear-gradient(135deg, #0f172a, #334155); }
+  .faculty-card h4 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin-bottom: 0.2rem;
+    color: var(--v4-text);
+  }
+  .faculty-school {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--v4-accent);
+    margin-bottom: 0.3rem;
+  }
+  .faculty-subjects {
+    font-size: 0.85rem;
+    color: var(--v4-text-muted);
+  }
+
+  /* ───────── FAQ ───────── */
+  .faq-wrap {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .faq-item {
+    background: var(--v4-bg-card);
+    border: 1px solid var(--v4-border);
+    border-radius: 12px;
+    padding: 1.3rem 1.5rem;
+    margin-bottom: 0.7rem;
+    transition: background 0.2s;
+  }
+  .faq-item:hover { background: var(--v4-bg-card-hover); }
+  .faq-item summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.02rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+    list-style: none;
+    color: var(--v4-text);
+  }
+  .faq-item summary :global(em) {
+    font-style: italic;
+    color: var(--v4-accent);
+    font-weight: 600;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-chevron {
+    color: var(--v4-text-muted);
+    transition: transform 0.25s;
+  }
+  .faq-chevron svg { width: 18px; height: 18px; display: block; }
+  .faq-item[open] .faq-chevron { transform: rotate(180deg); }
+  .faq-body {
+    padding-top: 0.8rem;
+    color: var(--v4-text-muted);
+    font-size: 0.96rem;
+    line-height: 1.6;
+  }
+
+  /* ───────── Final CTA ───────── */
+  .final-cta {
+    background: var(--v4-bg);
+    border-top: 1px solid var(--v4-border);
+    padding: 7rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .final-aurora .aurora-blob.a1 {
+    top: -200px;
+    left: 30%;
+    width: 600px;
+    height: 600px;
+  }
+  .final-aurora .aurora-blob.a2 {
+    bottom: -200px;
+    right: 20%;
+    top: auto;
+    width: 500px;
+    height: 500px;
+  }
+  .final-cta-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .final-cta h2 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 1rem;
+  }
+  .final-cta p {
+    color: var(--v4-text-muted);
+    font-size: 1.1rem;
+    line-height: 1.55;
+    margin-bottom: 2rem;
+  }
+
+  /* ───────── Responsive ───────── */
+  @media (max-width: 1024px) {
+    .services-grid, .faculty-grid { grid-template-columns: repeat(2, 1fr); }
+    .approach-grid { grid-template-columns: 1fr; }
+    .how-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .hero { padding: 4rem 1.2rem 3rem; }
+    .section { padding: 4rem 1.2rem; }
+    .section.section-elevated { padding: 4rem 1.2rem; }
+    .logos { padding: 2rem 1.2rem; }
+    .services-grid, .faculty-grid { grid-template-columns: 1fr; }
+    .final-cta { padding: 5rem 1.2rem; }
+  }
+</style>

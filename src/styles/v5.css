@@ -1,0 +1,62 @@
+/* V5 — Manifesto (editorial dark, big type) */
+
+[data-variant='v5'] {
+  --v5-bg: #000000;
+  --v5-bg-soft: #0a0a0a;
+  --v5-bg-elevated: rgba(255, 255, 255, 0.04);
+  --v5-bg-elevated-hover: rgba(255, 255, 255, 0.07);
+  --v5-text: #fafaf2;
+  --v5-text-muted: rgba(250, 250, 242, 0.62);
+  --v5-text-faint: rgba(250, 250, 242, 0.38);
+  --v5-border: rgba(250, 250, 242, 0.1);
+  --v5-border-strong: rgba(250, 250, 242, 0.2);
+  --v5-accent: #fdde00;
+  --v5-accent-soft: rgba(253, 222, 0, 0.18);
+  --v5-accent-deep: #e6c800;
+}
+
+[data-variant='v5'] body {
+  background: var(--v5-bg);
+  color: var(--v5-text);
+  font-family: "Inter", -apple-system, sans-serif;
+  font-weight: 400;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+[data-variant='v5'] body::after {
+  display: none;
+}
+
+[data-variant='v5'] * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+[data-variant='v5'] a {
+  color: var(--v5-text);
+  text-decoration: none;
+}
+
+[data-variant='v5'] .fraunces {
+  font-family: "Fraunces", "Times New Roman", serif;
+  font-feature-settings: "ss01", "ss03";
+}
+
+[data-variant='v5'] .v5-reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-variant='v5'] .v5-reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-variant='v5'] ::selection {
+  background: var(--v5-accent);
+  color: var(--v5-bg);
+}

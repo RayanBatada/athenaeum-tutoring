@@ -1,0 +1,82 @@
+---
+import { url } from '../../lib/url';
+const links = [
+  { href: url('/v4/#services'), label: 'Services' },
+  { href: url('/v4/#approach'), label: 'Approach' },
+  { href: url('/v4/#faculty'),  label: 'Faculty' },
+  { href: url('/v4/#faq'),      label: 'FAQ' },
+];
+---
+<nav>
+  <a href={url('/v4/')} class="brand">
+    <span class="brand-mark"></span>
+    Athenaeum
+  </a>
+  <ul class="nav-links">
+    {links.map((link) => (
+      <li><a href={link.href}>{link.label}</a></li>
+    ))}
+  </ul>
+  <a href={url('/v4/book/')} class="nav-cta">Schedule Consult →</a>
+</nav>
+
+<style>
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 1rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10, 10, 12, 0.7);
+    backdrop-filter: saturate(180%) blur(24px);
+    -webkit-backdrop-filter: saturate(180%) blur(24px);
+    border-bottom: 1px solid var(--v4-border);
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: -0.025em;
+    color: var(--v4-text);
+  }
+  .brand-mark {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    background: linear-gradient(135deg, var(--v4-accent), var(--v4-mint));
+    box-shadow: 0 0 12px rgba(167, 139, 250, 0.5);
+  }
+  .nav-links {
+    display: flex;
+    gap: 1.8rem;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--v4-text-muted);
+    font-size: 0.92rem;
+    font-weight: 500;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--v4-text); }
+  .nav-cta {
+    background: var(--v4-text);
+    color: var(--v4-bg);
+    padding: 0.55rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.15s;
+  }
+  .nav-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px -8px rgba(255, 255, 255, 0.2);
+  }
+  @media (max-width: 768px) {
+    nav { padding: 0.9rem 1.2rem; }
+    .nav-links { display: none; }
+  }
+</style>

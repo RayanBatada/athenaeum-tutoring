@@ -1,0 +1,74 @@
+---
+import PageLayout from '../../layouts/v5/PageLayout.astro';
+import CalEmbed from '../../components/CalEmbed.astro';
+import { site } from '../../data/site';
+---
+<PageLayout title="Book — Athenaeum" description="Schedule a free 30-min consult.">
+  <section class="book-hero">
+    <div class="hero-inner v5-reveal">
+      <span class="meta">— 001 · CONSULTATION —</span>
+      <h1 class="fraunces">
+        A free<br />
+        <em>thirty-minute</em><br />
+        consultation.
+      </h1>
+      <p>Tell us your timeline, target score, and the subjects you intend to read. We'll review fit and recommend the right plan.</p>
+    </div>
+  </section>
+
+  <section class="cal-section v5-reveal">
+    <div class="cal-frame">
+      <CalEmbed calLink={site.consultCalLink} embedId="cal-v5-consult" namespace="v5consult" />
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .book-hero {
+    padding: 5rem 2.5rem 3rem;
+    border-bottom: 1px solid var(--v5-border);
+  }
+  .hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .meta {
+    display: block;
+    color: var(--v5-accent);
+    font-size: 0.8rem;
+    letter-spacing: 0.18em;
+    font-weight: 700;
+    margin-bottom: 2rem;
+  }
+  .book-hero h1 {
+    font-size: clamp(3rem, 9vw, 8rem);
+    line-height: 0.92;
+    font-weight: 500;
+    letter-spacing: -0.035em;
+    margin-bottom: 2rem;
+  }
+  .book-hero h1 em {
+    color: var(--v5-accent);
+    font-style: italic;
+  }
+  .book-hero p {
+    font-size: 1.2rem;
+    color: var(--v5-text-muted);
+    line-height: 1.55;
+    max-width: 540px;
+  }
+  .cal-section {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 3rem 2rem 6rem;
+  }
+  .cal-frame {
+    background: var(--v5-text);
+    padding: 0.8rem;
+    box-shadow: 8px 8px 0 var(--v5-accent);
+  }
+  @media (max-width: 640px) {
+    .book-hero { padding: 3rem 1.2rem 2rem; }
+    .cal-section { padding: 2rem 1.2rem 4rem; }
+  }
+</style>
