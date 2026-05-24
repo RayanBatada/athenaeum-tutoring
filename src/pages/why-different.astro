@@ -1,0 +1,128 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import Eyebrow from '../components/Eyebrow.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+import FeatureCard from '../components/FeatureCard.astro';
+import ComparisonTable from '../components/ComparisonTable.astro';
+import BigCTA from '../components/BigCTA.astro';
+import { reasons, comparisonRows, type Pillar } from '../data/why-different';
+
+const pillars: Pillar[] = ['Talent', 'Method', 'Touch', 'Trust'];
+---
+<PageLayout title="Why Athenaeum is Different — Athenaeum" description="Twelve reasons that make Athenaeum different from a big tutoring chain.">
+  <section class="why-hero">
+    <div class="reveal" style="max-width: 1400px; margin: 0 auto;">
+      <Eyebrow text="Why Athenaeum" variant="lime-on-ink" />
+      <h1 class="why-title">
+        Built around the<br />
+        <span class="serif">student,</span> not the syllabus.
+      </h1>
+      <p class="why-lead">
+        Twelve specific things we do differently from a big tutoring chain. Grouped into the four reasons it adds up to a different outcome.
+      </p>
+    </div>
+  </section>
+
+  {pillars.map((pillar) => {
+    const items = reasons.filter((r) => r.pillar === pillar);
+    return (
+      <section class="pillar-section section-pad">
+        <div class="reveal" style="margin-bottom: 3rem;">
+          <Eyebrow text={pillar.toUpperCase()} variant="lime-on-ink" />
+          <SectionTitle>
+            {pillar === 'Talent' && <>The <span class="serif">people</span> in the room.</>}
+            {pillar === 'Method' && <>How we <span class="serif">actually</span> teach.</>}
+            {pillar === 'Touch' && <>Between the <span class="serif">sessions.</span></>}
+            {pillar === 'Trust' && <>How we <span class="serif">earn</span> the commitment.</>}
+          </SectionTitle>
+        </div>
+        <div class="pillar-grid reveal">
+          {items.map((r) => (
+            <FeatureCard
+              icon={r.iconLetter}
+              title={r.title}
+              titleSerif={r.titleSerif}
+              description={r.body}
+              iconColor={r.iconColor}
+            />
+          ))}
+        </div>
+      </section>
+    );
+  })}
+
+  <section class="compare-section section-pad">
+    <div class="reveal" style="text-align: center; max-width: 700px; margin: 0 auto 3rem;">
+      <Eyebrow text="Side by side" />
+      <SectionTitle>Athenaeum vs. a <span class="serif">big tutoring chain.</span></SectionTitle>
+    </div>
+    <div class="reveal">
+      <ComparisonTable rows={comparisonRows} />
+    </div>
+  </section>
+
+  <BigCTA
+    title='See if we are the <span class="serif">fit</span> for your student.'
+    subtitle="The free 30-minute consult is the honest version of this conversation."
+    ctaHref="/book"
+    ctaLabel="Schedule Free Consult"
+  />
+</PageLayout>
+
+<style>
+  .why-hero {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 7rem 2rem 6rem;
+    border-bottom: 2px solid var(--ink);
+    position: relative;
+    z-index: 2;
+  }
+  .why-title {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: clamp(3rem, 9vw, 7.5rem);
+    line-height: 0.9;
+    font-weight: 700;
+    letter-spacing: -0.045em;
+    margin-bottom: 1.5rem;
+    font-variation-settings: "wdth" 85;
+  }
+  .why-title .serif {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--lime);
+  }
+  .why-lead {
+    font-size: 1.3rem;
+    color: rgba(247, 240, 223, 0.75);
+    max-width: 640px;
+    line-height: 1.45;
+  }
+
+  section { position: relative; z-index: 2; }
+  .section-pad { padding: 6rem 2rem; max-width: 1400px; margin: 0 auto; }
+
+  .pillar-section {
+    background: var(--ink);
+    color: var(--cream);
+    border-bottom: 1px solid rgba(247, 240, 223, 0.15);
+  }
+  .pillar-section :global(.section-title) { color: var(--cream); }
+  .pillar-section :global(.section-title .serif) { color: var(--lime); }
+  .pillar-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .compare-section { background: var(--cream); }
+
+  @media (max-width: 1024px) {
+    .pillar-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .why-hero { padding: 4rem 1.2rem 4rem; }
+    .section-pad { padding: 4rem 1.2rem; }
+  }
+</style>

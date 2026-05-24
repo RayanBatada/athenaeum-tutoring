@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────
+   Tailwind theme tokens (Athenaeum palette + fonts)
+   ───────────────────────────────────────────── */
+@theme {
+  --color-cream: #f7f0df;
+  --color-cream-deep: #ede4cc;
+  --color-ink: #0c0c0c;
+  --color-ink-soft: #2a2a2a;
+  --color-ink-faint: rgba(12, 12, 12, 0.55);
+  --color-line: rgba(12, 12, 12, 0.15);
+  --color-lime: #d4f04a;
+  --color-lime-deep: #b8d433;
+  --color-tangerine: #ff5e2c;
+  --color-plum: #2c1947;
+
+  --font-display: "Bricolage Grotesque", sans-serif;
+  --font-serif: "Instrument Serif", serif;
+  --font-sans: "Geist", -apple-system, sans-serif;
+
+  --container-site: 1400px;
+}
+
+/* ─────────────────────────────────────────────
+   Plain CSS variables (used by component scoped styles)
+   ───────────────────────────────────────────── */
+:root {
+  --cream: #f7f0df;
+  --cream-deep: #ede4cc;
+  --ink: #0c0c0c;
+  --ink-soft: #2a2a2a;
+  --ink-faint: rgba(12, 12, 12, 0.55);
+  --line: rgba(12, 12, 12, 0.15);
+  --lime: #d4f04a;
+  --lime-deep: #b8d433;
+  --tangerine: #ff5e2c;
+  --plum: #2c1947;
+}
+
+/* ─────────────────────────────────────────────
+   Reset + base
+   ───────────────────────────────────────────── */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: "Geist", -apple-system, sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Subtle noise overlay across the whole page */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.35;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.05 0 0 0 0 0.05 0 0 0 0 0.05 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+/* Font-family helper classes (used in inline spans where Tailwind utilities are awkward) */
+.display { font-family: "Bricolage Grotesque", sans-serif; }
+.serif { font-family: "Instrument Serif", serif; font-style: italic; }
+
+/* Reveal-on-scroll: IntersectionObserver in BaseLayout adds .in */
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─────────────────────────────────────────────
+   Keyframes (shared)
+   ───────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.2); }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes highlightIn {
+  from { transform: skew(-3deg) scaleX(0); }
+  to { transform: skew(-3deg) scaleX(1); }
+}

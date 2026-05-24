@@ -1,0 +1,82 @@
+---
+export interface Props {
+  href: string;
+  monogram: string;
+  school: string;
+  name: string;
+  nameItalic: string;
+  subjectsLine: string;
+  gradient: 'lime' | 'tangerine' | 'plum' | 'ink';
+}
+const { href, monogram, school, name, nameItalic, subjectsLine, gradient } = Astro.props;
+---
+<a href={href} class="tutor">
+  <div class:list={['tutor-photo', gradient]}>
+    <div class="tutor-monogram">{monogram}</div>
+    <div class="tutor-school-tag">{school}</div>
+  </div>
+  <div class="tutor-name">{name} <span class="serif">{nameItalic}</span></div>
+  <div class="tutor-subject">{subjectsLine}</div>
+</a>
+
+<style>
+  .tutor {
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .tutor:hover { transform: translateY(-6px); }
+
+  .tutor-photo {
+    aspect-ratio: 4/5;
+    border-radius: 18px;
+    border: 2px solid var(--ink);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+  .tutor-photo.lime { background: linear-gradient(135deg, var(--lime), #a8c93a); color: var(--ink); }
+  .tutor-photo.tangerine { background: linear-gradient(135deg, var(--tangerine), #c84618); color: var(--cream); }
+  .tutor-photo.plum { background: linear-gradient(135deg, var(--plum), #1a0e2e); color: var(--cream); }
+  .tutor-photo.ink { background: linear-gradient(135deg, var(--ink), #2a2a2a); color: var(--cream); }
+
+  .tutor-monogram {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 5rem;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    font-variation-settings: "wdth" 80;
+  }
+  .tutor-school-tag {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    background: var(--ink);
+    color: var(--lime);
+    padding: 0.35rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  .tutor-name {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.2rem;
+  }
+  .tutor-name .serif {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+  }
+  .tutor-subject {
+    color: var(--ink-faint);
+    font-size: 0.9rem;
+  }
+</style>

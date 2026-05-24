@@ -1,0 +1,251 @@
+---
+import { getCollection } from 'astro:content';
+import PageLayout from '../layouts/PageLayout.astro';
+import Eyebrow from './Eyebrow.astro';
+import SectionTitle from './SectionTitle.astro';
+import MegaButton from './MegaButton.astro';
+import GhostButton from './GhostButton.astro';
+import HowCard from './HowCard.astro';
+import TutorCard from './TutorCard.astro';
+import FAQAccordion from './FAQAccordion.astro';
+import BigCTA from './BigCTA.astro';
+
+import { services, type ServiceSlug } from '../data/services';
+import { url } from '../lib/url';
+
+export interface Props {
+  slug: ServiceSlug;
+}
+const { slug } = Astro.props;
+const service = services.find((s) => s.slug === slug)!;
+
+const allTutors = await getCollection('tutors');
+const matchingTutors = allTutors
+  .filter((t) => t.data.serviceSlugs.includes(slug))
+  .slice(0, 3);
+---
+<PageLayout title={`${service.longName} — Athenaeum`} description={service.tagline}>
+  <section class="service-hero">
+    <div class="service-hero-inner reveal">
+      <Eyebrow text={service.longName.toUpperCase()} />
+      <h1 class="display">{service.longName}</h1>
+      <p class="lead">{service.tagline}</p>
+      <div class="cta-row">
+        <MegaButton href={url(`/tutors?subject=${service.slug}`)}>Find Your {service.name} Tutor</MegaButton>
+        <GhostButton href={url('/book')}>Schedule Free Consult</GhostButton>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad">
+    <div class="reveal">
+      <Eyebrow text="What we cover" />
+      <SectionTitle>The full <span class="serif">{service.name}</span>, taught 1-on-1.</SectionTitle>
+    </div>
+    <ul class="topics-grid reveal">
+      {service.topics.map((t) => (
+        <li class="topic-pill">{t}</li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="how-band section-pad">
+    <div class="reveal" style="text-align:center; max-width: 700px; margin: 0 auto 3.5rem;">
+      <Eyebrow text="How it works" />
+      <SectionTitle>From first <span class="serif">consult</span> to test day.</SectionTitle>
+    </div>
+    <div class="how-grid reveal">
+      <HowCard num={1} numColor="ink"       title="Free 30-min" titleSerif="consult" description="Quick call to lock in the right tutor, plan, and timeline for your student." />
+      <HowCard num={2} numColor="lime"      title="Diagnostic" titleSerif="week" description="Your tutor identifies the gaps and builds a custom weekly plan around them." />
+      <HowCard num={3} numColor="tangerine" title="Weekly 1-on-1s," titleSerif="exam day" description="Weekly sessions, hand-graded homework, practice tests, and a test-day strategy session." />
+    </div>
+  </section>
+
+  <section class="section-pad">
+    <div class="reveal">
+      <Eyebrow text="Sample tutors" />
+      <SectionTitle subtitle={`Three of our ${service.name} tutors. Browse the full faculty on the Tutors page.`}>
+        Who you might <span class="serif">work with.</span>
+      </SectionTitle>
+    </div>
+    <div class="tutors-grid reveal">
+      {matchingTutors.map((t) => (
+        <TutorCard
+          href={url(`/tutors/${t.id}`)}
+          monogram={t.data.monogram}
+          school={`${t.data.school} ${t.data.classYear}`}
+          name={t.data.name.split(' ')[0]}
+          nameItalic={t.data.name.split(' ').slice(1).join(' ')}
+          subjectsLine={t.data.subjects.slice(0, 3).join(' · ')}
+          gradient={t.data.cardGradient}
+        />
+      ))}
+    </div>
+  </section>
+
+  <section class="pricing section-pad">
+    <div class="reveal">
+      <Eyebrow text="Pricing" variant="lime-on-ink" />
+      <SectionTitle subtitle={`Starting at $${service.startingAtHourly}/hour. Most students book a 16 or 24-hour package. Full pricing is confirmed on the free consult.`}>
+        Built for <span class="serif">commitment-friendly</span> packages.
+      </SectionTitle>
+    </div>
+    <div class="pkg-grid reveal">
+      {service.packages.map((p, i) => (
+        <div class:list={['pkg-card', i === 1 ? 'featured' : '']}>
+          <div class="pkg-hours">{p.hours} hours</div>
+          <div class="pkg-price">${p.price.toLocaleString()}</div>
+          <div class="pkg-per">${p.perHour}/hour</div>
+          <p>{p.tagline}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section-pad">
+    <div class="reveal" style="text-align:center; margin-bottom: 3rem;">
+      <Eyebrow text="FAQ" />
+      <SectionTitle>{service.name} <span class="serif">questions.</span></SectionTitle>
+    </div>
+    <div class="reveal">
+      <FAQAccordion items={service.faqs} />
+    </div>
+  </section>
+
+  <BigCTA
+    title={`Find your <span class="serif">${service.name}</span> tutor.`}
+    subtitle="Free 30-min consult. We'll match you to the right tutor and plan."
+    ctaHref={url('/book')}
+    ctaLabel="Schedule Free Consult"
+  />
+</PageLayout>
+
+<style>
+  .service-hero {
+    background: var(--cream-deep);
+    padding: 6rem 2rem 4rem;
+    border-bottom: 2px solid var(--ink);
+    position: relative;
+    z-index: 2;
+  }
+  .service-hero-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .service-hero h1 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: clamp(3rem, 9vw, 7rem);
+    font-weight: 700;
+    letter-spacing: -0.045em;
+    line-height: 0.9;
+    margin-bottom: 1.5rem;
+    font-variation-settings: "wdth" 85;
+  }
+  .lead {
+    font-size: 1.4rem;
+    color: var(--ink-soft);
+    max-width: 680px;
+    margin-bottom: 2.5rem;
+    line-height: 1.4;
+  }
+  .cta-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  section { position: relative; z-index: 2; }
+  .section-pad { padding: 6rem 2rem; max-width: 1400px; margin: 0 auto; }
+
+  .topics-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    list-style: none;
+    padding: 0;
+  }
+  .topic-pill {
+    border: 1.5px solid var(--ink);
+    border-radius: 999px;
+    padding: 0.6rem 1.1rem;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    background: var(--cream);
+  }
+
+  .how-band { background: var(--cream-deep); }
+  .how-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .tutors-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+  }
+
+  .pricing {
+    background: var(--ink);
+    color: var(--cream);
+  }
+  .pricing :global(.section-title) { color: var(--cream); }
+  .pricing :global(.section-title .serif) { color: var(--lime); }
+  .pricing :global(.section-sub) { color: rgba(247, 240, 223, 0.7); }
+  .pkg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+    margin-top: 1rem;
+  }
+  .pkg-card {
+    background: rgba(247, 240, 223, 0.04);
+    border: 1px solid rgba(247, 240, 223, 0.18);
+    border-radius: 22px;
+    padding: 2rem 1.6rem;
+  }
+  .pkg-card.featured {
+    background: var(--lime);
+    color: var(--ink);
+    border-color: var(--lime);
+  }
+  .pkg-hours {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+  .pkg-price {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    margin-top: 0.3rem;
+    font-variation-settings: "wdth" 85;
+  }
+  .pkg-per {
+    font-size: 0.95rem;
+    opacity: 0.75;
+    margin-bottom: 1rem;
+  }
+  .pkg-card p {
+    font-size: 0.92rem;
+    line-height: 1.5;
+    opacity: 0.85;
+  }
+
+  @media (max-width: 1024px) {
+    .tutors-grid, .how-grid, .pkg-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 640px) {
+    .section-pad { padding: 4rem 1.2rem; }
+    .service-hero { padding: 4rem 1.2rem 3rem; }
+  }
+</style>

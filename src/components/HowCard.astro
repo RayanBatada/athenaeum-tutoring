@@ -1,0 +1,63 @@
+---
+export interface Props {
+  num: number;
+  numColor: 'ink' | 'lime' | 'tangerine';
+  title: string;
+  titleSerif?: string;
+  description: string;
+}
+const { num, numColor, title, titleSerif, description } = Astro.props;
+---
+<div class="how-card">
+  <div class:list={['how-num', numColor]}>{num}</div>
+  <h4>
+    {title}{titleSerif && <> <span class="serif">{titleSerif}</span></>}
+  </h4>
+  <p>{description}</p>
+</div>
+
+<style>
+  .how-card {
+    background: var(--cream);
+    border: 2px solid var(--ink);
+    border-radius: 24px;
+    padding: 2rem;
+    transition: transform 0.3s;
+  }
+  .how-card:hover { transform: translateY(-4px); }
+  .how-num {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+  }
+  .how-num.ink { background: var(--ink); color: var(--lime); }
+  .how-num.lime { background: var(--lime); color: var(--ink); }
+  .how-num.tangerine { background: var(--tangerine); color: var(--cream); }
+  .how-card h4 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 0.8rem;
+    font-variation-settings: "wdth" 90;
+  }
+  .how-card h4 .serif {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-variation-settings: normal;
+  }
+  .how-card p {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+</style>

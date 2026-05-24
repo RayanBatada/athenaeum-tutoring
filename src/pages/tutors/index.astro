@@ -1,0 +1,153 @@
+---
+import { getCollection } from 'astro:content';
+import PageLayout from '../../layouts/PageLayout.astro';
+import Eyebrow from '../../components/Eyebrow.astro';
+import SectionTitle from '../../components/SectionTitle.astro';
+import TutorCard from '../../components/TutorCard.astro';
+import BigCTA from '../../components/BigCTA.astro';
+import { url } from '../../lib/url';
+
+const allTutors = await getCollection('tutors');
+
+const filters = [
+  { slug: 'all', label: 'All' },
+  { slug: 'ap', label: 'AP' },
+  { slug: 'sat', label: 'SAT' },
+  { slug: 'act', label: 'ACT' },
+  { slug: 'college-counseling', label: 'College Counseling' },
+];
+---
+<PageLayout title="Tutors — Athenaeum" description="Browse our faculty. Top-1% Ivy League and peer-university tutors.">
+  <section class="tutors-hero">
+    <div class="reveal" style="max-width: 1400px; margin: 0 auto;">
+      <Eyebrow text="The Faculty" />
+      <SectionTitle subtitle="Every Athenaeum tutor is a current Ivy League or peer-university student who scored at the top of the exam they teach. Pick your fit.">
+        Browse our <span class="serif">tutors.</span>
+      </SectionTitle>
+    </div>
+  </section>
+
+  <section class="tutors-filters section-pad">
+    <div class="filter-chips reveal" id="filterChips">
+      {filters.map((f) => (
+        <button
+          class:list={['chip', f.slug === 'all' && 'active']}
+          data-filter={f.slug}
+          type="button"
+        >{f.label}</button>
+      ))}
+    </div>
+
+    <div class="tutors-grid reveal" id="tutorsGrid">
+      {allTutors.map((t) => (
+        <div class="tutor-wrap" data-service-slugs={t.data.serviceSlugs.join(',')}>
+          <TutorCard
+            href={url(`/tutors/${t.id}`)}
+            monogram={t.data.monogram}
+            school={`${t.data.school} ${t.data.classYear}`}
+            name={t.data.name.split(' ')[0]}
+            nameItalic={t.data.name.split(' ').slice(1).join(' ')}
+            subjectsLine={t.data.subjects.slice(0, 3).join(' · ')}
+            gradient={t.data.cardGradient}
+          />
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <BigCTA
+    title='Find your <span class="serif">match.</span>'
+    subtitle="The free consult is where we pair you with the right tutor."
+    ctaHref={url('/book')}
+    ctaLabel="Schedule Free Consult"
+  />
+</PageLayout>
+
+<script is:inline>
+  (() => {
+    const params = new URLSearchParams(window.location.search);
+    const initial = params.get('subject') || 'all';
+
+    const chips = document.querySelectorAll('#filterChips .chip');
+    const wraps = document.querySelectorAll('.tutor-wrap');
+
+    function applyFilter(filter) {
+      chips.forEach((c) => c.classList.toggle('active', c.dataset.filter === filter));
+      wraps.forEach((w) => {
+        const slugs = (w.dataset.serviceSlugs || '').split(',');
+        const visible = filter === 'all' || slugs.includes(filter);
+        w.style.display = visible ? '' : 'none';
+      });
+
+      const url = new URL(window.location.href);
+      if (filter === 'all') {
+        url.searchParams.delete('subject');
+      } else {
+        url.searchParams.set('subject', filter);
+      }
+      window.history.replaceState({}, '', url);
+    }
+
+    chips.forEach((chip) => {
+      chip.addEventListener('click', () => applyFilter(chip.dataset.filter));
+    });
+
+    applyFilter(initial);
+  })();
+</script>
+
+<style>
+  .tutors-hero {
+    padding: 6rem 2rem 3rem;
+    background: var(--cream-deep);
+    border-bottom: 2px solid var(--ink);
+    position: relative;
+    z-index: 2;
+  }
+  section { position: relative; z-index: 2; }
+  .section-pad { padding: 4rem 2rem 6rem; max-width: 1400px; margin: 0 auto; }
+
+  .filter-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 3rem;
+  }
+  .chip {
+    border: 1.5px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    padding: 0.55rem 1.1rem;
+    border-radius: 999px;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 500;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  .chip:hover {
+    background: var(--ink);
+    color: var(--cream);
+  }
+  .chip.active {
+    background: var(--lime);
+    border-color: var(--lime);
+  }
+  .chip.active:hover {
+    background: var(--lime-deep);
+    color: var(--ink);
+  }
+
+  .tutors-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.2rem;
+  }
+  @media (max-width: 1024px) {
+    .tutors-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .tutors-grid { grid-template-columns: 1fr; }
+    .section-pad { padding: 3rem 1.2rem 4rem; }
+  }
+</style>

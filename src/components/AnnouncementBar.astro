@@ -1,0 +1,48 @@
+---
+export interface Props {
+  text?: string;
+  emphasis?: string;
+}
+const {
+  text = 'Now booking spring 1-on-1 sessions —',
+  emphasis = 'limited slots',
+} = Astro.props;
+---
+<div class="announce">
+  <span class="announce-inner">
+    <span class="dot"></span>
+    <span>{text} <em>{emphasis}</em></span>
+  </span>
+</div>
+
+<style>
+  .announce {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 0.6rem 1.5rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-align: center;
+    position: relative;
+    z-index: 101;
+  }
+  .announce-inner {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .announce .dot {
+    width: 7px;
+    height: 7px;
+    background: var(--lime);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--lime);
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  .announce em {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    color: var(--lime);
+    font-size: 0.95rem;
+  }
+</style>

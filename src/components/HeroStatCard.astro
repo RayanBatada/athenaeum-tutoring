@@ -1,0 +1,49 @@
+---
+export interface Props {
+  variant: 'ink' | 'lime' | 'tangerine';
+  text: string;
+}
+const { variant, text } = Astro.props;
+---
+<div class:list={['stat-card', variant]}>
+  <div class="stat-num"><slot name="num" /></div>
+  <div class="stat-text">{text}</div>
+</div>
+
+<style>
+  .stat-card {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 1.6rem 1.8rem;
+    border-radius: 22px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .stat-card:hover { transform: translateY(-4px) rotate(-1deg); }
+  .stat-card.lime { background: var(--lime); color: var(--ink); }
+  .stat-card.tangerine { background: var(--tangerine); color: var(--cream); }
+  .stat-num {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 3.2rem;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    font-variation-settings: "wdth" 85;
+    display: flex;
+    align-items: baseline;
+    gap: 0.2rem;
+  }
+  .stat-num :global(.small) { font-size: 1.4rem; font-weight: 500; }
+  .stat-num :global(.serif) {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+  }
+  .stat-text {
+    margin-top: 0.4rem;
+    font-size: 0.92rem;
+    opacity: 0.88;
+    line-height: 1.4;
+  }
+</style>

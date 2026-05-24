@@ -1,0 +1,33 @@
+---
+export interface Props {
+  subtitle?: string;
+}
+const { subtitle } = Astro.props;
+---
+<h2 class="section-title"><slot /></h2>
+{subtitle && <p class="section-sub">{subtitle}</p>}
+
+<style>
+  .section-title {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 0.95;
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    font-variation-settings: "wdth" 85;
+    margin-bottom: 1rem;
+  }
+  .section-title :global(.serif) {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-variation-settings: normal;
+  }
+  .section-sub {
+    font-size: 1.15rem;
+    color: var(--ink-soft);
+    max-width: 600px;
+    line-height: 1.55;
+    margin-bottom: 4rem;
+  }
+</style>

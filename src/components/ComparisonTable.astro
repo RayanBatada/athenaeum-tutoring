@@ -1,0 +1,67 @@
+---
+export interface Row {
+  label: string;
+  athenaeum: string;
+  chain: string;
+}
+export interface Props {
+  rows: Row[];
+}
+const { rows } = Astro.props;
+---
+<div class="compare">
+  <div class="compare-head">
+    <div class="compare-cell label"></div>
+    <div class="compare-cell us">Athenaeum</div>
+    <div class="compare-cell them">A big tutoring chain</div>
+  </div>
+  {rows.map((row) => (
+    <div class="compare-row">
+      <div class="compare-cell label">{row.label}</div>
+      <div class="compare-cell us">{row.athenaeum}</div>
+      <div class="compare-cell them">{row.chain}</div>
+    </div>
+  ))}
+</div>
+
+<style>
+  .compare {
+    border: 2px solid var(--ink);
+    border-radius: 24px;
+    overflow: hidden;
+    background: var(--cream);
+  }
+  .compare-head, .compare-row {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1.2fr;
+  }
+  .compare-head {
+    background: var(--ink);
+    color: var(--cream);
+  }
+  .compare-head .compare-cell.us { color: var(--lime); }
+  .compare-head .compare-cell.them { color: rgba(247, 240, 223, 0.7); }
+  .compare-row { border-top: 1.5px solid var(--line); }
+  .compare-row:nth-child(even) { background: var(--cream-deep); }
+  .compare-cell {
+    padding: 1.2rem 1.4rem;
+    font-size: 0.95rem;
+  }
+  .compare-cell.label {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .compare-head .compare-cell {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.78rem;
+  }
+
+  @media (max-width: 768px) {
+    .compare-head, .compare-row { grid-template-columns: 1fr; }
+    .compare-cell.label { background: var(--ink); color: var(--lime); }
+  }
+</style>

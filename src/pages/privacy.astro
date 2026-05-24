@@ -1,0 +1,76 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import Eyebrow from '../components/Eyebrow.astro';
+---
+<PageLayout title="Privacy Policy — Athenaeum">
+  <main class="legal">
+    <Eyebrow text="Legal" />
+    <h1>Privacy Policy</h1>
+    <p class="updated">Last updated: 2026-05-24</p>
+
+    <p>This Privacy Policy describes how Athenaeum (the "Service", "we", "us", or "our") collects, uses, and shares your personal information when you visit athenaeum.co or use our services.</p>
+
+    <h2>Information we collect</h2>
+    <p>We collect information you provide directly to us, including when you book a consult or lesson (name, email, phone), and information we receive from our scheduling provider (Cal.com). We also collect basic analytics about how you use the site (page views, referrers, browser type).</p>
+
+    <h2>How we use information</h2>
+    <p>We use the information we collect to: provide and maintain the Service, schedule and deliver tutoring sessions, respond to inquiries, send service-related communications, and improve the Service.</p>
+
+    <h2>Sharing</h2>
+    <p>We share information only as needed to provide the Service. This includes our scheduling provider (Cal.com), our payment processor (when applicable), and the tutor you are matched with. We do not sell personal information.</p>
+
+    <h2>Your choices</h2>
+    <p>You can request access to, correction of, or deletion of your personal information by emailing <a href="mailto:hello@athenaeum.co">hello@athenaeum.co</a>.</p>
+
+    <h2>Children's privacy</h2>
+    <p>Many of our students are minors. Parents and legal guardians control account creation and consent. We collect only the information needed to deliver tutoring services.</p>
+
+    <h2>Contact</h2>
+    <p>Questions: <a href="mailto:hello@athenaeum.co">hello@athenaeum.co</a></p>
+  </main>
+</PageLayout>
+
+<style>
+  .legal {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 6rem 2rem;
+    position: relative;
+    z-index: 2;
+  }
+  .legal h1 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+  .legal .updated {
+    color: var(--ink-faint);
+    font-size: 0.95rem;
+    margin-bottom: 2.5rem;
+  }
+  .legal h2 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 2.5rem;
+    margin-bottom: 0.8rem;
+    letter-spacing: -0.02em;
+  }
+  .legal p {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin-bottom: 1rem;
+  }
+  .legal a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .legal a:hover {
+    color: var(--tangerine);
+  }
+</style>

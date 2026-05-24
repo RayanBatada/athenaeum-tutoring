@@ -1,0 +1,40 @@
+---
+export interface Props {
+  text: string;
+  variant?: 'default' | 'lime-on-ink';
+}
+const { text, variant = 'default' } = Astro.props;
+---
+<div class:list={['eyebrow', variant]}>
+  <span class="dot"></span>{text}
+</div>
+
+<style>
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: var(--ink);
+    color: var(--lime);
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    margin-bottom: 1.5rem;
+  }
+  .eyebrow .dot {
+    width: 6px;
+    height: 6px;
+    background: var(--lime);
+    border-radius: 50%;
+  }
+  .eyebrow.lime-on-ink {
+    background: var(--lime);
+    color: var(--ink);
+  }
+  .eyebrow.lime-on-ink .dot {
+    background: var(--ink);
+  }
+</style>

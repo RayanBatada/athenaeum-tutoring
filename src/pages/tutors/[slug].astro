@@ -1,0 +1,301 @@
+---
+import { getCollection, render } from 'astro:content';
+import PageLayout from '../../layouts/PageLayout.astro';
+import Eyebrow from '../../components/Eyebrow.astro';
+import MegaButton from '../../components/MegaButton.astro';
+import GhostButton from '../../components/GhostButton.astro';
+import CalEmbed from '../../components/CalEmbed.astro';
+import { url } from '../../lib/url';
+
+export async function getStaticPaths() {
+  const tutors = await getCollection('tutors');
+  return tutors.map((tutor) => ({
+    params: { slug: tutor.id },
+    props: { tutor },
+  }));
+}
+
+const { tutor } = Astro.props;
+const { Content } = await render(tutor);
+const d = tutor.data;
+---
+<PageLayout title={`${d.name} — Athenaeum`} description={d.headline}>
+  <section class="profile-hero">
+    <div class="profile-hero-inner">
+      <div class:list={['profile-photo', d.cardGradient]}>
+        <div class="profile-monogram">{d.monogram}</div>
+        <div class="profile-school-tag">{d.school} {d.classYear}</div>
+      </div>
+      <div class="profile-meta">
+        <Eyebrow text={`${d.school.toUpperCase()} ${d.classYear}`} />
+        <h1>{d.name}</h1>
+        <p class="profile-headline">{d.headline}</p>
+        <ul class="profile-subjects">
+          {d.subjects.map((s) => <li>{s}</li>)}
+        </ul>
+        {d.scoreHighlights && d.scoreHighlights.length > 0 && (
+          <ul class="profile-scores">
+            {d.scoreHighlights.map((s) => <li>{s}</li>)}
+          </ul>
+        )}
+        <div class="profile-meta-rate">Starting at <strong>${d.hourlyRate}/hour</strong></div>
+        <div class="cta-row">
+          <MegaButton href={url(`/book?type=lesson&tutor=${tutor.id}`)}>Book a Lesson with {d.name.split(' ')[0]}</MegaButton>
+          <GhostButton href={url(`/book?type=consult&tutor=${tutor.id}`)}>Free Consult First</GhostButton>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="profile-bio section-pad">
+    <div class="bio-grid">
+      <aside class="reveal">
+        <Eyebrow text="Sessions with" />
+        <h3 class="aside-name">{d.name.split(' ')[0]}</h3>
+        <ul class="aside-list">
+          <li>Weekly 1-on-1s, two sessions per week most common</li>
+          <li>Hand-graded homework</li>
+          <li>Recorded for review in your portal</li>
+          <li>Office hours + async messaging between sessions</li>
+        </ul>
+      </aside>
+      <article class="bio-content reveal">
+        <Eyebrow text="About" />
+        <Content />
+      </article>
+    </div>
+  </section>
+
+  <section class="profile-cal section-pad" id="book-here">
+    <div class="reveal" style="text-align:center; max-width: 720px; margin: 0 auto 3rem;">
+      <Eyebrow text="Book directly" variant="lime-on-ink" />
+      <h2 class="big">Pick a time with <span class="serif">{d.name.split(' ')[0]}.</span></h2>
+      <p class="sub">Choose either a free 30-minute consult or your first lesson.</p>
+    </div>
+    <div class="cal-wrap reveal">
+      <CalEmbed
+        calLink={d.calLinks.firstLesson}
+        embedId={`cal-tutor-${tutor.id}`}
+        namespace={`tutor-${tutor.id}`}
+      />
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .profile-hero {
+    background: var(--cream-deep);
+    padding: 5rem 2rem 5rem;
+    border-bottom: 2px solid var(--ink);
+    position: relative;
+    z-index: 2;
+  }
+  .profile-hero-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 0.7fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .profile-photo {
+    aspect-ratio: 4/5;
+    border-radius: 24px;
+    border: 2px solid var(--ink);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 8px 8px 0 var(--ink);
+  }
+  .profile-photo.lime { background: linear-gradient(135deg, var(--lime), #a8c93a); color: var(--ink); }
+  .profile-photo.tangerine { background: linear-gradient(135deg, var(--tangerine), #c84618); color: var(--cream); }
+  .profile-photo.plum { background: linear-gradient(135deg, var(--plum), #1a0e2e); color: var(--cream); }
+  .profile-photo.ink { background: linear-gradient(135deg, var(--ink), #2a2a2a); color: var(--cream); }
+  .profile-monogram {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 11rem;
+    font-weight: 700;
+    letter-spacing: -0.06em;
+    font-variation-settings: "wdth" 80;
+    line-height: 1;
+  }
+  .profile-school-tag {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    background: var(--ink);
+    color: var(--lime);
+    padding: 0.45rem 1rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  .profile-meta h1 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+    margin-bottom: 1rem;
+  }
+  .profile-headline {
+    font-size: 1.3rem;
+    color: var(--ink-soft);
+    line-height: 1.45;
+    margin-bottom: 1.5rem;
+    max-width: 540px;
+  }
+  .profile-subjects {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1.1rem;
+  }
+  .profile-subjects li {
+    background: var(--ink);
+    color: var(--lime);
+    padding: 0.35rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+  .profile-scores {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1.4rem;
+  }
+  .profile-scores li {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    color: var(--ink);
+    font-size: 1.1rem;
+  }
+  .profile-scores li::before {
+    content: "★ ";
+    color: var(--tangerine);
+    font-style: normal;
+  }
+  .profile-meta-rate {
+    font-size: 1rem;
+    margin-bottom: 1.6rem;
+    color: var(--ink-soft);
+  }
+  .profile-meta-rate strong {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    color: var(--ink);
+  }
+  .cta-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  section { position: relative; z-index: 2; }
+  .section-pad { padding: 6rem 2rem; max-width: 1400px; margin: 0 auto; }
+
+  .bio-grid {
+    display: grid;
+    grid-template-columns: 0.7fr 1.6fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .aside-name {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+  }
+  .aside-list {
+    list-style: none;
+    padding: 0;
+  }
+  .aside-list li {
+    border-top: 1px solid var(--line);
+    padding: 0.8rem 0;
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    line-height: 1.45;
+  }
+  .aside-list li:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+  .bio-content :global(h1),
+  .bio-content :global(h2),
+  .bio-content :global(h3),
+  .bio-content :global(h4) {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    letter-spacing: -0.02em;
+    margin-top: 1.8rem;
+    margin-bottom: 0.6rem;
+  }
+  .bio-content :global(p) {
+    font-size: 1.08rem;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin-bottom: 1rem;
+  }
+  .bio-content :global(ul) {
+    padding-left: 1.2rem;
+    margin-bottom: 1.2rem;
+  }
+  .bio-content :global(li) {
+    font-size: 1.04rem;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    margin-bottom: 0.4rem;
+  }
+  .bio-content :global(strong) {
+    color: var(--ink);
+  }
+
+  .profile-cal {
+    background: var(--ink);
+    color: var(--cream);
+    border-top: 2px solid var(--ink);
+  }
+  .profile-cal h2.big {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+    margin-bottom: 1rem;
+  }
+  .profile-cal h2 .serif {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--lime);
+  }
+  .profile-cal .sub {
+    font-size: 1.1rem;
+    color: rgba(247, 240, 223, 0.75);
+  }
+  .cal-wrap {
+    background: var(--cream);
+    border-radius: 24px;
+    padding: 1rem;
+    max-width: 980px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 1024px) {
+    .profile-hero-inner, .bio-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+  }
+  @media (max-width: 640px) {
+    .profile-hero { padding: 3rem 1.2rem 3rem; }
+    .section-pad { padding: 4rem 1.2rem; }
+    .profile-monogram { font-size: 7rem; }
+  }
+</style>

@@ -1,0 +1,117 @@
+---
+export interface Props {
+  href: string;
+  tag: string;
+  name: string;
+  nameItalic?: string;
+  topics: string[];
+  blurb: string;
+  color: 'lime' | 'tangerine' | 'ink' | 'cream';
+}
+const { href, tag, name, nameItalic, topics, blurb, color } = Astro.props;
+---
+<a href={href} class:list={['program-card', color]}>
+  <div class="program-tag">{tag}</div>
+  <h3>
+    {name}{nameItalic && <> <span class="serif">{nameItalic}</span></>}
+  </h3>
+  <div class="program-meta">
+    {topics.filter(Boolean).map((t) => <span>{t}</span>)}
+  </div>
+  <p>{blurb}</p>
+  <span class="program-link">Learn more →</span>
+</a>
+
+<style>
+  .program-card {
+    border: 2px solid var(--ink);
+    border-radius: 24px;
+    padding: 2rem 1.6rem 1.6rem;
+    background: var(--cream-deep);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    min-height: 400px;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .program-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+  .program-card.lime { background: var(--lime); }
+  .program-card.tangerine { background: var(--tangerine); color: var(--cream); }
+  .program-card.ink { background: var(--ink); color: var(--cream); }
+  .program-card.cream { background: var(--cream); }
+
+  .program-tag {
+    align-self: flex-start;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.7rem;
+    border: 1.5px solid currentColor;
+    border-radius: 999px;
+    opacity: 0.85;
+  }
+  .program-card h3 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 3.4rem;
+    line-height: 0.9;
+    font-weight: 700;
+    letter-spacing: -0.045em;
+    margin: 1.4rem 0 0.6rem;
+    font-variation-settings: "wdth" 85;
+  }
+  .program-card h3 .serif {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-variation-settings: normal;
+  }
+  .program-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.8rem;
+    margin-bottom: 1rem;
+    font-size: 0.82rem;
+    opacity: 0.85;
+  }
+  .program-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .program-meta span::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    background: currentColor;
+    border-radius: 50%;
+    opacity: 0.6;
+  }
+  .program-card p {
+    font-size: 0.92rem;
+    line-height: 1.5;
+    margin-bottom: 1.4rem;
+    opacity: 0.88;
+    flex-grow: 1;
+  }
+  .program-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: inherit;
+    text-decoration: none;
+    border-top: 1.5px solid currentColor;
+    padding-top: 1rem;
+    transition: gap 0.3s;
+  }
+  .program-card:hover .program-link { gap: 0.7rem; }
+</style>

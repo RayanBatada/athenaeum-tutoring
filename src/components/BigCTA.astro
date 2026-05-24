@@ -1,0 +1,98 @@
+---
+import MegaButton from './MegaButton.astro';
+export interface Props {
+  title: string;
+  subtitle: string;
+  ctaHref: string;
+  ctaLabel: string;
+}
+const { title, subtitle, ctaHref, ctaLabel } = Astro.props;
+---
+<section class="big-cta">
+  <h2 class="reveal" set:html={title} />
+  <p class="reveal">{subtitle}</p>
+  <div class="reveal cta-btn-wrap">
+    <MegaButton href={ctaHref} variant="ink">{ctaLabel}</MegaButton>
+  </div>
+  <div class="big-cta-foot reveal">
+    <div><span class="check">✓</span> One-on-one attention</div>
+    <div><span class="check">✓</span> Live + recorded</div>
+    <div><span class="check">✓</span> First-week refund</div>
+  </div>
+</section>
+
+<style>
+  .big-cta {
+    background: var(--lime);
+    padding: 6rem 2rem 7rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-top: 2px solid var(--ink);
+  }
+  .big-cta::before, .big-cta::after {
+    content: "★";
+    position: absolute;
+    color: var(--ink);
+    font-size: 8rem;
+    opacity: 0.15;
+    pointer-events: none;
+  }
+  .big-cta::before { top: 10%; left: 5%; transform: rotate(-15deg); }
+  .big-cta::after { bottom: 10%; right: 5%; transform: rotate(20deg); }
+
+  .big-cta h2 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: clamp(2.5rem, 8vw, 7rem);
+    line-height: 0.9;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    font-variation-settings: "wdth" 85;
+    margin-bottom: 1.5rem;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .big-cta h2 :global(.serif) {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-variation-settings: normal;
+  }
+  .big-cta p {
+    font-size: 1.2rem;
+    color: var(--ink-soft);
+    max-width: 580px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.5;
+  }
+  .cta-btn-wrap {
+    display: inline-block;
+  }
+  .big-cta-foot {
+    margin-top: 2rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 1.3rem;
+    font-size: 0.9rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .big-cta-foot div {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .big-cta-foot .check {
+    width: 18px;
+    height: 18px;
+    background: var(--ink);
+    color: var(--lime);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
+</style>

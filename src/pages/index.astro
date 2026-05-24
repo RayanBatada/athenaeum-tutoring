@@ -1,0 +1,293 @@
+---
+import { getCollection } from 'astro:content';
+import PageLayout from '../layouts/PageLayout.astro';
+import Hero from '../components/Hero.astro';
+import Marquee from '../components/Marquee.astro';
+import Eyebrow from '../components/Eyebrow.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import FeatureCard from '../components/FeatureCard.astro';
+import HowCard from '../components/HowCard.astro';
+import TutorCard from '../components/TutorCard.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
+import BigCTA from '../components/BigCTA.astro';
+import MegaButton from '../components/MegaButton.astro';
+
+import { services } from '../data/services';
+import { homepageFAQs } from '../data/faqs';
+import { reasons } from '../data/why-different';
+import { url } from '../lib/url';
+
+const tutors = (await getCollection('tutors')).slice(0, 4);
+
+const includedItems = [
+  { icon: '1', title: 'One-on-one',   serif: 'sessions',              body: 'Every session is yours. No cohorts. Two live online sessions a week is most common, with adjustments to fit your schedule.', color: 'lime' as const },
+  { icon: 'R', title: 'Recorded for', serif: 'review',                body: 'Every session is recorded and kept in your portal. Miss a session, rewatch a tough unit, or come back during exam week.',     color: 'tangerine' as const },
+  { icon: 'C', title: 'Custom lesson',serif: 'plans',                 body: 'A diagnostic week determines the gaps. The weekly plan adapts to your scores and pace. No cookie-cutter curriculum.',     color: 'cream' as const },
+  { icon: 'H', title: 'Weekly',       serif: 'homework with feedback',body: 'Targeted problem sets each week. Reviewed by your tutor personally, not auto-graded. Feedback that actually moves the score.', color: 'tangerine' as const },
+  { icon: 'O', title: 'Office',       serif: 'hours + async',         body: 'Drop-in office hours plus async messaging with your tutor for anything that did not click between sessions.',              color: 'cream' as const },
+  { icon: 'M', title: 'A test-day',   serif: 'strategy session',      body: 'Right before the exam, a dedicated session on pacing, recovery from a hard question, and the mindset to walk in calm.', color: 'lime' as const },
+];
+
+const teaserReasons = [
+  reasons.find((r) => r.pillar === 'Talent')!,
+  reasons.find((r) => r.pillar === 'Method')!,
+  reasons.find((r) => r.pillar === 'Trust')!,
+];
+---
+<PageLayout title="Athenaeum — 1-on-1 test prep & college counseling, taught by Ivy League minds.">
+  <Hero />
+  <Marquee />
+
+  <!-- Services -->
+  <section class="section-pad" id="services">
+    <div class="reveal">
+      <Eyebrow text="Services" />
+      <SectionTitle subtitle="One-on-one prep tailored to the test (or college list) your student is actually facing.">
+        Pick your <span class="serif">test.</span> Pick your <span class="serif">tutor.</span>
+      </SectionTitle>
+    </div>
+    <div class="programs-grid reveal">
+      {services.map((s) => (
+        <ServiceCard
+          href={url(`/${s.slug}`)}
+          tag={s.cadence}
+          name={s.name === 'College Counseling' ? 'College' : s.name}
+          nameItalic={s.name === 'College Counseling' ? 'Counseling' : (s.slug === 'ap' ? 'Classes' : undefined)}
+          topics={[s.topics.slice(0, 2).join(' · '), s.topics.slice(2, 4).join(' · ')].filter(Boolean)}
+          blurb={s.blurb}
+          color={s.cardColor}
+        />
+      ))}
+    </div>
+  </section>
+
+  <!-- What's Included -->
+  <section class="included">
+    <div class="included-inner">
+      <div class="reveal" style="margin-bottom: 3rem;">
+        <Eyebrow text="What's Included" variant="lime-on-ink" />
+        <SectionTitle subtitle="Not just sessions. A complete structure to keep your student progressing every week.">
+          Every package comes <span class="serif">fully loaded.</span>
+        </SectionTitle>
+      </div>
+      <div class="included-grid reveal">
+        {includedItems.map((item) => (
+          <FeatureCard
+            icon={item.icon}
+            title={item.title}
+            titleSerif={item.serif}
+            description={item.body}
+            iconColor={item.color}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="how section-pad" id="how">
+    <div class="reveal" style="text-align:center; max-width:700px; margin: 0 auto 4rem;">
+      <Eyebrow text="How it works" />
+      <SectionTitle>From first consult to <span class="serif">test day.</span></SectionTitle>
+    </div>
+    <div class="how-grid reveal">
+      <HowCard num={1} numColor="ink"       title="Free 30-min" titleSerif="consult" description="A quick call: what test, current level, target score, timeline. We recommend the right tutor match." />
+      <HowCard num={2} numColor="lime"      title="Get matched with" titleSerif="your tutor" description="Within a week of the consult, you'll meet your tutor and start the diagnostic week." />
+      <HowCard num={3} numColor="tangerine" title="Weekly 1-on-1s," titleSerif="practice, exam day" description="Weekly sessions, hand-graded homework, regular practice tests, and a test-day strategy session." />
+    </div>
+    <div class="how-cta">
+      <MegaButton href={url('/book')}>Schedule Your Free Consult</MegaButton>
+    </div>
+  </section>
+
+  <!-- Tutor preview -->
+  <section class="section-pad" id="instructors">
+    <div class="reveal">
+      <Eyebrow text="The Faculty" />
+      <SectionTitle subtitle="Every tutor is a current Ivy League or peer-university student who scored at the top of the exam they teach.">
+        Taught by people who <span class="serif">recently sat</span> these exams.
+      </SectionTitle>
+    </div>
+    <div class="tutors-grid reveal">
+      {tutors.map((t) => (
+        <TutorCard
+          href={url(`/tutors/${t.id}`)}
+          monogram={t.data.monogram}
+          school={`${t.data.school} ${t.data.classYear}`}
+          name={t.data.name.split(' ')[0]}
+          nameItalic={t.data.name.split(' ').slice(1).join(' ')}
+          subjectsLine={t.data.subjects.slice(0, 3).join(' · ')}
+          gradient={t.data.cardGradient}
+        />
+      ))}
+    </div>
+    <div style="text-align:center; margin-top: 3rem;">
+      <a href={url('/tutors')} class="see-all">See all tutors →</a>
+    </div>
+  </section>
+
+  <!-- Why Different teaser -->
+  <section class="why-teaser section-pad">
+    <div class="reveal">
+      <Eyebrow text="Why Athenaeum" variant="lime-on-ink" />
+      <SectionTitle subtitle="Three things that make the difference. The full list is on the Why Different page.">
+        Built around the <span class="serif">student</span>, not the syllabus.
+      </SectionTitle>
+    </div>
+    <div class="why-teaser-grid reveal">
+      {teaserReasons.map((r) => (
+        <div class="why-teaser-card">
+          <div class:list={['why-teaser-icon', r.iconColor]}>{r.iconLetter}</div>
+          <h4>
+            {r.title}{r.titleSerif && <> <span class="serif">{r.titleSerif}</span></>}
+          </h4>
+          <p>{r.body}</p>
+        </div>
+      ))}
+    </div>
+    <div style="text-align:center; margin-top: 3rem;">
+      <a href={url('/why-different')} class="see-all">See all 12 reasons →</a>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section-pad">
+    <div class="reveal" style="text-align:center; margin-bottom: 3rem;">
+      <Eyebrow text="FAQ" />
+      <SectionTitle>Common <span class="serif">questions.</span></SectionTitle>
+    </div>
+    <div class="reveal">
+      <FAQAccordion items={homepageFAQs} />
+    </div>
+  </section>
+
+  <!-- Big CTA -->
+  <BigCTA
+    title='Reserve your <span class="serif">free</span> consult.'
+    subtitle="A 30-minute call covers your timeline, target score, and tutor match. No commitment."
+    ctaHref={url('/book')}
+    ctaLabel="Schedule Free Consult"
+  />
+</PageLayout>
+
+<style>
+  section { position: relative; z-index: 2; }
+  .section-pad { padding: 6rem 2rem; max-width: 1400px; margin: 0 auto; }
+
+  .programs-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.2rem;
+  }
+
+  .included {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 6rem 2rem;
+    border-top: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+  }
+  .included-inner { max-width: 1400px; margin: 0 auto; }
+  .included-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  .included :global(.section-title) { color: var(--cream); }
+  .included :global(.section-title .serif) { color: var(--lime); }
+  .included :global(.section-sub) { color: rgba(247, 240, 223, 0.7); }
+
+  .how { background: var(--cream-deep); }
+  .how-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .how-cta { text-align: center; margin-top: 3.5rem; }
+
+  .tutors-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.2rem;
+  }
+  .see-all {
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: 0.2rem;
+  }
+  .see-all:hover {
+    color: var(--tangerine);
+    border-color: var(--tangerine);
+  }
+
+  .why-teaser {
+    background: var(--ink);
+    color: var(--cream);
+    border-top: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+  }
+  .why-teaser :global(.section-title) { color: var(--cream); }
+  .why-teaser :global(.section-title .serif) { color: var(--lime); }
+  .why-teaser :global(.section-sub) { color: rgba(247, 240, 223, 0.7); }
+  .why-teaser :global(.see-all) { color: var(--lime); border-bottom-color: var(--lime); }
+  .why-teaser :global(.see-all:hover) { color: var(--tangerine); border-color: var(--tangerine); }
+  .why-teaser-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .why-teaser-card {
+    border: 1px solid rgba(247, 240, 223, 0.18);
+    border-radius: 20px;
+    padding: 1.8rem;
+  }
+  .why-teaser-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.2rem;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+  }
+  .why-teaser-icon.lime { background: var(--lime); color: var(--ink); }
+  .why-teaser-icon.tangerine { background: var(--tangerine); color: var(--cream); }
+  .why-teaser-icon.cream { background: var(--cream); color: var(--ink); }
+  .why-teaser-card h4 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 0.6rem;
+    color: var(--cream);
+  }
+  .why-teaser-card h4 .serif {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--lime);
+  }
+  .why-teaser-card p {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: rgba(247, 240, 223, 0.75);
+  }
+
+  @media (max-width: 1024px) {
+    .programs-grid, .tutors-grid { grid-template-columns: repeat(2, 1fr); }
+    .how-grid, .included-grid, .why-teaser-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .section-pad { padding: 4rem 1.2rem; }
+    .programs-grid, .tutors-grid { grid-template-columns: 1fr; }
+  }
+</style>

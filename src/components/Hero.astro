@@ -1,0 +1,164 @@
+---
+import MegaButton from './MegaButton.astro';
+import GhostButton from './GhostButton.astro';
+import HeroStatCard from './HeroStatCard.astro';
+import { url } from '../lib/url';
+---
+<section class="hero">
+  <div class="hero-pill">
+    <span class="pulse"></span>
+    <span>One-on-one online sessions · Top-1% Ivy League tutors</span>
+  </div>
+
+  <h1>
+    Test prep<br />
+    & college counseling,<br />
+    taught by <span class="serif">Ivy League</span> <span class="highlight">minds.</span>
+  </h1>
+
+  <div class="hero-row">
+    <div>
+      <p class="hero-sub">
+        One-on-one classes for <strong>AP, SAT, ACT &amp; college counseling</strong> taught by tutors from Harvard, Yale, Princeton, and Columbia. Live online. Recorded for review. Built around your student.
+      </p>
+
+      <div class="hero-cta">
+        <MegaButton href={url('/book')}>Schedule Free Consult</MegaButton>
+        <GhostButton href={url('/tutors')}>Browse Tutors</GhostButton>
+      </div>
+
+      <div class="hero-trust">
+        <span>✓ One-on-one attention</span>
+        <span class="serif">·</span>
+        <span>✓ Live + recorded</span>
+        <span class="serif">·</span>
+        <span>✓ First-week money-back</span>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <HeroStatCard variant="lime" text="One-on-one attention. Every session built around your student.">
+        <span slot="num">1:1</span>
+      </HeroStatCard>
+      <HeroStatCard variant="ink" text="Attend live or rewatch on demand. Every session is yours to keep.">
+        <span slot="num">Live<span class="serif">+</span><span class="small">recorded</span></span>
+      </HeroStatCard>
+      <HeroStatCard variant="tangerine" text="Tutors from Harvard, Yale, Princeton, Columbia &amp; beyond.">
+        <span slot="num">Ivy<span class="serif">League</span></span>
+      </HeroStatCard>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding: 5rem 2rem 4rem;
+    position: relative;
+    z-index: 2;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .hero-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--ink);
+    color: var(--cream);
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.8s 0.1s both;
+  }
+  .hero-pill .pulse {
+    width: 7px;
+    height: 7px;
+    background: var(--lime);
+    border-radius: 50%;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  .hero h1 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: clamp(3rem, 9vw, 8.5rem);
+    line-height: 0.88;
+    font-weight: 700;
+    letter-spacing: -0.045em;
+    margin-bottom: 2.5rem;
+    font-variation-settings: "wdth" 85;
+    animation: fadeUp 1s 0.2s both;
+  }
+  .hero h1 .serif {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    font-variation-settings: normal;
+  }
+  .hero h1 .highlight {
+    position: relative;
+    display: inline-block;
+    z-index: 1;
+    padding: 0 0.15em;
+  }
+  .hero h1 .highlight::before {
+    content: "";
+    position: absolute;
+    inset: 0.12em -0.05em 0.18em;
+    background: var(--lime);
+    z-index: -1;
+    transform: skew(-3deg);
+    animation: highlightIn 0.9s 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+    transform-origin: left;
+  }
+
+  .hero-row {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 4rem;
+    align-items: end;
+  }
+  .hero-sub {
+    font-size: 1.25rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 540px;
+    margin-bottom: 2rem;
+    animation: fadeUp 1s 0.4s both;
+  }
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    animation: fadeUp 1s 0.5s both;
+  }
+  .hero-trust {
+    margin-top: 1.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+    animation: fadeUp 1s 0.7s both;
+    flex-wrap: wrap;
+  }
+  .hero-trust .serif {
+    color: var(--ink);
+    font-size: 1rem;
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+  }
+  .hero-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    animation: fadeUp 1.2s 0.6s both;
+  }
+
+  @media (max-width: 1024px) {
+    .hero-row { grid-template-columns: 1fr; gap: 3rem; }
+  }
+  @media (max-width: 640px) {
+    .hero { padding: 3rem 1.2rem 3rem; }
+  }
+</style>
