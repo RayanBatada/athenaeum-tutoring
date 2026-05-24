@@ -1,6 +1,5 @@
 ---
 export interface Props {
-  href: string;
   monogram: string;
   school: string;
   name: string;
@@ -8,16 +7,16 @@ export interface Props {
   subjectsLine: string;
   gradient: 'lime' | 'tangerine' | 'plum' | 'ink';
 }
-const { href, monogram, school, name, nameItalic, subjectsLine, gradient } = Astro.props;
+const { monogram, school, name, nameItalic, subjectsLine, gradient } = Astro.props;
 ---
-<a href={href} class="tutor">
+<div class="tutor">
   <div class:list={['tutor-photo', gradient]}>
     <div class="tutor-monogram">{monogram}</div>
     <div class="tutor-school-tag">{school}</div>
   </div>
   <div class="tutor-name">{name} <span class="serif">{nameItalic}</span></div>
   <div class="tutor-subject">{subjectsLine}</div>
-</a>
+</div>
 
 <style>
   .tutor {

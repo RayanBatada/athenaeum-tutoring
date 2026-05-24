@@ -1,0 +1,70 @@
+---
+import PageLayout from '../../layouts/v2/PageLayout.astro';
+import CalEmbed from '../../components/CalEmbed.astro';
+import { site } from '../../data/site';
+---
+<PageLayout title="Book — Athenaeum" description="Schedule a free 30-min consult.">
+  <section class="book-hero">
+    <div class="v2-reveal">
+      <span class="pill">Book your seat</span>
+      <h1>A free 30-minute consult.</h1>
+      <p>Tell us your timeline, target score, and the subjects you're focused on. We'll review fit and recommend the right plan.</p>
+    </div>
+  </section>
+
+  <section class="cal-section v2-reveal">
+    <div class="cal-card">
+      <CalEmbed calLink={site.consultCalLink} embedId="cal-v2-consult" namespace="v2consult" />
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .book-hero {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 6rem 2rem 3rem;
+    text-align: center;
+  }
+  .pill {
+    display: inline-block;
+    background: var(--v2-bg-subtle);
+    border: 1px solid var(--v2-border);
+    color: var(--v2-text-muted);
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 1.4rem;
+  }
+  .book-hero h1 {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 1.1rem;
+  }
+  .book-hero p {
+    font-size: 1.1rem;
+    color: var(--v2-text-muted);
+    line-height: 1.55;
+  }
+  .cal-section {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 2rem 2rem 6rem;
+  }
+  .cal-card {
+    background: var(--v2-bg);
+    border: 1px solid var(--v2-border);
+    border-radius: 16px;
+    padding: 0.8rem;
+    box-shadow: 0 4px 24px -12px rgba(10, 37, 64, 0.08);
+  }
+  @media (max-width: 640px) {
+    .book-hero { padding: 4rem 1.2rem 2rem; }
+    .cal-section { padding: 1rem 1.2rem 4rem; }
+  }
+</style>

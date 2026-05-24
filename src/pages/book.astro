@@ -1,144 +1,28 @@
 ---
-import { getCollection } from 'astro:content';
 import PageLayout from '../layouts/PageLayout.astro';
 import Eyebrow from '../components/Eyebrow.astro';
 import CalEmbed from '../components/CalEmbed.astro';
 import { site } from '../data/site';
-
-const tutors = await getCollection('tutors');
 ---
-<PageLayout title="Book — Athenaeum" description="Schedule a free 30-min consult or your first lesson.">
+<PageLayout title="Book a Free Consult — Athenaeum" description="Schedule a free 30-min consult.">
   <section class="book-hero section-pad">
     <div class="reveal" style="text-align:center; max-width: 800px; margin: 0 auto;">
       <Eyebrow text="Book your seat" />
       <h1 class="book-title">
-        Start with a <span class="serif">free consult,</span><br />
-        or jump straight to a <span class="serif">first lesson.</span>
+        A free <span class="serif">30-minute</span> consult.
       </h1>
       <p class="book-sub">
-        The free 30-minute consult is the matching call. If you already know who you want to work with, book directly with that tutor.
+        Tell us about your timeline, target score, and the subjects you're focused on. We'll review fit and recommend the right plan.
       </p>
-    </div>
-
-    <div class="tabs reveal" id="bookTabs" role="tablist">
-      <button class="tab active" data-tab="consult" role="tab" type="button">Free 30-min Consult</button>
-      <button class="tab" data-tab="lesson" role="tab" type="button">Schedule a First Lesson</button>
     </div>
   </section>
 
-  <!-- Consult panel -->
-  <section class="book-panel section-pad" data-panel="consult">
-    <div class="reveal" style="text-align:center; max-width: 700px; margin: 0 auto 3rem;">
-      <h2 class="panel-title">A free 30-min <span class="serif">diagnostic call.</span></h2>
-      <p class="panel-sub">Tell us about your timeline, target score, and the subjects you're focused on. We'll match you with the right tutor.</p>
-    </div>
+  <section class="book-panel section-pad">
     <div class="cal-wrap reveal">
       <CalEmbed calLink={site.consultCalLink} embedId="cal-consult" namespace="consult" />
     </div>
   </section>
-
-  <!-- Lesson panel -->
-  <section class="book-panel hidden section-pad" data-panel="lesson">
-    <div class="reveal" style="text-align:center; max-width: 700px; margin: 0 auto 3rem;">
-      <h2 class="panel-title">Pick your <span class="serif">tutor.</span></h2>
-      <p class="panel-sub">Choose a tutor below, then pick a time for your first paid lesson directly on their calendar.</p>
-    </div>
-    <div class="tutor-picker reveal" id="tutorPicker">
-      {tutors.map((t) => (
-        <button
-          class="picker-card"
-          data-tutor-slug={t.id}
-          data-cal-link={t.data.calLinks.firstLesson}
-          data-namespace={`lesson-${t.id}`}
-          type="button"
-        >
-          <div class:list={['picker-photo', t.data.cardGradient]}>
-            <div class="picker-monogram">{t.data.monogram}</div>
-            <div class="picker-school">{t.data.school} {t.data.classYear}</div>
-          </div>
-          <div class="picker-name">{t.data.name}</div>
-          <div class="picker-subjects">{t.data.subjects.slice(0, 3).join(' · ')}</div>
-        </button>
-      ))}
-    </div>
-
-    <div class="lesson-cal-wrap reveal" id="lessonCalWrap" style="display:none;">
-      <div id="lesson-cal-embed" style="min-height: 700px; width: 100%;"></div>
-    </div>
-  </section>
 </PageLayout>
-
-<script is:inline>
-  (() => {
-    const params = new URLSearchParams(window.location.search);
-    const initialType = params.get('type') === 'lesson' ? 'lesson' : 'consult';
-    const initialTutor = params.get('tutor');
-
-    const tabs = document.querySelectorAll('#bookTabs .tab');
-    const panels = document.querySelectorAll('[data-panel]');
-
-    function setTab(name) {
-      tabs.forEach((t) => t.classList.toggle('active', t.dataset.tab === name));
-      panels.forEach((p) => p.classList.toggle('hidden', p.dataset.panel !== name));
-      const url = new URL(window.location.href);
-      url.searchParams.set('type', name);
-      window.history.replaceState({}, '', url);
-    }
-
-    tabs.forEach((t) => t.addEventListener('click', () => setTab(t.dataset.tab)));
-
-    const pickerCards = document.querySelectorAll('.picker-card');
-    const lessonWrap = document.getElementById('lessonCalWrap');
-    const lessonEmbed = document.getElementById('lesson-cal-embed');
-
-    function loadTutorCal(calLink, namespace) {
-      // Cal is already bootstrapped by the consult CalEmbed inline script.
-      // If for some reason it isn't, the bootstrap is idempotent.
-      if (typeof window.Cal === 'undefined') {
-        console.warn('Cal.com bootstrap not loaded yet; deferring');
-        setTimeout(() => loadTutorCal(calLink, namespace), 200);
-        return;
-      }
-
-      // Clear any prior embed
-      lessonEmbed.innerHTML = '';
-
-      window.Cal('init', namespace, { origin: 'https://app.cal.com' });
-      window.Cal.ns[namespace]('inline', {
-        elementOrSelector: '#lesson-cal-embed',
-        config: { layout: 'month_view' },
-        calLink,
-      });
-      window.Cal.ns[namespace]('ui', {
-        cssVarsPerTheme: { light: { 'cal-brand': '#d4f04a' } },
-        hideEventTypeDetails: false,
-        layout: 'month_view',
-      });
-
-      lessonWrap.style.display = '';
-      setTimeout(() => lessonWrap.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
-    }
-
-    pickerCards.forEach((card) => {
-      card.addEventListener('click', () => {
-        pickerCards.forEach((c) => c.classList.toggle('selected', c === card));
-        loadTutorCal(card.dataset.calLink, card.dataset.namespace);
-        const url = new URL(window.location.href);
-        url.searchParams.set('tutor', card.dataset.tutorSlug);
-        window.history.replaceState({}, '', url);
-      });
-    });
-
-    setTab(initialType);
-    if (initialType === 'lesson' && initialTutor) {
-      const match = document.querySelector(`.picker-card[data-tutor-slug="${initialTutor}"]`);
-      if (match) {
-        // Defer to let the Cal bootstrap settle
-        setTimeout(() => match.click(), 250);
-      }
-    }
-  })();
-</script>
 
 <style>
   .book-hero {
@@ -168,59 +52,11 @@ const tutors = await getCollection('tutors');
     color: var(--ink-soft);
     text-align: center;
     line-height: 1.5;
-    margin-bottom: 3rem;
-  }
-  .tabs {
-    display: flex;
-    gap: 0.5rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  .tab {
-    border: 2px solid var(--ink);
-    background: transparent;
-    color: var(--ink);
-    padding: 0.9rem 1.6rem;
-    border-radius: 999px;
-    font-family: 'Bricolage Grotesque', sans-serif;
-    font-weight: 600;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.25s;
-  }
-  .tab:hover {
-    background: var(--ink);
-    color: var(--cream);
-  }
-  .tab.active {
-    background: var(--lime);
-    color: var(--ink);
-    box-shadow: 4px 4px 0 var(--ink);
-  }
-
-  section { position: relative; z-index: 2; }
-  .section-pad { padding: 5rem 2rem; max-width: 1400px; margin: 0 auto; }
-  .hidden { display: none; }
-
-  .panel-title {
-    font-family: 'Bricolage Grotesque', sans-serif;
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    line-height: 0.95;
     margin-bottom: 1rem;
   }
-  .panel-title .serif {
-    font-family: 'Instrument Serif', serif;
-    font-style: italic;
-    font-weight: 400;
-    color: var(--tangerine);
-  }
-  .panel-sub {
-    font-size: 1.1rem;
-    color: var(--ink-soft);
-    line-height: 1.5;
-  }
+  section { position: relative; z-index: 2; }
+  .section-pad { padding: 5rem 2rem; max-width: 1400px; margin: 0 auto; }
+
   .cal-wrap {
     background: var(--cream-deep);
     border: 2px solid var(--ink);
@@ -229,91 +65,8 @@ const tutors = await getCollection('tutors');
     max-width: 980px;
     margin: 0 auto;
   }
-  .lesson-cal-wrap {
-    margin-top: 3rem;
-    background: var(--cream-deep);
-    border: 2px solid var(--ink);
-    border-radius: 24px;
-    padding: 1rem;
-    max-width: 980px;
-    margin-left: auto;
-    margin-right: auto;
-  }
 
-  .tutor-picker {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-  }
-  .picker-card {
-    text-align: left;
-    background: transparent;
-    border: 2px solid var(--ink);
-    border-radius: 20px;
-    padding: 1rem;
-    cursor: pointer;
-    transition: all 0.25s;
-    color: inherit;
-    font-family: inherit;
-  }
-  .picker-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 4px 4px 0 var(--ink);
-  }
-  .picker-card.selected {
-    background: var(--lime);
-    border-color: var(--lime);
-    box-shadow: 4px 4px 0 var(--ink);
-  }
-  .picker-photo {
-    aspect-ratio: 4/5;
-    border-radius: 14px;
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 0.8rem;
-    border: 1.5px solid var(--ink);
-  }
-  .picker-photo.lime { background: linear-gradient(135deg, var(--lime), #a8c93a); color: var(--ink); }
-  .picker-photo.tangerine { background: linear-gradient(135deg, var(--tangerine), #c84618); color: var(--cream); }
-  .picker-photo.plum { background: linear-gradient(135deg, var(--plum), #1a0e2e); color: var(--cream); }
-  .picker-photo.ink { background: linear-gradient(135deg, var(--ink), #2a2a2a); color: var(--cream); }
-  .picker-monogram {
-    font-family: 'Bricolage Grotesque', sans-serif;
-    font-size: 3rem;
-    font-weight: 700;
-    letter-spacing: -0.04em;
-  }
-  .picker-school {
-    position: absolute;
-    bottom: 0.6rem;
-    left: 0.6rem;
-    background: var(--ink);
-    color: var(--lime);
-    padding: 0.25rem 0.6rem;
-    border-radius: 999px;
-    font-size: 0.7rem;
-    font-weight: 600;
-  }
-  .picker-name {
-    font-family: 'Bricolage Grotesque', sans-serif;
-    font-weight: 700;
-    font-size: 1.1rem;
-    letter-spacing: -0.02em;
-  }
-  .picker-subjects {
-    font-size: 0.82rem;
-    color: var(--ink-faint);
-    margin-top: 0.2rem;
-  }
-
-  @media (max-width: 1024px) {
-    .tutor-picker { grid-template-columns: repeat(2, 1fr); }
-  }
   @media (max-width: 640px) {
-    .tutor-picker { grid-template-columns: 1fr; }
     .book-hero, .section-pad { padding: 4rem 1.2rem; }
   }
 </style>

@@ -1,0 +1,110 @@
+---
+import { url } from '../../lib/url';
+---
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand-block">
+      <a href={url('/v2/')} class="footer-brand">
+        <span class="brand-mark"></span>
+        Athenaeum
+      </a>
+      <p class="footer-tag">One-on-one test prep & college counseling, taught by Ivy League tutors.</p>
+    </div>
+
+    <div class="footer-links">
+      <div>
+        <h4>Services</h4>
+        <a href={url('/v2/#services')}>AP</a>
+        <a href={url('/v2/#services')}>SAT</a>
+        <a href={url('/v2/#services')}>ACT</a>
+        <a href={url('/v2/#services')}>College Counseling</a>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <a href={url('/v2/#approach')}>Approach</a>
+        <a href={url('/v2/#faculty')}>Faculty</a>
+        <a href={url('/v2/#faq')}>FAQ</a>
+        <a href={url('/v2/book/')}>Book a Consult</a>
+      </div>
+      <div>
+        <h4>Get in touch</h4>
+        <a href="mailto:hello@athenaeum.co">hello@athenaeum.co</a>
+        <a href={url('/privacy')}>Privacy</a>
+        <a href={url('/terms')}>Terms</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 Athenaeum & Co.</div>
+</footer>
+
+<style>
+  footer {
+    background: var(--v2-bg-subtle);
+    border-top: 1px solid var(--v2-border);
+    padding: 4.5rem 2.5rem 2rem;
+    color: var(--v2-text);
+  }
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.5fr 2fr;
+    gap: 4rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--v2-border);
+  }
+  .footer-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    letter-spacing: -0.025em;
+    color: var(--v2-text);
+    margin-bottom: 0.8rem;
+  }
+  .brand-mark {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    background: linear-gradient(135deg, var(--v2-accent) 0%, #8b85ff 100%);
+  }
+  .footer-tag {
+    color: var(--v2-text-muted);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    max-width: 340px;
+  }
+  .footer-links {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+  }
+  .footer-links h4 {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--v2-text-faint);
+    margin-bottom: 1rem;
+  }
+  .footer-links a {
+    display: block;
+    color: var(--v2-text-muted);
+    font-size: 0.92rem;
+    margin-bottom: 0.55rem;
+    transition: color 0.15s;
+  }
+  .footer-links a:hover { color: var(--v2-text); }
+  .footer-bottom {
+    max-width: 1200px;
+    margin: 2rem auto 0;
+    color: var(--v2-text-faint);
+    font-size: 0.85rem;
+  }
+  @media (max-width: 768px) {
+    .footer-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .footer-links { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  }
+</style>

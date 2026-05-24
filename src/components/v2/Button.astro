@@ -1,0 +1,56 @@
+---
+export interface Props {
+  href: string;
+  variant?: 'primary' | 'outline' | 'subtle';
+  size?: 'md' | 'lg';
+}
+const { href, variant = 'primary', size = 'md' } = Astro.props;
+---
+<a href={href} class:list={['v2-btn', variant, size]}>
+  <slot />
+</a>
+
+<style>
+  .v2-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.15s cubic-bezier(0.22, 1, 0.36, 1);
+    border: 1px solid transparent;
+  }
+  .v2-btn.md { padding: 0.65rem 1.1rem; font-size: 0.95rem; }
+  .v2-btn.lg { padding: 0.95rem 1.5rem; font-size: 1.05rem; }
+
+  .v2-btn.primary {
+    background: var(--v2-bg-dark);
+    color: var(--v2-bg);
+    border-color: var(--v2-bg-dark);
+  }
+  .v2-btn.primary:hover {
+    background: #08243d;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px -8px rgba(10, 37, 64, 0.4);
+  }
+
+  .v2-btn.outline {
+    background: transparent;
+    color: var(--v2-text);
+    border-color: var(--v2-border-strong);
+  }
+  .v2-btn.outline:hover {
+    border-color: var(--v2-text);
+    background: var(--v2-bg-subtle);
+  }
+
+  .v2-btn.subtle {
+    background: var(--v2-bg-subtle);
+    color: var(--v2-text);
+  }
+  .v2-btn.subtle:hover { background: var(--v2-border); }
+</style>

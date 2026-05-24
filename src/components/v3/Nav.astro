@@ -1,0 +1,99 @@
+---
+import { url } from '../../lib/url';
+
+const links = [
+  { href: url('/v3/#services'), label: 'Curriculum' },
+  { href: url('/v3/#approach'), label: 'Approach' },
+  { href: url('/v3/#faculty'),  label: 'Faculty' },
+  { href: url('/v3/#faq'),      label: 'Inquiries' },
+];
+---
+<nav>
+  <a href={url('/v3/')} class="brand">
+    <span class="brand-emblem">A</span>
+    <span class="brand-name">Athenaeum</span>
+  </a>
+  <ul class="nav-links">
+    {links.map((link) => (
+      <li><a href={link.href}>{link.label}</a></li>
+    ))}
+  </ul>
+  <a href={url('/v3/book/')} class="nav-cta">Apply for Consultation</a>
+</nav>
+
+<style>
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 1.4rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(13, 20, 38, 0.85);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid var(--v3-border);
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    color: var(--v3-text);
+  }
+  .brand-emblem {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border: 1.5px solid var(--v3-gold);
+    color: var(--v3-gold);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.3rem;
+    border-radius: 50%;
+  }
+  .brand-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.55rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2.2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Lora', serif;
+    color: var(--v3-text-muted);
+    font-size: 0.92rem;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover {
+    color: var(--v3-gold);
+  }
+  .nav-cta {
+    border: 1px solid var(--v3-gold);
+    color: var(--v3-gold);
+    padding: 0.65rem 1.3rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  .nav-cta:hover {
+    background: var(--v3-gold);
+    color: var(--v3-bg);
+  }
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.2rem; }
+    .nav-links { display: none; }
+  }
+</style>

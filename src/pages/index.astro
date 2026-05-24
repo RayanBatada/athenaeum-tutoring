@@ -112,7 +112,6 @@ const teaserReasons = [
     <div class="tutors-grid reveal">
       {tutors.map((t) => (
         <TutorCard
-          href={url(`/tutors/${t.id}`)}
           monogram={t.data.monogram}
           school={`${t.data.school} ${t.data.classYear}`}
           name={t.data.name.split(' ')[0]}
@@ -121,9 +120,6 @@ const teaserReasons = [
           gradient={t.data.cardGradient}
         />
       ))}
-    </div>
-    <div style="text-align:center; margin-top: 3rem;">
-      <a href={url('/tutors')} class="see-all">See all tutors →</a>
     </div>
   </section>
 

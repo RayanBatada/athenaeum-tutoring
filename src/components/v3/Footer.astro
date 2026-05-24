@@ -1,0 +1,147 @@
+---
+import { url } from '../../lib/url';
+---
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand-block">
+      <div class="brand">
+        <span class="brand-emblem">A</span>
+        <span class="brand-name">Athenaeum</span>
+      </div>
+      <p class="footer-motto">
+        <em>per aspera ad astra.</em>
+      </p>
+      <p class="footer-tag">
+        One-on-one preparation for the boards that decide your trajectory. Taught live by Ivy League scholars.
+      </p>
+    </div>
+
+    <div class="footer-links">
+      <div>
+        <h4>Curriculum</h4>
+        <a href={url('/v3/#services')}>AP Examinations</a>
+        <a href={url('/v3/#services')}>SAT</a>
+        <a href={url('/v3/#services')}>ACT</a>
+        <a href={url('/v3/#services')}>College Counsel</a>
+      </div>
+      <div>
+        <h4>The Society</h4>
+        <a href={url('/v3/#approach')}>Approach</a>
+        <a href={url('/v3/#faculty')}>Faculty</a>
+        <a href={url('/v3/book/')}>Apply for Consultation</a>
+      </div>
+      <div>
+        <h4>Correspondence</h4>
+        <a href="mailto:hello@athenaeum.co">hello@athenaeum.co</a>
+        <a href={url('/privacy')}>Privacy</a>
+        <a href={url('/terms')}>Terms</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="rule"></span>
+    <span><em>MMXXVI</em> · Athenaeum & Co. · All rights reserved.</span>
+  </div>
+</footer>
+
+<style>
+  footer {
+    background: var(--v3-bg-deep);
+    border-top: 1px solid var(--v3-border-gold);
+    padding: 5rem 2.5rem 2.5rem;
+    color: var(--v3-text);
+    position: relative;
+    z-index: 2;
+  }
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.4fr 2fr;
+    gap: 4rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--v3-border);
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-bottom: 1rem;
+  }
+  .brand-emblem {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1.5px solid var(--v3-gold);
+    color: var(--v3-gold);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.55rem;
+    border-radius: 50%;
+  }
+  .brand-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.9rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  .footer-motto {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--v3-gold);
+    font-size: 1.05rem;
+    margin-bottom: 0.8rem;
+  }
+  .footer-tag {
+    color: var(--v3-text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: 360px;
+  }
+  .footer-links {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+  }
+  .footer-links h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--v3-gold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .footer-links a {
+    display: block;
+    color: var(--v3-text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 0.6rem;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover {
+    color: var(--v3-gold);
+  }
+  .footer-bottom {
+    max-width: 1200px;
+    margin: 2rem auto 0;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--v3-text-faint);
+    letter-spacing: 0.04em;
+  }
+  .footer-bottom em { color: var(--v3-gold); }
+  .rule {
+    display: inline-block;
+    width: 80px;
+    height: 1px;
+    background: var(--v3-border-gold);
+    vertical-align: middle;
+    margin-right: 1rem;
+  }
+  @media (max-width: 768px) {
+    .footer-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .footer-links { grid-template-columns: 1fr 1fr; }
+  }
+</style>

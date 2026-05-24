@@ -1,0 +1,62 @@
+/* V2 — Modern Minimal theme tokens + base */
+
+[data-variant='v2'] {
+  --v2-bg: #ffffff;
+  --v2-bg-subtle: #fafafa;
+  --v2-bg-card: #ffffff;
+  --v2-bg-dark: #0a2540;
+  --v2-border: #e5e7eb;
+  --v2-border-strong: #d1d5db;
+  --v2-text: #0a2540;
+  --v2-text-muted: #6b7280;
+  --v2-text-faint: #9ca3af;
+  --v2-accent: #635bff;
+  --v2-accent-hover: #5048e5;
+  --v2-success: #00875a;
+}
+
+[data-variant='v2'] body {
+  background: var(--v2-bg);
+  color: var(--v2-text);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+[data-variant='v2'] body::after {
+  /* No noise overlay for V2 — minimal aesthetic */
+  display: none;
+}
+
+[data-variant='v2'] * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+[data-variant='v2'] a {
+  color: var(--v2-text);
+  text-decoration: none;
+}
+
+[data-variant='v2'] h1,
+[data-variant='v2'] h2,
+[data-variant='v2'] h3,
+[data-variant='v2'] h4 {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  letter-spacing: -0.025em;
+  font-feature-settings: "ss01", "ss03";
+}
+
+[data-variant='v2'] .v2-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-variant='v2'] .v2-reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}

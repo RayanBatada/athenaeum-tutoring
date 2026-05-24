@@ -1,0 +1,76 @@
+---
+import PageLayout from '../../layouts/v3/PageLayout.astro';
+import CalEmbed from '../../components/CalEmbed.astro';
+import { site } from '../../data/site';
+import { url } from '../../lib/url';
+---
+<PageLayout title="Apply for a Consultation — Athenaeum">
+  <section class="book-hero">
+    <div class="v3-reveal">
+      <span class="hero-eyebrow">— Consultation —</span>
+      <h1>A complimentary <em>thirty minutes.</em></h1>
+      <div class="v3-divider">✦</div>
+      <p>Tell us about your timeline, target score, and the subjects you intend to read. We shall review fit, recommend a tutor, and outline the course of study.</p>
+    </div>
+  </section>
+
+  <section class="cal-section v3-reveal">
+    <div class="cal-frame">
+      <CalEmbed calLink={site.consultCalLink} embedId="cal-v3-consult" namespace="v3consult" />
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .book-hero {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 6.5rem 2rem 3rem;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-eyebrow {
+    display: inline-block;
+    color: var(--v3-gold);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    letter-spacing: 0.08em;
+    margin-bottom: 1.4rem;
+  }
+  .book-hero h1 {
+    font-size: clamp(2.5rem, 6vw, 4.3rem);
+    line-height: 1.05;
+    font-weight: 500;
+    margin-bottom: 0;
+  }
+  .book-hero h1 em {
+    color: var(--v3-gold);
+    font-style: italic;
+  }
+  .book-hero p {
+    font-family: 'Lora', serif;
+    font-size: 1.1rem;
+    color: var(--v3-text-muted);
+    line-height: 1.7;
+  }
+  .cal-section {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 2rem 6rem;
+    position: relative;
+    z-index: 2;
+  }
+  .cal-frame {
+    background: var(--v3-text);
+    border: 1px solid var(--v3-gold);
+    border-radius: 4px;
+    padding: 1rem;
+    box-shadow: 0 0 0 6px rgba(201, 165, 88, 0.08);
+  }
+  @media (max-width: 640px) {
+    .book-hero { padding: 4rem 1.2rem 2rem; }
+    .cal-section { padding: 1rem 1.2rem 4rem; }
+  }
+</style>
