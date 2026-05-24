@@ -1,0 +1,67 @@
+/* V6 — Slate (refined monochrome dark) */
+
+[data-variant='v6'] {
+  --v6-bg: #0a0a0c;
+  --v6-bg-elevated: #14141a;
+  --v6-bg-card: #15151c;
+  --v6-bg-card-hover: #1c1c24;
+  --v6-text: #fafafa;
+  --v6-text-muted: rgba(250, 250, 250, 0.6);
+  --v6-text-faint: rgba(250, 250, 250, 0.38);
+  --v6-border: rgba(250, 250, 250, 0.08);
+  --v6-border-strong: rgba(250, 250, 250, 0.16);
+  /* Single muted accent. Used sparingly. */
+  --v6-accent: #93c5fd;
+  --v6-accent-soft: rgba(147, 197, 253, 0.12);
+}
+
+[data-variant='v6'] body {
+  background: var(--v6-bg);
+  color: var(--v6-text);
+  font-family: "Inter Tight", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "ss01", "ss03", "cv11";
+}
+
+[data-variant='v6'] body::after {
+  display: none;
+}
+
+[data-variant='v6'] * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+[data-variant='v6'] a {
+  color: var(--v6-text);
+  text-decoration: none;
+}
+
+[data-variant='v6'] h1,
+[data-variant='v6'] h2,
+[data-variant='v6'] h3,
+[data-variant='v6'] h4 {
+  font-family: "Inter Tight", "Inter", sans-serif;
+  letter-spacing: -0.035em;
+  font-feature-settings: "ss01", "ss03", "cv11";
+}
+
+[data-variant='v6'] .v6-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-variant='v6'] .v6-reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-variant='v6'] ::selection {
+  background: var(--v6-text);
+  color: var(--v6-bg);
+}

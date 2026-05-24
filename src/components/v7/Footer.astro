@@ -1,0 +1,118 @@
+---
+import { url } from '../../lib/url';
+---
+<footer>
+  <div class="footer-rule"></div>
+
+  <div class="footer-grid">
+    <div class="footer-brand-block">
+      <div class="brand">
+        <span class="brand-mark">Æ</span>
+        <span class="brand-name">Athenaeum</span>
+      </div>
+      <p class="footer-tag">One-on-one preparation for the examinations that decide your trajectory.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Programs</h4>
+      <a href={url('/v7/#services')}>AP</a>
+      <a href={url('/v7/#services')}>SAT</a>
+      <a href={url('/v7/#services')}>ACT</a>
+      <a href={url('/v7/#services')}>College Counseling</a>
+    </div>
+    <div class="footer-col">
+      <h4>Athenaeum</h4>
+      <a href={url('/v7/#approach')}>Approach</a>
+      <a href={url('/v7/#faculty')}>Faculty</a>
+      <a href={url('/v7/#faq')}>FAQ</a>
+      <a href={url('/v7/book/')}>Book a Consult</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="mailto:hello@athenaeum.co">hello@athenaeum.co</a>
+      <a href={url('/privacy')}>Privacy</a>
+      <a href={url('/terms')}>Terms</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span><em>MMXXVI</em> · Athenaeum & Co.</span>
+    <span class="quiet">All rights reserved.</span>
+  </div>
+</footer>
+
+<style>
+  footer {
+    background: var(--v7-bg);
+    padding: 4rem 2.5rem 2.5rem;
+    color: var(--v7-text);
+  }
+  .footer-rule {
+    max-width: 1200px;
+    margin: 0 auto 3rem;
+    height: 1px;
+    background: var(--v7-border-strong);
+  }
+  .footer-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--v7-border);
+  }
+  .brand {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .brand-mark {
+    font-style: italic;
+    font-size: 2rem;
+    color: var(--v7-text-strong);
+  }
+  .brand-name {
+    font-size: 1.7rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .footer-tag {
+    color: var(--v7-text-muted);
+    font-size: 1.02rem;
+    line-height: 1.6;
+    max-width: 320px;
+  }
+  .footer-col h4 {
+    font-family: "Inter", sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--v7-text-faint);
+    margin-bottom: 1rem;
+  }
+  .footer-col a {
+    display: block;
+    color: var(--v7-text-muted);
+    font-size: 1rem;
+    margin-bottom: 0.55rem;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--v7-text); }
+  .footer-bottom {
+    max-width: 1200px;
+    margin: 2rem auto 0;
+    display: flex;
+    justify-content: space-between;
+    color: var(--v7-text-faint);
+    font-size: 0.92rem;
+  }
+  .footer-bottom em { color: var(--v7-text); }
+  .footer-bottom .quiet { font-style: italic; }
+  @media (max-width: 768px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .footer-bottom { flex-direction: column; gap: 0.5rem; }
+  }
+</style>

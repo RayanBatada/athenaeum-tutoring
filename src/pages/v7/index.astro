@@ -1,0 +1,538 @@
+---
+import { getCollection } from 'astro:content';
+import PageLayout from '../../layouts/v7/PageLayout.astro';
+import { services } from '../../data/services';
+import { homepageFAQs } from '../../data/faqs';
+import { reasons } from '../../data/why-different';
+import { url } from '../../lib/url';
+
+const tutors = (await getCollection('tutors')).slice(0, 4);
+const topReasons = reasons.slice(0, 6);
+const universities = ['Harvard', 'Yale', 'Princeton', 'Columbia', 'Brown', 'Dartmouth', 'Cornell', 'UPenn', 'MIT', 'Stanford'];
+---
+<PageLayout title="Athenaeum — One-on-one tutoring, taught by Ivy League scholars.">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner">
+      <span class="hero-meta v7-reveal">— Est. for the discerning student —</span>
+      <h1 class="hero-headline v7-reveal">
+        One-on-one preparation,<br />
+        taught <em>privately,</em><br />
+        by <em>Ivy League</em> scholars.
+      </h1>
+      <p class="hero-sub v7-reveal">
+        AP, SAT, ACT, and college counseling, in the manner of an Oxford tutorial. Tutors from Harvard, Yale, Princeton, and Columbia. Custom syllabi. Hand-graded coursework. Built around your timeline.
+      </p>
+      <div class="hero-cta v7-reveal">
+        <a href={url('/v7/book/')} class="btn-primary">Schedule a free consult <span class="arr">→</span></a>
+        <a href="#services" class="btn-quiet"><em>Read the programs.</em></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- University ribbon -->
+  <section class="ribbon">
+    <span class="ribbon-prefix"><em>Tutors drawn from</em></span>
+    <div class="ribbon-list">
+      {universities.map((u, i) => (
+        <>
+          <span>{u}</span>
+          {i < universities.length - 1 && <span class="ribbon-sep">·</span>}
+        </>
+      ))}
+    </div>
+  </section>
+
+  <!-- Programs -->
+  <section id="services" class="section">
+    <div class="section-head v7-reveal">
+      <span class="eyebrow">— I · Programs —</span>
+      <h2>Four programs.<br /><em>Taught one to one.</em></h2>
+    </div>
+    <div class="programs-list v7-reveal">
+      {services.map((s, i) => (
+        <article class="program">
+          <span class="program-no">{String(i + 1).padStart(2, '0')}.</span>
+          <div class="program-body">
+            <h3>{s.longName}</h3>
+            <p class="program-tagline"><em>{s.tagline}</em></p>
+            <ul>
+              {s.topics.slice(0, 4).map((t) => <li>{t}</li>)}
+            </ul>
+            <div class="program-meta">
+              <span>{s.cadence}</span>
+              <span class="meta-sep">·</span>
+              <span>From ${s.startingAtHourly}/hr</span>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- Approach -->
+  <section id="approach" class="section section-soft">
+    <div class="section-head v7-reveal">
+      <span class="eyebrow">— II · Approach —</span>
+      <h2>Built around <em>the student,</em><br />not the syllabus.</h2>
+      <p>The Athenaeum method is precise, personal, and unhurried.</p>
+    </div>
+    <div class="approach-grid v7-reveal">
+      {topReasons.map((r, i) => (
+        <div class="approach-item">
+          <span class="approach-no"><em>{String(i + 1).padStart(2, '0')}</em></span>
+          <h4>{r.title}{r.titleSerif && <> <em>{r.titleSerif}</em></>}</h4>
+          <p>{r.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Faculty -->
+  <section id="faculty" class="section">
+    <div class="section-head v7-reveal">
+      <span class="eyebrow">— III · Faculty —</span>
+      <h2>Tutors who <em>recently sat</em><br />these examinations.</h2>
+      <p>Each a current scholar at Harvard, Yale, Princeton, Columbia, or a comparable institution. Each at the top of the examination they teach.</p>
+    </div>
+    <div class="faculty-grid v7-reveal">
+      {tutors.map((t) => (
+        <figure class="faculty">
+          <div class="faculty-portrait">
+            <span class="faculty-mono">{t.data.monogram}</span>
+          </div>
+          <figcaption>
+            <h4>{t.data.name}</h4>
+            <p class="faculty-school"><em>{t.data.school}, {t.data.classYear}</em></p>
+            <p class="faculty-subjects">{t.data.subjects.slice(0, 3).join(' · ')}</p>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="section section-soft">
+    <div class="section-head v7-reveal">
+      <span class="eyebrow">— IV · Inquiries —</span>
+      <h2><em>Frequently</em> asked.</h2>
+    </div>
+    <div class="faq-list v7-reveal">
+      {homepageFAQs.map((item, i) => (
+        <details class="faq">
+          <summary>
+            <span class="faq-no">{String(i + 1).padStart(2, '0')}.</span>
+            <span class="faq-q" set:html={item.question.replace(/<span class='serif'>/g, '<em>').replace(/<\/span>/g, '</em>')} />
+            <span class="faq-marker">+</span>
+          </summary>
+          <div class="faq-a">{item.answer}</div>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="final">
+    <div class="final-inner v7-reveal">
+      <span class="final-meta">— V · Apply —</span>
+      <h2>
+        Begin <em>here.</em>
+      </h2>
+      <p>The thirty-minute consultation is complimentary. We will tell you, honestly, whether Athenaeum is the right fit.</p>
+      <a href={url('/v7/book/')} class="btn-primary lg">Schedule a free consult <span class="arr">→</span></a>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  /* ───────── Hero ───────── */
+  .hero {
+    padding: 6.5rem 2.5rem 5rem;
+    border-bottom: 1px solid var(--v7-border-strong);
+  }
+  .hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .hero-meta {
+    display: block;
+    font-family: "Newsreader", serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--v7-text-muted);
+    margin-bottom: 2rem;
+    letter-spacing: 0.01em;
+  }
+  .hero-headline {
+    font-size: clamp(2.8rem, 7.5vw, 6.5rem);
+    line-height: 1.02;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    margin-bottom: 2.2rem;
+    max-width: 1000px;
+    color: var(--v7-text);
+  }
+  .hero-headline em {
+    color: var(--v7-text-strong);
+    font-style: italic;
+    font-weight: 400;
+  }
+  .hero-sub {
+    font-size: 1.18rem;
+    color: var(--v7-text-muted);
+    line-height: 1.7;
+    max-width: 640px;
+    margin-bottom: 2.4rem;
+  }
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    border: 1px solid var(--v7-text);
+    color: var(--v7-text);
+    padding: 0.85rem 1.5rem;
+    font-family: "Newsreader", serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    transition: all 0.25s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 2px;
+  }
+  .btn-primary .arr { font-style: normal; transition: transform 0.25s; }
+  .btn-primary:hover {
+    background: var(--v7-text);
+    color: var(--v7-bg);
+  }
+  .btn-primary:hover .arr { transform: translateX(4px); }
+  .btn-primary.lg {
+    padding: 1.05rem 1.9rem;
+    font-size: 1.25rem;
+  }
+  .btn-quiet {
+    color: var(--v7-text-muted);
+    font-family: "Newsreader", serif;
+    font-size: 1.1rem;
+    border-bottom: 1px solid var(--v7-text-muted);
+    padding-bottom: 0.15rem;
+    transition: all 0.2s;
+  }
+  .btn-quiet:hover {
+    color: var(--v7-text);
+    border-color: var(--v7-text);
+  }
+
+  /* ───────── Ribbon ───────── */
+  .ribbon {
+    padding: 1.6rem 2.5rem;
+    border-bottom: 1px solid var(--v7-border);
+    text-align: center;
+  }
+  .ribbon-prefix {
+    display: block;
+    color: var(--v7-text-muted);
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+  }
+  .ribbon-list {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 0.8rem;
+    font-family: "Newsreader", serif;
+    font-size: 1.25rem;
+    color: var(--v7-text);
+  }
+  .ribbon-sep {
+    color: var(--v7-text-faint);
+  }
+
+  /* ───────── Sections ───────── */
+  .section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 6.5rem 2.5rem;
+  }
+  .section-soft {
+    background: var(--v7-bg-soft);
+    max-width: none;
+    border-top: 1px solid var(--v7-border);
+    border-bottom: 1px solid var(--v7-border);
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+  .section-soft > * {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .section-head {
+    margin-bottom: 4rem;
+    max-width: 800px;
+  }
+  .eyebrow {
+    display: block;
+    font-family: "Newsreader", serif;
+    font-style: italic;
+    color: var(--v7-text-muted);
+    font-size: 1rem;
+    margin-bottom: 1.2rem;
+    letter-spacing: 0.02em;
+  }
+  .section-head h2 {
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    line-height: 1.05;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    color: var(--v7-text);
+  }
+  .section-head h2 em {
+    color: var(--v7-text-strong);
+    font-style: italic;
+  }
+  .section-head p {
+    font-size: 1.1rem;
+    color: var(--v7-text-muted);
+    line-height: 1.65;
+    max-width: 620px;
+  }
+
+  /* ───────── Programs (list, not cards) ───────── */
+  .programs-list {
+    border-top: 1px solid var(--v7-border-strong);
+  }
+  .program {
+    display: grid;
+    grid-template-columns: 4rem 1fr;
+    gap: 1.5rem;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--v7-border);
+    align-items: start;
+  }
+  .program-no {
+    font-family: "Newsreader", serif;
+    font-style: italic;
+    color: var(--v7-text-muted);
+    font-size: 1.3rem;
+    padding-top: 0.4rem;
+  }
+  .program h3 {
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    line-height: 1.05;
+    margin-bottom: 0.5rem;
+    color: var(--v7-text);
+  }
+  .program-tagline {
+    font-style: italic;
+    color: var(--v7-text-strong);
+    font-size: 1.2rem;
+    line-height: 1.4;
+    margin-bottom: 1.2rem;
+  }
+  .program ul {
+    list-style: none;
+    margin-bottom: 1.2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.5rem;
+  }
+  .program li {
+    color: var(--v7-text-muted);
+    font-size: 1rem;
+    position: relative;
+  }
+  .program li + li::before {
+    content: "·";
+    color: var(--v7-text-faint);
+    position: absolute;
+    left: -0.95rem;
+  }
+  .program-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: "Inter", sans-serif;
+    font-size: 0.8rem;
+    color: var(--v7-text-muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .meta-sep { color: var(--v7-text-faint); }
+
+  /* ───────── Approach ───────── */
+  .approach-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem 4rem;
+  }
+  .approach-item {
+    border-top: 1px solid var(--v7-border-strong);
+    padding-top: 1.4rem;
+  }
+  .approach-no {
+    display: block;
+    color: var(--v7-text-muted);
+    font-size: 1.1rem;
+    margin-bottom: 0.7rem;
+  }
+  .approach-item h4 {
+    font-size: 1.55rem;
+    line-height: 1.15;
+    margin-bottom: 0.6rem;
+    color: var(--v7-text);
+  }
+  .approach-item p {
+    color: var(--v7-text-muted);
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  /* ───────── Faculty ───────── */
+  .faculty-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+  .faculty {
+    margin: 0;
+  }
+  .faculty-portrait {
+    aspect-ratio: 4/5;
+    background: var(--v7-bg-card);
+    border: 1px solid var(--v7-border-strong);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.2rem;
+    transition: border-color 0.3s;
+  }
+  .faculty-portrait:hover { border-color: var(--v7-text-muted); }
+  .faculty-mono {
+    font-family: "Newsreader", serif;
+    font-style: italic;
+    font-size: 5rem;
+    color: var(--v7-text);
+    font-weight: 400;
+    line-height: 1;
+  }
+  .faculty h4 {
+    font-size: 1.25rem;
+    color: var(--v7-text);
+    margin-bottom: 0.3rem;
+    line-height: 1.15;
+  }
+  .faculty-school {
+    color: var(--v7-text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 0.3rem;
+  }
+  .faculty-subjects {
+    color: var(--v7-text-faint);
+    font-size: 0.88rem;
+  }
+
+  /* ───────── FAQ ───────── */
+  .faq-list {
+    border-top: 1px solid var(--v7-border-strong);
+  }
+  .faq {
+    border-bottom: 1px solid var(--v7-border);
+    padding: 1.8rem 0;
+    cursor: pointer;
+  }
+  .faq summary {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    list-style: none;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq-no {
+    font-family: "Newsreader", serif;
+    font-style: italic;
+    color: var(--v7-text-muted);
+    font-size: 1.05rem;
+    min-width: 2.2rem;
+  }
+  .faq-q {
+    flex: 1;
+    font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+    line-height: 1.25;
+    color: var(--v7-text);
+  }
+  .faq-q em {
+    color: var(--v7-text-strong);
+    font-style: italic;
+  }
+  .faq-marker {
+    color: var(--v7-text-muted);
+    font-size: 1.4rem;
+    transition: transform 0.3s;
+  }
+  .faq[open] .faq-marker { transform: rotate(45deg); color: var(--v7-text); }
+  .faq-a {
+    padding: 1rem 0 0 3.7rem;
+    color: var(--v7-text-muted);
+    font-size: 1.02rem;
+    line-height: 1.7;
+    max-width: 760px;
+  }
+
+  /* ───────── Final ───────── */
+  .final {
+    padding: 7rem 2.5rem;
+    border-top: 1px solid var(--v7-border-strong);
+    text-align: center;
+  }
+  .final-inner {
+    max-width: 880px;
+    margin: 0 auto;
+  }
+  .final-meta {
+    display: block;
+    font-family: "Newsreader", serif;
+    font-style: italic;
+    color: var(--v7-text-muted);
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.02em;
+  }
+  .final h2 {
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    line-height: 1;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    color: var(--v7-text);
+    letter-spacing: -0.025em;
+  }
+  .final h2 em {
+    color: var(--v7-text-strong);
+    font-style: italic;
+  }
+  .final p {
+    color: var(--v7-text-muted);
+    font-size: 1.18rem;
+    max-width: 580px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.65;
+  }
+
+  /* ───────── Responsive ───────── */
+  @media (max-width: 1024px) {
+    .approach-grid, .faculty-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .hero { padding: 4rem 1.2rem 3rem; }
+    .section { padding: 5rem 1.2rem; }
+    .section-soft { padding: 5rem 1.2rem; }
+    .ribbon { padding: 1.5rem 1.2rem; }
+    .approach-grid, .faculty-grid { grid-template-columns: 1fr; }
+    .program { grid-template-columns: 3rem 1fr; gap: 1rem; }
+    .final { padding: 5rem 1.2rem; }
+  }
+</style>

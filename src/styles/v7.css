@@ -1,0 +1,73 @@
+/* V7 — Folio (refined editorial dark, no color) */
+
+[data-variant='v7'] {
+  --v7-bg: #0a0a0a;
+  --v7-bg-soft: #111111;
+  --v7-bg-card: #131313;
+  --v7-text: #f1ebd9;
+  --v7-text-strong: #faf6e9;
+  --v7-text-muted: rgba(241, 235, 217, 0.62);
+  --v7-text-faint: rgba(241, 235, 217, 0.4);
+  --v7-border: rgba(241, 235, 217, 0.1);
+  --v7-border-strong: rgba(241, 235, 217, 0.22);
+}
+
+[data-variant='v7'] body {
+  background: var(--v7-bg);
+  color: var(--v7-text);
+  font-family: "Newsreader", "Times New Roman", Georgia, serif;
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+[data-variant='v7'] body::after {
+  display: none;
+}
+
+[data-variant='v7'] * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+[data-variant='v7'] a {
+  color: var(--v7-text);
+  text-decoration: none;
+}
+
+[data-variant='v7'] h1,
+[data-variant='v7'] h2,
+[data-variant='v7'] h3,
+[data-variant='v7'] h4 {
+  font-family: "Newsreader", "Times New Roman", Georgia, serif;
+  letter-spacing: -0.015em;
+  font-weight: 500;
+}
+
+[data-variant='v7'] em,
+[data-variant='v7'] i {
+  font-style: italic;
+  color: var(--v7-text-strong);
+}
+
+[data-variant='v7'] .sans {
+  font-family: "Inter", -apple-system, sans-serif;
+}
+
+[data-variant='v7'] .v7-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-variant='v7'] .v7-reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-variant='v7'] ::selection {
+  background: var(--v7-text);
+  color: var(--v7-bg);
+}
