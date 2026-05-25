@@ -1,0 +1,31 @@
+---
+import PageLayout from '../../layouts/v14/PageLayout.astro';
+import CalEmbed from '../../components/CalEmbed.astro';
+import { site } from '../../data/site';
+---
+<PageLayout title="Apply for a Consultation — Athenaeum">
+  <section class="book-hero">
+    <div class="v14-reveal">
+      <span class="meta">— Consultation —</span>
+      <h1>A complimentary<br /><em>thirty-minute</em> conversation.</h1>
+      <p>Tell us your timeline, target score, and whether you'd prefer the private tutorial or a cohort. We'll review fit and recommend the right plan.</p>
+    </div>
+  </section>
+
+  <section class="cal-section v14-reveal">
+    <div class="cal-frame">
+      <CalEmbed calLink={site.consultCalLink} embedId="cal-v14-consult" namespace="v14consult" />
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .book-hero { max-width: 880px; margin: 0 auto; padding: 6rem 2.5rem 3rem; text-align: center; }
+  .meta { display: block; font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--v14-text-muted); font-size: 1.05rem; margin-bottom: 1.6rem; }
+  .book-hero h1 { font-size: clamp(2.6rem, 6.5vw, 5rem); line-height: 1.02; font-weight: 500; letter-spacing: -0.022em; margin-bottom: 1.5rem; color: var(--v14-text); }
+  .book-hero h1 em { color: var(--v14-gold); font-style: italic; }
+  .book-hero p { font-family: 'Lora', serif; font-size: 1.15rem; color: var(--v14-text-muted); line-height: 1.65; max-width: 540px; margin: 0 auto; }
+  .cal-section { max-width: 1000px; margin: 0 auto; padding: 2rem 2.5rem 6rem; }
+  .cal-frame { background: var(--v14-text); border: 1px solid var(--v14-border-strong); padding: 0.8rem; border-radius: 2px; }
+  @media (max-width: 640px) { .book-hero { padding: 4rem 1.2rem 2rem; } .cal-section { padding: 1rem 1.2rem 4rem; } }
+</style>

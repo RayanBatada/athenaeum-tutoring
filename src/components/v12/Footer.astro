@@ -1,0 +1,52 @@
+---
+import { url } from '../../lib/url';
+---
+<footer>
+  <div class="footer-headline">
+    <h2>Top scores. <span class="serif">Top schools.</span></h2>
+    <a href={url('/v12/book/')} class="footer-cta">Schedule a free consult →</a>
+  </div>
+  <div class="footer-rule"></div>
+  <div class="footer-meta">
+    <div>
+      <h4>Programs</h4>
+      <a href={url('/v12/#programs')}>AP</a>
+      <a href={url('/v12/#programs')}>SAT</a>
+      <a href={url('/v12/#programs')}>ACT</a>
+      <a href={url('/v12/#programs')}>College Counseling</a>
+    </div>
+    <div>
+      <h4>Athenaeum</h4>
+      <a href={url('/v12/#paths')}>Paths</a>
+      <a href={url('/v12/#faculty')}>Faculty</a>
+      <a href={url('/v12/book/')}>Book</a>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <a href="mailto:hello@athenaeum.co">hello@athenaeum.co</a>
+      <a href={url('/privacy')}>Privacy</a>
+      <a href={url('/terms')}>Terms</a>
+    </div>
+    <div class="copyright">
+      <span>© 2026 Athenaeum & Co.</span>
+      <span class="serif">Made in New York.</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  footer { background: var(--v10-bg); border-top: 1px solid var(--v10-border-strong); padding: 4.5rem 2.5rem 2.5rem; color: var(--v10-ink); }
+  .footer-headline { max-width: 1300px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-end; gap: 3rem; padding-bottom: 3rem; }
+  .footer-headline h2 { font-family: "Bricolage Grotesque", sans-serif; font-size: clamp(2.5rem, 5.5vw, 4.5rem); line-height: 0.92; font-weight: 700; letter-spacing: -0.04em; font-variation-settings: "wdth" 86; }
+  .footer-headline h2 .serif { font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; color: var(--v10-tangerine); }
+  .footer-cta { font-size: 1.1rem; font-weight: 500; border-bottom: 1px solid var(--v10-ink); padding-bottom: 0.25rem; transition: all 0.2s; }
+  .footer-cta:hover { color: var(--v10-tangerine); border-color: var(--v10-tangerine); }
+  .footer-rule { max-width: 1300px; margin: 0 auto; height: 1px; background: var(--v10-border-strong); }
+  .footer-meta { max-width: 1300px; margin: 2.5rem auto 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.5rem; }
+  .footer-meta h4 { font-family: "Inter", sans-serif; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--v10-ink-faint); margin-bottom: 1rem; }
+  .footer-meta a { display: block; color: var(--v10-ink-soft); font-size: 0.95rem; margin-bottom: 0.5rem; transition: color 0.2s; }
+  .footer-meta a:hover { color: var(--v10-tangerine); }
+  .copyright { display: flex; flex-direction: column; gap: 0.4rem; color: var(--v10-ink-faint); font-size: 0.88rem; align-items: flex-end; text-align: right; }
+  .copyright .serif { color: var(--v10-tangerine); font-size: 1rem; }
+  @media (max-width: 768px) { .footer-headline { flex-direction: column; align-items: flex-start; } .footer-meta { grid-template-columns: 1fr 1fr; } .copyright { align-items: flex-start; text-align: left; } }
+</style>

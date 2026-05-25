@@ -1,0 +1,394 @@
+---
+import { getCollection } from 'astro:content';
+import PageLayout from '../../layouts/v14/PageLayout.astro';
+import { services } from '../../data/services';
+import { homepageFAQs } from '../../data/faqs';
+import { reasons } from '../../data/why-different';
+import { groupCohorts } from '../../data/group-cohorts';
+import { url } from '../../lib/url';
+
+const tutors = (await getCollection('tutors')).slice(0, 4);
+const topReasons = reasons.slice(0, 6);
+const universities = ['Harvard', 'Yale', 'Princeton', 'Columbia', 'Brown', 'Dartmouth', 'Cornell', 'UPenn', 'MIT', 'Stanford'];
+const featuredCohorts = groupCohorts.slice(0, 3);
+---
+<PageLayout title="Athenaeum — Tutorials, taught by Ivy League scholars.">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner">
+      <span class="hero-meta v14-reveal">— Est. for the discerning student —</span>
+      <h1 class="hero-headline v14-reveal">
+        One-on-one preparation,<br />
+        taught <em>privately,</em><br />
+        by <em>Ivy League</em> scholars.
+      </h1>
+      <p class="hero-sub v14-reveal">
+        AP, SAT, ACT, and college counseling — taught privately or in cohorts of eight. Tutors from Harvard, Yale, Princeton, and Columbia. Custom syllabi. Hand-graded coursework.
+      </p>
+      <div class="hero-cta v14-reveal">
+        <a href={url('/v14/book/')} class="btn-primary">Apply for a Consultation <span class="arr">→</span></a>
+        <a href="#curriculum" class="btn-quiet"><em>Read the curriculum.</em></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- University ribbon -->
+  <section class="ribbon">
+    <span class="ribbon-prefix"><em>Tutors drawn from</em></span>
+    <div class="ribbon-list">
+      {universities.map((u, i) => (
+        <>
+          <span>{u}</span>
+          {i < universities.length - 1 && <span class="ribbon-sep">·</span>}
+        </>
+      ))}
+    </div>
+  </section>
+
+  <!-- Curriculum (list-style) -->
+  <section id="curriculum" class="section">
+    <div class="section-head v14-reveal">
+      <span class="eyebrow">— Curriculum —</span>
+      <h2>Four programs. <em>Two forms of study.</em></h2>
+    </div>
+    <div class="programs-list v14-reveal">
+      {services.map((s, i) => (
+        <article class="program">
+          <span class="program-no">{String(i + 1).padStart(2, '0')}.</span>
+          <div class="program-body">
+            <h3>{s.longName}</h3>
+            <p class="program-tagline"><em>{s.tagline}</em></p>
+            <ul>
+              {s.topics.slice(0, 4).map((t) => <li>{t}</li>)}
+            </ul>
+            <div class="program-meta">
+              <span><em>Private</em> from ${s.startingAtHourly}/hr</span>
+              <span class="meta-sep">·</span>
+              <span><em>Cohort</em> from $60/hr</span>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- Forms of Study -->
+  <section id="study" class="study-section">
+    <div class="study-head v14-reveal">
+      <span class="eyebrow">— Forms of Study —</span>
+      <h2>Two ways <em>to read.</em></h2>
+      <p>Each pulls from the same faculty, the same syllabus, the same standard. The difference is the room.</p>
+    </div>
+
+    <div class="study-split">
+      <article class="study-half v14-reveal">
+        <span class="study-tag"><em>Option A</em></span>
+        <h3>The Private <em>Tutorial.</em></h3>
+        <p>One-to-one sessions with an Ivy League tutor. A syllabus drawn entirely from your diagnostic week. Hand-graded coursework. Flexible scheduling.</p>
+        <ul class="study-list">
+          <li>Weekly one-on-one sessions</li>
+          <li>Custom syllabus, custom pace</li>
+          <li>Hand-graded homework</li>
+          <li>Test-day strategy session</li>
+        </ul>
+        <div class="study-foot">
+          <div>
+            <div class="study-rate">From $130 <em>per hour</em></div>
+            <div class="study-pkg">8 / 16 / 24-hour packages</div>
+          </div>
+          <a href={url('/v14/book/')} class="study-cta">Apply →</a>
+        </div>
+      </article>
+
+      <article class="study-half v14-reveal">
+        <span class="study-tag"><em>Option B</em></span>
+        <h3>The <em>Cohort.</em></h3>
+        <p>A small society of up to eight students, taught live by the same Ivy League faculty. Set start dates. Shared coursework. Half the cost of the tutorial.</p>
+        <ul class="study-list">
+          <li>Eight students maximum</li>
+          <li>Live online, recorded for review</li>
+          <li>Same hand-graded homework</li>
+          <li>Cohort discussions + test-day session</li>
+        </ul>
+        <div class="study-foot">
+          <div>
+            <div class="study-rate">From $60 <em>per hour</em></div>
+            <div class="study-pkg">6 / 8 / 10-week courses</div>
+          </div>
+          <a href="#cohorts" class="study-cta">Browse cohorts →</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Upcoming Cohorts -->
+  <section id="cohorts" class="section">
+    <div class="section-head v14-reveal">
+      <span class="eyebrow">— Upcoming Cohorts —</span>
+      <h2>Live classes <em>opening soon.</em></h2>
+    </div>
+    <div class="cohort-table v14-reveal">
+      {featuredCohorts.map((c) => (
+        <div class="cohort-row">
+          <div class="cohort-name">{c.name}</div>
+          <div class="cohort-meta-line">{c.duration} · {c.schedule}</div>
+          <div class="cohort-date"><em>{c.startDate}</em></div>
+          <div class="cohort-seats">{c.seatsLeft} of {c.capSize} seats</div>
+          <div class="cohort-price">${c.totalPrice.toLocaleString()}</div>
+          <a href={url('/v14/book/')} class="cohort-reserve">Reserve →</a>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Approach -->
+  <section class="section section-soft">
+    <div class="section-head v14-reveal">
+      <span class="eyebrow">— Approach —</span>
+      <h2>Built around <em>the student,</em><br />not the syllabus.</h2>
+      <p>The Athenaeum method is precise, personal, and unhurried.</p>
+    </div>
+    <div class="approach-grid v14-reveal">
+      {topReasons.map((r, i) => (
+        <div class="approach-item">
+          <span class="approach-no"><em>{String(i + 1).padStart(2, '0')}</em></span>
+          <h4>{r.title}{r.titleSerif && <> <em>{r.titleSerif}</em></>}</h4>
+          <p>{r.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Faculty -->
+  <section id="faculty" class="section">
+    <div class="section-head center v14-reveal">
+      <span class="eyebrow">— The Faculty —</span>
+      <h2>Tutors who <em>recently sat</em><br />these examinations.</h2>
+    </div>
+    <div class="faculty-grid v14-reveal">
+      {tutors.map((t) => (
+        <figure class="faculty">
+          <div class="faculty-portrait">
+            <span class="faculty-mono">{t.data.monogram}</span>
+          </div>
+          <figcaption>
+            <h4>{t.data.name}</h4>
+            <p class="faculty-school"><em>{t.data.school}, {t.data.classYear}</em></p>
+            <p class="faculty-subjects">{t.data.subjects.slice(0, 3).join(' · ')}</p>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </section>
+
+  <!-- Inquiries -->
+  <section id="inquiries" class="section section-soft">
+    <div class="section-head center v14-reveal">
+      <span class="eyebrow">— Inquiries —</span>
+      <h2><em>Frequently</em> asked.</h2>
+    </div>
+    <div class="faq-list v14-reveal">
+      {homepageFAQs.map((item, i) => (
+        <details class="faq">
+          <summary>
+            <span class="faq-no">{String(i + 1).padStart(2, '0')}.</span>
+            <span class="faq-q" set:html={item.question.replace(/<span class='serif'>/g, '<em>').replace(/<\/span>/g, '</em>')} />
+            <span class="faq-marker">+</span>
+          </summary>
+          <div class="faq-a">{item.answer}</div>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="final">
+    <div class="final-inner v14-reveal">
+      <h2>Begin <em>here.</em></h2>
+      <p>The thirty-minute consultation is complimentary. We will tell you, candidly, whether Athenaeum is the right fit.</p>
+      <a href={url('/v14/book/')} class="btn-primary lg">Apply for a Consultation <span class="arr">→</span></a>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  /* ───────── Hero ───────── */
+  .hero { padding: 6.5rem 2.5rem 5rem; border-bottom: 1px solid var(--v14-border-strong); }
+  .hero-inner { max-width: 1100px; margin: 0 auto; }
+  .hero-meta { display: block; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem; color: var(--v14-text-muted); margin-bottom: 2rem; letter-spacing: 0.01em; }
+  .hero-headline { font-size: clamp(2.8rem, 7.5vw, 6.5rem); line-height: 1.02; font-weight: 500; letter-spacing: -0.025em; margin-bottom: 2.2rem; max-width: 1000px; color: var(--v14-text); }
+  .hero-headline em { color: var(--v14-gold); font-style: italic; font-weight: 400; }
+  .hero-sub { font-size: 1.18rem; color: var(--v14-text-muted); line-height: 1.7; max-width: 640px; margin-bottom: 2.4rem; }
+  .hero-cta { display: inline-flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
+  .btn-primary {
+    border: 1px solid var(--v14-text);
+    color: var(--v14-text);
+    padding: 0.85rem 1.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    transition: all 0.25s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    border-radius: 2px;
+  }
+  .btn-primary .arr { font-style: normal; transition: transform 0.25s; }
+  .btn-primary:hover { background: var(--v14-text); color: var(--v14-bg); }
+  .btn-primary:hover .arr { transform: translateX(4px); }
+  .btn-primary.lg { padding: 1.05rem 1.9rem; font-size: 1.25rem; }
+  .btn-quiet { color: var(--v14-text-muted); font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; border-bottom: 1px solid var(--v14-text-muted); padding-bottom: 0.15rem; transition: all 0.2s; }
+  .btn-quiet em { font-style: italic; }
+  .btn-quiet:hover { color: var(--v14-gold); border-color: var(--v14-gold); }
+
+  /* ───────── Ribbon ───────── */
+  .ribbon { padding: 1.6rem 2.5rem; border-bottom: 1px solid var(--v14-border); text-align: center; }
+  .ribbon-prefix { display: block; color: var(--v14-text-muted); font-size: 1rem; margin-bottom: 0.8rem; }
+  .ribbon-list { display: inline-flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 0.8rem; font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; color: var(--v14-text); }
+  .ribbon-sep { color: var(--v14-text-faint); }
+
+  /* ───────── Sections ───────── */
+  .section { max-width: 1200px; margin: 0 auto; padding: 6.5rem 2.5rem; }
+  .section.section-soft { background: var(--v14-bg-soft); max-width: none; border-top: 1px solid var(--v14-border); border-bottom: 1px solid var(--v14-border); padding-left: 2.5rem; padding-right: 2.5rem; }
+  .section.section-soft > * { max-width: 1200px; margin-left: auto; margin-right: auto; }
+  .section-head { margin-bottom: 4rem; max-width: 800px; }
+  .section-head.center { text-align: center; margin-left: auto; margin-right: auto; }
+  .eyebrow { display: block; font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--v14-text-muted); font-size: 1rem; margin-bottom: 1.2rem; letter-spacing: 0.02em; }
+  .section-head h2 { font-size: clamp(2.4rem, 5vw, 4rem); line-height: 1.05; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 1rem; color: var(--v14-text); }
+  .section-head h2 em { color: var(--v14-gold); font-style: italic; }
+  .section-head p { font-family: 'Lora', serif; font-size: 1.1rem; color: var(--v14-text-muted); line-height: 1.65; max-width: 620px; }
+
+  /* ───────── Programs list ───────── */
+  .programs-list { border-top: 1px solid var(--v14-border-strong); }
+  .program { display: grid; grid-template-columns: 4rem 1fr; gap: 1.5rem; padding: 2.5rem 0; border-bottom: 1px solid var(--v14-border); align-items: start; }
+  .program-no { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--v14-text-muted); font-size: 1.3rem; padding-top: 0.4rem; }
+  .program h3 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); line-height: 1.05; margin-bottom: 0.5rem; color: var(--v14-text); }
+  .program-tagline { font-style: italic; color: var(--v14-gold); font-size: 1.2rem; line-height: 1.4; margin-bottom: 1.1rem; font-family: 'Cormorant Garamond', serif; }
+  .program ul { list-style: none; margin-bottom: 1.1rem; display: flex; flex-wrap: wrap; gap: 0.4rem 1.5rem; }
+  .program li { color: var(--v14-text-muted); font-size: 1rem; position: relative; font-family: 'Lora', serif; }
+  .program li + li::before { content: "·"; color: var(--v14-text-faint); position: absolute; left: -0.95rem; }
+  .program-meta { display: flex; align-items: center; gap: 0.8rem; font-family: 'Cormorant Garamond', serif; color: var(--v14-text); font-size: 1.05rem; }
+  .program-meta em { color: var(--v14-gold); font-style: italic; }
+  .meta-sep { color: var(--v14-text-faint); }
+
+  /* ───────── Forms of Study ───────── */
+  .study-section { background: var(--v14-bg-soft); border-top: 1px solid var(--v14-border); border-bottom: 1px solid var(--v14-border); padding: 6.5rem 2.5rem; }
+  .study-head { max-width: 880px; margin: 0 auto 4rem; text-align: center; }
+  .study-head h2 { font-size: clamp(2.2rem, 5vw, 3.8rem); line-height: 1.05; margin-bottom: 1rem; font-weight: 500; color: var(--v14-text); }
+  .study-head h2 em { color: var(--v14-gold); font-style: italic; }
+  .study-head p { font-family: 'Lora', serif; font-size: 1.1rem; color: var(--v14-text-muted); line-height: 1.65; max-width: 600px; margin: 0 auto; }
+  .study-split { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 1.3rem; }
+  .study-half {
+    background: var(--v14-bg-card);
+    border: 1px solid var(--v14-border-strong);
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s;
+  }
+  .study-half:hover { border-color: var(--v14-gold); background: var(--v14-bg-card-hover); }
+  .study-tag { color: var(--v14-gold); font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem; margin-bottom: 1rem; }
+  .study-half h3 { font-size: clamp(2rem, 4vw, 3rem); line-height: 1.05; margin-bottom: 1rem; color: var(--v14-text); font-weight: 500; }
+  .study-half h3 em { color: var(--v14-gold); font-style: italic; }
+  .study-half p { font-family: 'Lora', serif; font-size: 1rem; color: var(--v14-text-muted); line-height: 1.65; margin-bottom: 1.3rem; }
+  .study-list { list-style: none; margin-bottom: 1.5rem; }
+  .study-list li { font-family: 'Lora', serif; color: var(--v14-text-muted); padding: 0.5rem 0; border-top: 1px dotted var(--v14-border); font-size: 0.95rem; }
+  .study-list li:last-child { border-bottom: 1px dotted var(--v14-border); }
+  .study-foot { display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; margin-top: auto; }
+  .study-rate { font-family: 'Cormorant Garamond', serif; color: var(--v14-text); font-size: 1.25rem; }
+  .study-rate em { color: var(--v14-gold); font-style: italic; font-size: 1rem; }
+  .study-pkg { font-family: 'Lora', serif; color: var(--v14-text-muted); font-size: 0.88rem; margin-top: 0.2rem; }
+  .study-cta { color: var(--v14-gold); font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem; border-bottom: 1px solid var(--v14-gold); padding-bottom: 0.15rem; transition: opacity 0.2s; }
+  .study-cta:hover { opacity: 0.75; }
+
+  /* ───────── Upcoming Cohorts ───────── */
+  .cohort-table { border-top: 1px solid var(--v14-border-strong); }
+  .cohort-row {
+    display: grid;
+    grid-template-columns: 1.3fr 1.6fr 1fr 0.9fr 0.7fr 0.7fr;
+    gap: 1.2rem;
+    align-items: center;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--v14-border);
+  }
+  .cohort-name { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--v14-text); font-weight: 500; }
+  .cohort-meta-line { font-family: 'Lora', serif; color: var(--v14-text-muted); font-size: 0.92rem; }
+  .cohort-date { font-family: 'Cormorant Garamond', serif; color: var(--v14-text); font-size: 1.05rem; }
+  .cohort-date em { color: var(--v14-gold); font-style: italic; }
+  .cohort-seats { font-family: 'Lora', serif; color: var(--v14-text-muted); font-size: 0.88rem; }
+  .cohort-price { font-family: 'Cormorant Garamond', serif; color: var(--v14-text); font-size: 1.15rem; }
+  .cohort-reserve {
+    border: 1px solid var(--v14-gold);
+    color: var(--v14-gold);
+    padding: 0.45rem 0.9rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    text-align: center;
+    transition: all 0.25s;
+    border-radius: 2px;
+  }
+  .cohort-reserve:hover { background: var(--v14-gold); color: var(--v14-bg); }
+
+  /* ───────── Approach ───────── */
+  .approach-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3rem 4rem; }
+  .approach-item { border-top: 1px solid var(--v14-border-strong); padding-top: 1.5rem; }
+  .approach-no { display: block; color: var(--v14-text-muted); font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; margin-bottom: 0.7rem; }
+  .approach-item h4 { font-size: 1.6rem; line-height: 1.15; margin-bottom: 0.6rem; color: var(--v14-text); }
+  .approach-item h4 em { color: var(--v14-gold); font-style: italic; }
+  .approach-item p { font-family: 'Lora', serif; color: var(--v14-text-muted); font-size: 1rem; line-height: 1.65; }
+
+  /* ───────── Faculty ───────── */
+  .faculty-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+  .faculty { margin: 0; text-align: center; }
+  .faculty-portrait {
+    aspect-ratio: 4/5;
+    background: var(--v14-bg-card);
+    border: 1px solid var(--v14-border-strong);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.2rem;
+    transition: border-color 0.3s;
+  }
+  .faculty-portrait:hover { border-color: var(--v14-gold); }
+  .faculty-mono { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 5rem; color: var(--v14-text); font-weight: 400; line-height: 1; }
+  .faculty h4 { font-size: 1.3rem; color: var(--v14-text); margin-bottom: 0.3rem; line-height: 1.15; font-weight: 500; }
+  .faculty-school { color: var(--v14-text-muted); font-family: 'Cormorant Garamond', serif; font-size: 1rem; margin-bottom: 0.4rem; }
+  .faculty-school em { color: var(--v14-gold); font-style: italic; }
+  .faculty-subjects { font-family: 'Lora', serif; color: var(--v14-text-muted); font-size: 0.9rem; }
+
+  /* ───────── FAQ ───────── */
+  .faq-list { border-top: 1px solid var(--v14-border-strong); max-width: 820px; margin: 0 auto; }
+  .faq { border-bottom: 1px solid var(--v14-border); padding: 1.8rem 0; cursor: pointer; }
+  .faq summary { display: flex; align-items: baseline; gap: 1.5rem; list-style: none; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq-no { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--v14-text-muted); font-size: 1.05rem; min-width: 2.2rem; }
+  .faq-q { flex: 1; font-family: 'Cormorant Garamond', serif; font-size: clamp(1.3rem, 2.2vw, 1.8rem); font-weight: 500; line-height: 1.25; color: var(--v14-text); }
+  .faq-q em { color: var(--v14-gold); font-style: italic; }
+  .faq-marker { color: var(--v14-gold); font-size: 1.4rem; transition: transform 0.3s; }
+  .faq[open] .faq-marker { transform: rotate(45deg); }
+  .faq-a { padding: 1rem 0 0 3.7rem; color: var(--v14-text-muted); font-family: 'Lora', serif; font-size: 1.02rem; line-height: 1.7; max-width: 720px; }
+
+  /* ───────── Final ───────── */
+  .final { padding: 7rem 2.5rem; border-top: 1px solid var(--v14-border-strong); text-align: center; }
+  .final-inner { max-width: 880px; margin: 0 auto; }
+  .final h2 { font-size: clamp(3rem, 8vw, 6.5rem); line-height: 1; font-weight: 500; margin-bottom: 1.4rem; color: var(--v14-text); letter-spacing: -0.025em; }
+  .final h2 em { color: var(--v14-gold); font-style: italic; }
+  .final p { font-family: 'Lora', serif; color: var(--v14-text-muted); font-size: 1.18rem; max-width: 580px; margin: 0 auto 2.5rem; line-height: 1.65; }
+
+  @media (max-width: 1024px) {
+    .approach-grid, .faculty-grid, .study-split { grid-template-columns: repeat(2, 1fr); }
+    .cohort-row { grid-template-columns: 1fr 1fr; gap: 0.6rem 1rem; }
+    .cohort-reserve { grid-column: 1 / -1; justify-self: stretch; }
+  }
+  @media (max-width: 640px) {
+    .hero { padding: 4rem 1.2rem 3rem; }
+    .ribbon { padding: 1.4rem 1.2rem; }
+    .section, .study-section { padding: 5rem 1.2rem; }
+    .approach-grid, .faculty-grid, .study-split { grid-template-columns: 1fr; }
+    .program { grid-template-columns: 3rem 1fr; gap: 1rem; }
+    .cohort-row { grid-template-columns: 1fr; }
+    .final { padding: 5rem 1.2rem; }
+  }
+</style>

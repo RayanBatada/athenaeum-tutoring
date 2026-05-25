@@ -1,0 +1,575 @@
+---
+import { getCollection } from 'astro:content';
+import PageLayout from '../../layouts/v11/PageLayout.astro';
+import { services } from '../../data/services';
+import { homepageFAQs } from '../../data/faqs';
+import { reasons } from '../../data/why-different';
+import { groupCohorts } from '../../data/group-cohorts';
+import { url } from '../../lib/url';
+
+const tutors = (await getCollection('tutors')).slice(0, 4);
+const topReasons = reasons.slice(0, 6);
+const universities = ['Harvard', 'Yale', 'Princeton', 'Columbia', 'Brown', 'Dartmouth', 'Cornell', 'UPenn', 'MIT', 'Stanford'];
+const featuredCohorts = groupCohorts.slice(0, 4);
+---
+<PageLayout title="Athenaeum — Test prep, taught by Ivy League minds.">
+  <!-- EDITORIAL STATEMENT HERO (no split) -->
+  <section class="hero">
+    <div class="hero-inner">
+      <span class="eyebrow v10-reveal">— Now booking spring sessions —</span>
+      <h1 class="v10-reveal">
+        Test prep,<br />
+        taught by <span class="serif">Ivy League</span><br />
+        <span class="underline-mark">minds.</span>
+      </h1>
+      <p class="v10-reveal">
+        AP, SAT, ACT, and college counseling. Taught one-on-one or in cohorts of eight, by current students from Harvard, Yale, Princeton, and Columbia.
+      </p>
+      <div class="hero-cta v10-reveal">
+        <a href={url('/v11/book/')} class="cta-primary">
+          Schedule a free consult
+          <svg width="16" height="16" viewBox="0 0 18 18" fill="none">
+            <path d="M2 9H16M16 9L10 3M16 9L10 15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href="#paths" class="cta-quiet"><em>or, see both paths.</em></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Universities ribbon -->
+  <section class="ribbon">
+    <span class="ribbon-prefix">— Tutors drawn from —</span>
+    <div class="ribbon-list">
+      {universities.map((u, i) => (
+        <>
+          <span>{u}</span>
+          {i < universities.length - 1 && <span class="ribbon-sep">·</span>}
+        </>
+      ))}
+    </div>
+  </section>
+
+  <!-- Programs grid -->
+  <section id="programs" class="section">
+    <div class="section-head v10-reveal">
+      <span class="eyebrow">— Programs —</span>
+      <h2>Four programs. <span class="serif">Both formats.</span></h2>
+      <p>Whatever you're prepping for, choose the format that fits.</p>
+    </div>
+    <div class="programs-grid v10-reveal">
+      {services.map((s) => (
+        <div class="program-card">
+          <span class="program-cadence">{s.cadence}</span>
+          <h3>{s.longName}</h3>
+          <p>{s.blurb}</p>
+          <div class="program-formats">
+            <div class="format">
+              <span class="format-label">1-on-1</span>
+              <span class="format-price">${s.startingAtHourly}/hr</span>
+            </div>
+            <div class="format-divider"></div>
+            <div class="format">
+              <span class="format-label">Group</span>
+              <span class="format-price">$60/hr</span>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- TWO WAYS TO STUDY — the split, moved down -->
+  <section id="paths" class="paths-section">
+    <div class="paths-head v10-reveal">
+      <span class="eyebrow">— Choose your path —</span>
+      <h2>Two ways <span class="serif">to study.</span></h2>
+      <p>Both pull from the same Ivy League faculty. Pick the one that fits your timeline, budget, and learning style.</p>
+    </div>
+
+    <div class="paths-split">
+      <div class="path-half path-private v10-reveal">
+        <span class="path-tag">— Option A —</span>
+        <h3>Private <span class="serif">tutoring.</span></h3>
+        <p>One-on-one sessions with an Ivy League tutor. Custom plan from a diagnostic week. Hand-graded homework. Flexible weekly cadence.</p>
+        <div class="path-stats">
+          <div><strong>From $130</strong><span>per hour</span></div>
+          <div><strong>8 / 16 / 24</strong><span>hour packages</span></div>
+        </div>
+        <a href={url('/v11/book/')} class="path-cta dark">
+          Schedule 1-on-1 Consult
+          <svg width="16" height="16" viewBox="0 0 18 18" fill="none"><path d="M2 9H16M16 9L10 3M16 9L10 15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+      <div class="path-mid"><span class="serif">or</span></div>
+
+      <div class="path-half path-group v10-reveal">
+        <span class="path-tag">— Option B —</span>
+        <h3>Group <span class="serif">cohorts.</span></h3>
+        <p>Small-group classes, capped at 8 students. Set start dates, fixed weekly schedule. Same Ivy League tutors. Roughly half the price.</p>
+        <div class="path-stats">
+          <div><strong>From $60</strong><span>per hour</span></div>
+          <div><strong>6 / 8 / 10</strong><span>week courses</span></div>
+        </div>
+        <a href="#cohorts" class="path-cta tangerine">
+          Browse Cohorts
+          <svg width="16" height="16" viewBox="0 0 18 18" fill="none"><path d="M2 9H16M16 9L10 3M16 9L10 15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Upcoming cohorts -->
+  <section id="cohorts" class="cohorts">
+    <div class="section-head v10-reveal">
+      <span class="eyebrow">— Upcoming cohorts —</span>
+      <h2>Live cohorts <span class="serif">starting soon.</span></h2>
+      <p>Eight students max per cohort. Reserve early.</p>
+    </div>
+    <div class="cohorts-grid v10-reveal">
+      {featuredCohorts.map((c) => (
+        <article class="cohort-card">
+          <div class="cohort-head">
+            <h3>{c.name}</h3>
+            <div class="cohort-seats"><span class="dot"></span>{c.seatsLeft}/{c.capSize}</div>
+          </div>
+          <div class="cohort-meta-row">
+            <span>{c.duration}</span>
+            <span>{c.schedule}</span>
+          </div>
+          <div class="cohort-foot">
+            <div>
+              <div class="cohort-start">{c.startDate}</div>
+              <div class="cohort-price">${c.totalPrice.toLocaleString()}<span> total</span></div>
+            </div>
+            <a href={url('/v11/book/')} class="cohort-reserve">Reserve →</a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- Approach -->
+  <section class="section">
+    <div class="section-head v10-reveal">
+      <span class="eyebrow">— Approach —</span>
+      <h2>Built around the <span class="serif">student.</span></h2>
+      <p>What separates Athenaeum from a big tutoring chain.</p>
+    </div>
+    <div class="approach-grid v10-reveal">
+      {topReasons.map((r, i) => (
+        <div class="approach-item">
+          <span class="approach-no">{String(i + 1).padStart(2, '0')}.</span>
+          <div>
+            <h4>{r.title}{r.titleSerif && <> <span class="serif">{r.titleSerif}</span></>}</h4>
+            <p>{r.body}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Faculty -->
+  <section id="faculty" class="section section-cream">
+    <div class="section-head v10-reveal">
+      <span class="eyebrow">— Faculty —</span>
+      <h2>Tutors who <span class="serif">recently sat</span> these exams.</h2>
+      <p>Every tutor is a current Ivy League or peer-university student who scored at the top of their exam.</p>
+    </div>
+    <div class="faculty-grid v10-reveal">
+      {tutors.map((t) => (
+        <div class="faculty-card">
+          <div class="faculty-portrait">
+            <span class="faculty-mono">{t.data.monogram}</span>
+            <span class="faculty-tag">{t.data.school} {t.data.classYear}</span>
+          </div>
+          <h4>{t.data.name}</h4>
+          <p>{t.data.subjects.slice(0, 3).join(' · ')}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="section">
+    <div class="section-head v10-reveal">
+      <span class="eyebrow">— FAQ —</span>
+      <h2>Common <span class="serif">questions.</span></h2>
+    </div>
+    <div class="faq-list v10-reveal">
+      {homepageFAQs.map((item, i) => (
+        <details class="faq">
+          <summary>
+            <span class="faq-num">{String(i + 1).padStart(2, '0')}.</span>
+            <span class="faq-q" set:html={item.question} />
+            <span class="faq-marker">+</span>
+          </summary>
+          <div class="faq-a">{item.answer}</div>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="final">
+    <div class="final-inner v10-reveal">
+      <h2>Begin <span class="serif">here.</span></h2>
+      <p>The 30-minute consult is free. We'll figure out which path (private or group) fits, and match you with the right tutor.</p>
+      <a href={url('/v11/book/')} class="final-cta">
+        Schedule a free consult
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 10H18M18 10L11 3M18 10L11 17" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  /* ───────── Editorial Statement Hero ───────── */
+  .hero {
+    padding: 6rem 2.5rem 5rem;
+    text-align: center;
+    border-bottom: 1px solid var(--v10-border);
+  }
+  .hero-inner {
+    max-width: 940px;
+    margin: 0 auto;
+  }
+  .eyebrow {
+    display: inline-block;
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    color: var(--v10-tangerine);
+    font-size: 1.1rem;
+    margin-bottom: 1.6rem;
+    letter-spacing: 0.02em;
+  }
+  .hero h1 {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: clamp(3rem, 8.5vw, 7.5rem);
+    line-height: 0.92;
+    font-weight: 700;
+    letter-spacing: -0.045em;
+    margin-bottom: 2rem;
+    font-variation-settings: "wdth" 86;
+  }
+  .hero h1 .serif {
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--v10-tangerine);
+    letter-spacing: -0.01em;
+    font-variation-settings: normal;
+  }
+  .hero h1 .underline-mark {
+    border-bottom: 4px solid var(--v10-tangerine);
+    padding-bottom: 0.05em;
+  }
+  .hero p {
+    font-size: 1.22rem;
+    color: var(--v10-ink-soft);
+    line-height: 1.6;
+    max-width: 620px;
+    margin: 0 auto 2.2rem;
+  }
+  .hero-cta {
+    display: inline-flex;
+    gap: 1.6rem;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .cta-primary {
+    background: var(--v10-ink);
+    color: var(--v10-bg);
+    padding: 1.05rem 1.7rem;
+    border-radius: 8px;
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .cta-primary:hover { background: var(--v10-tangerine); }
+  .cta-primary svg { transition: transform 0.2s; }
+  .cta-primary:hover svg { transform: translateX(3px); }
+  .cta-quiet {
+    color: var(--v10-ink-soft);
+    font-size: 1.05rem;
+    font-family: "Instrument Serif", serif;
+    border-bottom: 1px solid var(--v10-ink-faint);
+    padding-bottom: 0.2rem;
+    transition: all 0.2s;
+  }
+  .cta-quiet em { font-style: italic; }
+  .cta-quiet:hover { color: var(--v10-tangerine); border-color: var(--v10-tangerine); }
+
+  /* ───────── Ribbon ───────── */
+  .ribbon {
+    padding: 1.8rem 2.5rem;
+    text-align: center;
+    background: var(--v10-bg);
+    border-bottom: 1px solid var(--v10-border);
+  }
+  .ribbon-prefix {
+    display: block;
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    color: var(--v10-ink-faint);
+    font-size: 0.98rem;
+    margin-bottom: 0.7rem;
+  }
+  .ribbon-list {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem 0.7rem;
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--v10-ink);
+  }
+  .ribbon-sep { color: var(--v10-tangerine); }
+
+  /* ───────── Sections (shared) ───────── */
+  .section {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 6.5rem 2.5rem;
+  }
+  .section.section-cream {
+    background: var(--v10-bg-cream);
+    max-width: none;
+    border-top: 1px solid var(--v10-border-strong);
+    border-bottom: 1px solid var(--v10-border-strong);
+  }
+  .section.section-cream > * { max-width: 1300px; margin-left: auto; margin-right: auto; }
+  .section-head { margin-bottom: 3.5rem; max-width: 780px; }
+  .section-head h2 {
+    font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin-bottom: 1rem;
+    font-variation-settings: "wdth" 85;
+  }
+  .section-head h2 .serif { font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; color: var(--v10-tangerine); }
+  .section-head p { font-size: 1.1rem; color: var(--v10-ink-soft); line-height: 1.6; max-width: 580px; }
+
+  /* ───────── Programs ───────── */
+  .programs-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  .program-card {
+    border: 1px solid var(--v10-border-strong);
+    border-radius: 14px;
+    padding: 1.8rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    min-height: 320px;
+  }
+  .program-card:hover { border-color: var(--v10-ink); transform: translateY(-3px); }
+  .program-cadence { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--v10-tangerine); margin-bottom: 0.7rem; }
+  .program-card h3 { font-size: 1.5rem; line-height: 1.05; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.7rem; }
+  .program-card p { font-size: 0.9rem; color: var(--v10-ink-soft); line-height: 1.55; flex-grow: 1; margin-bottom: 1.2rem; }
+  .program-formats { display: flex; align-items: center; border-top: 1px solid var(--v10-border); padding-top: 1rem; gap: 1rem; }
+  .program-formats .format { display: flex; flex-direction: column; gap: 0.1rem; flex: 1; }
+  .format-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--v10-ink-faint); }
+  .format-price { font-family: "Bricolage Grotesque", sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: -0.02em; }
+  .format-divider { width: 1px; height: 28px; background: var(--v10-border); }
+
+  /* ───────── PATHS (the split, moved here) ───────── */
+  .paths-section {
+    background: var(--v10-bg-soft);
+    border-top: 1px solid var(--v10-border-strong);
+    border-bottom: 1px solid var(--v10-border-strong);
+    padding: 6rem 2.5rem;
+  }
+  .paths-head {
+    max-width: 800px;
+    margin: 0 auto 3.5rem;
+    text-align: center;
+  }
+  .paths-head .eyebrow { color: var(--v10-tangerine); }
+  .paths-head h2 {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin-bottom: 1rem;
+    font-variation-settings: "wdth" 85;
+  }
+  .paths-head h2 .serif { font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; color: var(--v10-tangerine); }
+  .paths-head p { font-size: 1.1rem; color: var(--v10-ink-soft); line-height: 1.55; max-width: 580px; margin: 0 auto; }
+
+  .paths-split {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0;
+    border: 1.5px solid var(--v10-ink);
+    border-radius: 18px;
+    overflow: hidden;
+    background: var(--v10-bg);
+  }
+  .path-half {
+    padding: 2.8rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .path-half.path-private { background: var(--v10-bg); }
+  .path-half.path-group { background: var(--v10-bg-cream); }
+
+  .path-tag {
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    color: var(--v10-ink-faint);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+  .path-group .path-tag { color: var(--v10-tangerine); }
+  .path-half h3 {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    line-height: 0.95;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    margin-bottom: 1.1rem;
+    font-variation-settings: "wdth" 86;
+  }
+  .path-half h3 .serif { font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; font-variation-settings: normal; }
+  .path-group h3 .serif { color: var(--v10-tangerine); }
+  .path-half p {
+    font-size: 1rem;
+    color: var(--v10-ink-soft);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    max-width: 400px;
+  }
+  .path-stats {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1.6rem;
+    padding: 1rem 0;
+    border-top: 1px solid var(--v10-border);
+    border-bottom: 1px solid var(--v10-border);
+  }
+  .path-stats > div { display: flex; flex-direction: column; gap: 0.15rem; }
+  .path-stats strong { font-family: "Bricolage Grotesque", sans-serif; font-size: 1.2rem; font-weight: 700; letter-spacing: -0.025em; }
+  .path-stats span { font-size: 0.8rem; color: var(--v10-ink-faint); }
+  .path-cta {
+    align-self: flex-start;
+    padding: 0.85rem 1.4rem;
+    border-radius: 8px;
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 0.94rem;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .path-cta.dark { background: var(--v10-ink); color: var(--v10-bg); }
+  .path-cta.dark:hover { background: var(--v10-tangerine); }
+  .path-cta.tangerine { background: var(--v10-tangerine); color: var(--v10-bg); }
+  .path-cta.tangerine:hover { background: var(--v10-ink); }
+  .path-cta svg { transition: transform 0.2s; }
+  .path-cta:hover svg { transform: translateX(3px); }
+  .path-mid {
+    background: var(--v10-ink);
+    color: var(--v10-bg-cream);
+    width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .path-mid .serif {
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    transform: rotate(-90deg);
+    letter-spacing: 0.04em;
+  }
+
+  /* ───────── Cohorts ───────── */
+  .cohorts {
+    background: var(--v10-bg);
+    padding: 6.5rem 2.5rem;
+  }
+  .cohorts > * { max-width: 1300px; margin-left: auto; margin-right: auto; }
+  .cohorts-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+  .cohort-card { background: var(--v10-bg); border: 1px solid var(--v10-border-strong); border-radius: 14px; padding: 1.8rem 2rem; transition: all 0.25s; }
+  .cohort-card:hover { border-color: var(--v10-ink); }
+  .cohort-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; gap: 1rem; }
+  .cohort-head h3 { font-size: 1.55rem; font-weight: 700; letter-spacing: -0.025em; line-height: 1.1; font-family: "Bricolage Grotesque", sans-serif; }
+  .cohort-seats { flex-shrink: 0; display: inline-flex; align-items: center; gap: 0.4rem; background: var(--v10-tangerine-soft); color: var(--v10-tangerine); padding: 0.3rem 0.7rem; border-radius: 999px; font-size: 0.78rem; font-weight: 600; }
+  .cohort-seats .dot { width: 5px; height: 5px; background: var(--v10-tangerine); border-radius: 50%; }
+  .cohort-meta-row { display: flex; gap: 0.8rem; color: var(--v10-ink-faint); font-size: 0.9rem; margin-bottom: 1.4rem; }
+  .cohort-meta-row span:not(:last-child)::after { content: "·"; margin-left: 0.8rem; }
+  .cohort-foot { display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid var(--v10-border); padding-top: 1rem; gap: 1rem; }
+  .cohort-start { font-family: "Instrument Serif", serif; font-style: italic; color: var(--v10-tangerine); font-size: 1.05rem; }
+  .cohort-price { font-family: "Bricolage Grotesque", sans-serif; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em; }
+  .cohort-price span { font-size: 0.85rem; font-weight: 500; color: var(--v10-ink-faint); }
+  .cohort-reserve { background: var(--v10-ink); color: var(--v10-bg); padding: 0.6rem 1rem; border-radius: 8px; font-size: 0.88rem; font-weight: 600; transition: background 0.2s; }
+  .cohort-reserve:hover { background: var(--v10-tangerine); }
+
+  /* ───────── Approach ───────── */
+  .approach-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem 3rem; }
+  .approach-item { display: grid; grid-template-columns: 3rem 1fr; gap: 1rem; border-top: 1px solid var(--v10-border); padding-top: 1.5rem; }
+  .approach-no { font-family: "Instrument Serif", serif; font-style: italic; color: var(--v10-tangerine); font-size: 1.2rem; }
+  .approach-item h4 { font-size: 1.3rem; line-height: 1.15; margin-bottom: 0.5rem; font-weight: 600; letter-spacing: -0.02em; font-family: "Bricolage Grotesque", sans-serif; }
+  .approach-item h4 .serif { font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; color: var(--v10-tangerine); }
+  .approach-item p { font-size: 0.95rem; color: var(--v10-ink-soft); line-height: 1.6; }
+
+  /* ───────── Faculty ───────── */
+  .faculty-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+  .faculty-portrait { aspect-ratio: 4/5; border: 1.5px solid var(--v10-ink); border-radius: 14px; background: var(--v10-bg); position: relative; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; transition: transform 0.3s; }
+  .faculty-card:hover .faculty-portrait { transform: translateY(-4px); }
+  .faculty-mono { font-family: "Bricolage Grotesque", sans-serif; font-size: 5rem; font-weight: 700; letter-spacing: -0.04em; color: var(--v10-ink); }
+  .faculty-tag { position: absolute; bottom: 0.9rem; left: 0.9rem; background: var(--v10-ink); color: var(--v10-bg-cream); padding: 0.3rem 0.7rem; border-radius: 999px; font-size: 0.72rem; font-weight: 600; }
+  .faculty-card h4 { font-size: 1.2rem; font-weight: 600; letter-spacing: -0.025em; margin-bottom: 0.2rem; font-family: "Bricolage Grotesque", sans-serif; }
+  .faculty-card p { color: var(--v10-ink-faint); font-size: 0.88rem; }
+
+  /* ───────── FAQ ───────── */
+  .faq-list { max-width: 880px; margin: 0 auto; }
+  .faq { border-top: 1px solid var(--v10-border); padding: 1.6rem 0; cursor: pointer; }
+  .faq:last-child { border-bottom: 1px solid var(--v10-border); }
+  .faq summary { display: flex; align-items: center; gap: 1rem; list-style: none; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq-num { font-family: "Instrument Serif", serif; font-style: italic; color: var(--v10-tangerine); font-size: 1.05rem; min-width: 2rem; }
+  .faq-q { flex: 1; font-family: "Bricolage Grotesque", sans-serif; font-size: 1.25rem; font-weight: 600; line-height: 1.2; letter-spacing: -0.02em; }
+  .faq-q :global(.serif) { font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; color: var(--v10-tangerine); }
+  .faq-marker { width: 32px; height: 32px; background: var(--v10-bg-soft); border: 1px solid var(--v10-border-strong); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--v10-ink); transition: all 0.3s; }
+  .faq[open] .faq-marker { transform: rotate(45deg); background: var(--v10-tangerine); color: var(--v10-bg); border-color: var(--v10-tangerine); }
+  .faq-a { padding: 0.9rem 0 0 3rem; color: var(--v10-ink-soft); font-size: 0.98rem; line-height: 1.65; max-width: 700px; }
+
+  /* ───────── Final ───────── */
+  .final { background: var(--v10-ink); color: var(--v10-bg); padding: 7rem 2.5rem; text-align: center; }
+  .final-inner { max-width: 720px; margin: 0 auto; }
+  .final h2 { font-family: "Bricolage Grotesque", sans-serif; font-size: clamp(3rem, 7vw, 6rem); line-height: 0.92; font-weight: 700; letter-spacing: -0.04em; margin-bottom: 1.4rem; font-variation-settings: "wdth" 85; }
+  .final h2 .serif { font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; color: var(--v10-tangerine); }
+  .final p { color: rgba(255,255,255,0.72); font-size: 1.15rem; margin-bottom: 2rem; line-height: 1.6; }
+  .final-cta { background: var(--v10-tangerine); color: var(--v10-bg); padding: 1.05rem 1.8rem; border-radius: 8px; font-family: "Inter", sans-serif; font-weight: 600; font-size: 1.05rem; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.2s; }
+  .final-cta:hover { background: var(--v10-bg); color: var(--v10-ink); }
+  .final-cta svg { transition: transform 0.2s; }
+  .final-cta:hover svg { transform: translateX(3px); }
+
+  @media (max-width: 1024px) {
+    .paths-split { grid-template-columns: 1fr; }
+    .path-mid { width: 100%; height: 50px; }
+    .path-mid .serif { transform: none; }
+    .programs-grid, .faculty-grid { grid-template-columns: repeat(2, 1fr); }
+    .approach-grid, .cohorts-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .hero { padding: 4rem 1.2rem 3rem; }
+    .ribbon { padding: 1.5rem 1.2rem; }
+    .section, .paths-section, .cohorts { padding: 4.5rem 1.2rem; }
+    .path-half { padding: 2.2rem 1.5rem; }
+    .programs-grid, .faculty-grid { grid-template-columns: 1fr; }
+    .final { padding: 5rem 1.2rem; }
+  }
+</style>

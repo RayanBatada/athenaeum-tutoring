@@ -1,0 +1,30 @@
+---
+import PageLayout from '../../layouts/v11/PageLayout.astro';
+import CalEmbed from '../../components/CalEmbed.astro';
+import { site } from '../../data/site';
+---
+<PageLayout title="Book — Athenaeum" description="Schedule a free 30-min consult.">
+  <section class="book-hero">
+    <div class="v10-reveal">
+      <span class="eyebrow">— Consultation —</span>
+      <h1>A free <span class="serif">30-minute</span> consult.</h1>
+      <p>Tell us your timeline, target score, and whether you'd prefer 1-on-1 or a group cohort. We'll review fit and recommend the right plan.</p>
+    </div>
+  </section>
+  <section class="cal-section v10-reveal">
+    <div class="cal-card">
+      <CalEmbed calLink={site.consultCalLink} embedId="cal-v11-consult" namespace="v11consult" />
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .book-hero { max-width: 880px; margin: 0 auto; padding: 6rem 2.5rem 3rem; text-align: center; }
+  .eyebrow { display: inline-block; font-family: "Instrument Serif", serif; font-style: italic; color: var(--v10-tangerine); font-size: 1.05rem; margin-bottom: 1.2rem; }
+  .book-hero h1 { font-family: "Bricolage Grotesque", sans-serif; font-size: clamp(2.6rem, 6.5vw, 4.8rem); font-weight: 700; letter-spacing: -0.045em; line-height: 1; margin-bottom: 1.3rem; font-variation-settings: "wdth" 85; }
+  .book-hero h1 .serif { font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; color: var(--v10-tangerine); }
+  .book-hero p { font-size: 1.12rem; color: var(--v10-ink-soft); line-height: 1.55; }
+  .cal-section { max-width: 1000px; margin: 0 auto; padding: 2rem 2.5rem 6rem; }
+  .cal-card { background: var(--v10-bg-soft); border: 1.5px solid var(--v10-ink); border-radius: 14px; padding: 0.8rem; }
+  @media (max-width: 640px) { .book-hero { padding: 4rem 1.2rem 2rem; } .cal-section { padding: 1rem 1.2rem 4rem; } }
+</style>

@@ -1,0 +1,33 @@
+---
+import { url } from '../../lib/url';
+const links = [
+  { href: url('/v14/#curriculum'), label: 'Curriculum' },
+  { href: url('/v14/#study'),      label: 'Forms of Study' },
+  { href: url('/v14/#faculty'),    label: 'Faculty' },
+  { href: url('/v14/#inquiries'),  label: 'Inquiries' },
+];
+---
+<nav>
+  <a href={url('/v14/')} class="brand">
+    <span class="brand-name">Athenaeum</span>
+  </a>
+  <ul class="nav-links">
+    {links.map((link) => (
+      <li><a href={link.href}>{link.label}</a></li>
+    ))}
+  </ul>
+  <a href={url('/v14/book/')} class="nav-cta">Apply <em>→</em></a>
+</nav>
+
+<style>
+  nav { position: sticky; top: 0; z-index: 100; padding: 1.3rem 2.5rem; display: flex; justify-content: space-between; align-items: center; background: rgba(0, 0, 0, 0.82); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--v14-border); }
+  .brand { color: var(--v14-text); }
+  .brand-name { font-family: 'Cormorant Garamond', serif; font-size: 1.55rem; font-weight: 500; letter-spacing: 0.005em; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-family: 'Lora', serif; color: var(--v14-text-muted); font-size: 0.9rem; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--v14-gold); }
+  .nav-cta { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--v14-gold); font-size: 1.05rem; border-bottom: 1px solid var(--v14-gold); padding-bottom: 0.15rem; transition: opacity 0.2s; }
+  .nav-cta em { font-style: normal; }
+  .nav-cta:hover { opacity: 0.75; }
+  @media (max-width: 768px) { nav { padding: 1rem 1.2rem; } .nav-links { display: none; } }
+</style>
