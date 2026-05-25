@@ -1,0 +1,68 @@
+/* V9 — Warm Brutalist (V1 base + V2 restraint) */
+
+[data-variant='v9'] {
+  --v9-cream: #f7f0df;
+  --v9-cream-deep: #ede4cc;
+  --v9-cream-light: #fbf6e8;
+  --v9-ink: #0c0c0c;
+  --v9-ink-soft: #2a2a2a;
+  --v9-ink-faint: rgba(12, 12, 12, 0.55);
+  --v9-border: rgba(12, 12, 12, 0.12);
+  --v9-border-strong: rgba(12, 12, 12, 0.22);
+  --v9-lime: #d4f04a;
+  --v9-lime-deep: #b8d433;
+  --v9-tangerine: #ff5e2c;
+  --v9-plum: #2c1947;
+}
+
+[data-variant='v9'] body {
+  background: var(--v9-cream);
+  color: var(--v9-ink);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+[data-variant='v9'] body::after { display: none; }
+
+[data-variant='v9'] * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+[data-variant='v9'] a { color: var(--v9-ink); text-decoration: none; }
+
+[data-variant='v9'] h1,
+[data-variant='v9'] h2,
+[data-variant='v9'] h3,
+[data-variant='v9'] h4 {
+  font-family: "Bricolage Grotesque", "Inter", sans-serif;
+  letter-spacing: -0.03em;
+  font-variation-settings: "wdth" 88;
+}
+
+[data-variant='v9'] .serif {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-variation-settings: normal;
+}
+
+[data-variant='v9'] .v9-reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-variant='v9'] .v9-reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-variant='v9'] ::selection {
+  background: var(--v9-lime);
+  color: var(--v9-ink);
+}

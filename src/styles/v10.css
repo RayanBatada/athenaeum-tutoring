@@ -1,0 +1,68 @@
+/* V10 — Editorial Split (V1 typography + V2 restraint, balanced) */
+
+[data-variant='v10'] {
+  --v10-bg: #ffffff;
+  --v10-bg-soft: #f8f5ec;
+  --v10-bg-cream: #f7f0df;
+  --v10-bg-card: #ffffff;
+  --v10-ink: #0c0c0c;
+  --v10-ink-soft: #3a3a3a;
+  --v10-ink-faint: rgba(12, 12, 12, 0.55);
+  --v10-border: rgba(12, 12, 12, 0.1);
+  --v10-border-strong: rgba(12, 12, 12, 0.2);
+  --v10-tangerine: #ff5e2c;
+  --v10-tangerine-soft: #ffe7df;
+  --v10-lime: #d4f04a;
+}
+
+[data-variant='v10'] body {
+  background: var(--v10-bg);
+  color: var(--v10-ink);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+[data-variant='v10'] body::after { display: none; }
+
+[data-variant='v10'] * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+[data-variant='v10'] a { color: var(--v10-ink); text-decoration: none; }
+
+[data-variant='v10'] h1,
+[data-variant='v10'] h2,
+[data-variant='v10'] h3,
+[data-variant='v10'] h4 {
+  font-family: "Bricolage Grotesque", sans-serif;
+  letter-spacing: -0.035em;
+  font-variation-settings: "wdth" 86;
+}
+
+[data-variant='v10'] .serif {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-variation-settings: normal;
+}
+
+[data-variant='v10'] .v10-reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-variant='v10'] .v10-reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-variant='v10'] ::selection {
+  background: var(--v10-tangerine);
+  color: var(--v10-bg);
+}

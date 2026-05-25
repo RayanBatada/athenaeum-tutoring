@@ -1,0 +1,70 @@
+/* V8 — Quiet Editorial (V2 base + V1 italic accents) */
+
+[data-variant='v8'] {
+  --v8-bg: #ffffff;
+  --v8-bg-soft: #faf6ec;
+  --v8-bg-card: #ffffff;
+  --v8-bg-card-hover: #fafafa;
+  --v8-bg-dark: #0a2540;
+  --v8-border: #e8e6dd;
+  --v8-border-strong: #d4d1c4;
+  --v8-text: #0a2540;
+  --v8-text-muted: #5b6478;
+  --v8-text-faint: #94a0b2;
+  --v8-lime: #c5e63d;
+  --v8-lime-deep: #a8c728;
+  --v8-tangerine: #f25c2c;
+  --v8-cream-deep: #ede4cc;
+}
+
+[data-variant='v8'] body {
+  background: var(--v8-bg);
+  color: var(--v8-text);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+[data-variant='v8'] body::after { display: none; }
+
+[data-variant='v8'] * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+[data-variant='v8'] a { color: var(--v8-text); text-decoration: none; }
+
+[data-variant='v8'] h1,
+[data-variant='v8'] h2,
+[data-variant='v8'] h3,
+[data-variant='v8'] h4 {
+  font-family: "Bricolage Grotesque", "Inter", sans-serif;
+  letter-spacing: -0.03em;
+  font-variation-settings: "wdth" 90;
+}
+
+[data-variant='v8'] .serif {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-variation-settings: normal;
+}
+
+[data-variant='v8'] .v8-reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-variant='v8'] .v8-reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-variant='v8'] ::selection {
+  background: var(--v8-lime);
+  color: var(--v8-bg-dark);
+}

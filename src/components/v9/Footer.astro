@@ -1,0 +1,117 @@
+---
+import { url } from '../../lib/url';
+---
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand-block">
+      <a href={url('/v9/')} class="brand">
+        <span class="brand-mark"></span>
+        Athenaeum
+      </a>
+      <p class="footer-tag">Test prep & college counseling. <span class="serif">Privately</span> or in cohorts. Taught by Ivy League tutors.</p>
+    </div>
+    <div class="footer-links">
+      <div>
+        <h4>Programs</h4>
+        <a href={url('/v9/#programs')}>AP</a>
+        <a href={url('/v9/#programs')}>SAT</a>
+        <a href={url('/v9/#programs')}>ACT</a>
+        <a href={url('/v9/#programs')}>College Counseling</a>
+      </div>
+      <div>
+        <h4>Athenaeum</h4>
+        <a href={url('/v9/#approach')}>Approach</a>
+        <a href={url('/v9/#faculty')}>Faculty</a>
+        <a href={url('/v9/book/')}>Book Consult</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="mailto:hello@athenaeum.co">hello@athenaeum.co</a>
+        <a href={url('/privacy')}>Privacy</a>
+        <a href={url('/terms')}>Terms</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Athenaeum & Co.</span>
+    <span>Made with <span class="serif">care</span> in New York.</span>
+  </div>
+</footer>
+
+<style>
+  footer {
+    background: var(--v9-ink);
+    color: var(--v9-cream);
+    padding: 4rem 2rem 2rem;
+  }
+  .footer-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.5fr 2fr;
+    gap: 4rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(247, 240, 223, 0.15);
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    letter-spacing: -0.03em;
+    color: var(--v9-cream);
+    margin-bottom: 1rem;
+  }
+  .brand-mark {
+    width: 14px;
+    height: 14px;
+    background: var(--v9-lime);
+    border-radius: 50%;
+  }
+  .footer-tag {
+    color: rgba(247, 240, 223, 0.7);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    max-width: 340px;
+  }
+  .footer-tag .serif { color: var(--v9-lime); font-size: 1.05rem; }
+  .footer-links {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+  }
+  .footer-links h4 {
+    font-family: "Inter", sans-serif;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--v9-lime);
+    margin-bottom: 1.1rem;
+  }
+  .footer-links a {
+    display: block;
+    color: rgba(247, 240, 223, 0.75);
+    font-size: 0.92rem;
+    margin-bottom: 0.55rem;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--v9-cream); }
+  .footer-bottom {
+    max-width: 1400px;
+    margin: 2rem auto 0;
+    padding-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: rgba(247, 240, 223, 0.5);
+  }
+  .footer-bottom .serif { color: var(--v9-lime); font-size: 0.95rem; }
+  @media (max-width: 768px) {
+    .footer-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .footer-links { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .footer-bottom { flex-direction: column; gap: 0.4rem; }
+  }
+</style>

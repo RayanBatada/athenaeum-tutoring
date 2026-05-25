@@ -1,0 +1,114 @@
+---
+import { url } from '../../lib/url';
+---
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand-block">
+      <a href={url('/v8/')} class="brand">
+        <span class="brand-mark"></span>
+        Athenaeum
+      </a>
+      <p class="footer-tag">Test prep & college counseling, taught <span class="serif">privately</span> or in small cohorts.</p>
+    </div>
+    <div class="footer-links">
+      <div>
+        <h4>Services</h4>
+        <a href={url('/v8/#services')}>AP</a>
+        <a href={url('/v8/#services')}>SAT</a>
+        <a href={url('/v8/#services')}>ACT</a>
+        <a href={url('/v8/#services')}>College Counseling</a>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <a href={url('/v8/#approach')}>Approach</a>
+        <a href={url('/v8/#faculty')}>Faculty</a>
+        <a href={url('/v8/book/')}>Book a Consult</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="mailto:hello@athenaeum.co">hello@athenaeum.co</a>
+        <a href={url('/privacy')}>Privacy</a>
+        <a href={url('/terms')}>Terms</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 Athenaeum & Co.</div>
+</footer>
+
+<style>
+  footer {
+    background: var(--v8-bg-soft);
+    border-top: 1px solid var(--v8-border);
+    padding: 4.5rem 2.5rem 2rem;
+    color: var(--v8-text);
+  }
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.5fr 2fr;
+    gap: 4rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--v8-border);
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: -0.025em;
+    color: var(--v8-text);
+    margin-bottom: 0.8rem;
+  }
+  .brand-mark {
+    width: 12px;
+    height: 12px;
+    background: var(--v8-lime);
+    border: 1.5px solid var(--v8-text);
+    border-radius: 50%;
+  }
+  .footer-tag {
+    color: var(--v8-text-muted);
+    font-size: 0.98rem;
+    line-height: 1.55;
+    max-width: 340px;
+  }
+  .footer-tag .serif {
+    color: var(--v8-text);
+    font-size: 1.08rem;
+  }
+  .footer-links {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+  }
+  .footer-links h4 {
+    font-family: "Inter", sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--v8-text-faint);
+    margin-bottom: 1rem;
+  }
+  .footer-links a {
+    display: block;
+    color: var(--v8-text-muted);
+    font-size: 0.92rem;
+    margin-bottom: 0.55rem;
+    transition: color 0.15s;
+  }
+  .footer-links a:hover { color: var(--v8-text); }
+  .footer-bottom {
+    max-width: 1200px;
+    margin: 2rem auto 0;
+    color: var(--v8-text-faint);
+    font-size: 0.85rem;
+  }
+  @media (max-width: 768px) {
+    .footer-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .footer-links { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  }
+</style>

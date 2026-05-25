@@ -1,0 +1,83 @@
+---
+import PageLayout from '../../layouts/v9/PageLayout.astro';
+import CalEmbed from '../../components/CalEmbed.astro';
+import { site } from '../../data/site';
+---
+<PageLayout title="Book — Athenaeum" description="Schedule a free 30-min consult.">
+  <section class="book-hero">
+    <div class="v9-reveal">
+      <span class="pill"><span class="pulse"></span> Book your seat</span>
+      <h1>A free <span class="serif">30-minute</span> consult.</h1>
+      <p>Tell us your timeline, target score, and whether you'd prefer 1-on-1 or a group cohort. We'll review fit and recommend the right plan.</p>
+    </div>
+  </section>
+
+  <section class="cal-section v9-reveal">
+    <div class="cal-card">
+      <CalEmbed calLink={site.consultCalLink} embedId="cal-v9-consult" namespace="v9consult" />
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .book-hero {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 5.5rem 2rem 3rem;
+    text-align: center;
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    background: var(--v9-ink);
+    color: var(--v9-cream);
+    padding: 0.45rem 0.95rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-bottom: 1.4rem;
+  }
+  .pulse {
+    width: 6px;
+    height: 6px;
+    background: var(--v9-lime);
+    border-radius: 50%;
+  }
+  .book-hero h1 {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: clamp(2.6rem, 7vw, 5rem);
+    font-weight: 700;
+    letter-spacing: -0.045em;
+    line-height: 0.95;
+    margin-bottom: 1.4rem;
+    font-variation-settings: "wdth" 85;
+  }
+  .book-hero h1 .serif {
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--v9-tangerine);
+  }
+  .book-hero p {
+    font-size: 1.15rem;
+    color: var(--v9-ink-soft);
+    line-height: 1.55;
+  }
+  .cal-section {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 2rem 6rem;
+  }
+  .cal-card {
+    background: var(--v9-cream-light);
+    border: 2px solid var(--v9-ink);
+    border-radius: 22px;
+    padding: 0.9rem;
+    box-shadow: 5px 5px 0 var(--v9-ink);
+  }
+  @media (max-width: 640px) {
+    .book-hero { padding: 3.5rem 1.2rem 2rem; }
+    .cal-section { padding: 1rem 1.2rem 4rem; }
+  }
+</style>

@@ -1,0 +1,837 @@
+---
+import { getCollection } from 'astro:content';
+import PageLayout from '../../layouts/v9/PageLayout.astro';
+import { services } from '../../data/services';
+import { homepageFAQs } from '../../data/faqs';
+import { reasons } from '../../data/why-different';
+import { groupCohorts } from '../../data/group-cohorts';
+import { url } from '../../lib/url';
+
+const tutors = (await getCollection('tutors')).slice(0, 4);
+const topReasons = reasons.slice(0, 6);
+const universities = ['Harvard', 'Yale', 'Princeton', 'Columbia', 'Brown', 'Dartmouth', 'Cornell', 'UPenn', 'MIT', 'Stanford'];
+---
+<PageLayout title="Athenaeum — Test prep, taught privately or in cohorts.">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-pill v9-reveal">
+      <span class="pulse"></span>
+      Now booking spring sessions
+    </div>
+    <h1 class="v9-reveal">
+      Test prep,<br />
+      taught by <span class="serif">Ivy League</span><br />
+      <span class="highlight">minds.</span>
+    </h1>
+    <div class="hero-row v9-reveal">
+      <div>
+        <p class="hero-sub">
+          <strong>AP, SAT, ACT &amp; college counseling.</strong> Taught one-on-one or in cohorts of eight, by current students from Harvard, Yale, Princeton, and Columbia.
+        </p>
+        <div class="hero-cta">
+          <a href={url('/v9/book/')} class="btn-mega">
+            Schedule a Free Consult
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M2 9H16M16 9L10 3M16 9L10 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a href="#programs" class="btn-ghost">View Programs</a>
+        </div>
+        <div class="hero-trust">
+          <span>✓ Private or group</span>
+          <span class="serif">·</span>
+          <span>✓ Live + recorded</span>
+          <span class="serif">·</span>
+          <span>✓ First-week refund</span>
+        </div>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-card lime">
+          <div class="stat-num">1:1</div>
+          <div class="stat-text">One-on-one attention. Every session built around your student.</div>
+        </div>
+        <div class="stat-card ink">
+          <div class="stat-num">8<span class="small">/cohort</span></div>
+          <div class="stat-text">Or join a small-group cohort. Eight students max, set start dates.</div>
+        </div>
+        <div class="stat-card tangerine">
+          <div class="stat-num">Ivy<span class="serif">League</span></div>
+          <div class="stat-text">Tutors from Harvard, Yale, Princeton, Columbia &amp; beyond.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- University marquee -->
+  <section class="marquee">
+    <div class="marquee-track">
+      {universities.map((u) => <span>{u}</span>)}
+      <span class="serif">— Tutors from —</span>
+      {universities.map((u) => <span>{u}</span>)}
+      <span class="serif">— Tutors from —</span>
+    </div>
+  </section>
+
+  <!-- Programs with toggle -->
+  <section id="programs" class="programs-section">
+    <div class="section-head v9-reveal">
+      <span class="eyebrow"><span class="dot"></span>Programs</span>
+      <h2>Pick your <span class="serif">test.</span> Pick your <span class="serif">format.</span></h2>
+      <p>Every program is offered in both formats. Pick the one that fits your timeline, budget, and learning style.</p>
+    </div>
+
+    <div class="format-toggle v9-reveal" id="formatToggle">
+      <button class="toggle-btn active" data-mode="private" type="button">
+        <span class="toggle-label">Private</span>
+        <span class="toggle-sub">1-on-1 · From $130/hr</span>
+      </button>
+      <button class="toggle-btn" data-mode="group" type="button">
+        <span class="toggle-label">Group <span class="serif">cohorts</span></span>
+        <span class="toggle-sub">Up to 8 students · From $60/hr</span>
+      </button>
+    </div>
+
+    <!-- PRIVATE MODE: services as cards -->
+    <div class="programs-grid v9-reveal" data-show-mode="private">
+      {services.map((s, i) => (
+        <a href={url('/v9/book/')} class={`program-card color-${['lime','tangerine','ink','cream'][i]}`}>
+          <div class="program-tag">Weekly 1-on-1s</div>
+          <h3>{s.name === 'College Counseling' ? <>College <span class="serif">Counseling</span></> : <>{s.name}{s.slug === 'ap' && <> <span class="serif">Classes</span></>}</>}</h3>
+          <div class="program-meta">
+            {s.topics.slice(0, 2).map((t) => <span>{t}</span>)}
+          </div>
+          <p>{s.blurb}</p>
+          <span class="program-link">Schedule consult →</span>
+        </a>
+      ))}
+    </div>
+
+    <!-- GROUP MODE: cohort table -->
+    <div class="cohort-table v9-reveal" data-show-mode="group">
+      {groupCohorts.slice(0, 5).map((c) => (
+        <div class="cohort-row">
+          <div class="cohort-name">{c.name}</div>
+          <div class="cohort-meta"><span>{c.duration}</span><span>{c.schedule}</span></div>
+          <div class="cohort-date">{c.startDate}</div>
+          <div class="cohort-seats">
+            <span class="seats-dot"></span>{c.seatsLeft} seats left
+          </div>
+          <div class="cohort-price">${c.totalPrice.toLocaleString()}</div>
+          <a href={url('/v9/book/')} class="cohort-reserve">Reserve →</a>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Approach -->
+  <section id="approach" class="approach-section">
+    <div class="section-head v9-reveal">
+      <span class="eyebrow lime-on-ink"><span class="dot"></span>Approach</span>
+      <h2>Built around <span class="serif">the student,</span> not the syllabus.</h2>
+      <p>What separates Athenaeum from a big tutoring chain.</p>
+    </div>
+    <div class="approach-grid v9-reveal">
+      {topReasons.map((r) => (
+        <div class="approach-card">
+          <div class="approach-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h4>{r.title}{r.titleSerif && <> <span class="serif">{r.titleSerif}</span></>}</h4>
+          <p>{r.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Faculty -->
+  <section id="faculty" class="section">
+    <div class="section-head v9-reveal">
+      <span class="eyebrow"><span class="dot"></span>The Faculty</span>
+      <h2>Taught by people who <span class="serif">recently sat</span> these exams.</h2>
+      <p>Every tutor is a current Ivy League or peer-university student who scored at the top of the exam they teach.</p>
+    </div>
+    <div class="faculty-grid v9-reveal">
+      {tutors.map((t) => (
+        <div class="faculty-card">
+          <div class={`faculty-photo ${t.data.cardGradient}`}>
+            <div class="faculty-mono">{t.data.monogram}</div>
+            <div class="faculty-tag">{t.data.school} {t.data.classYear}</div>
+          </div>
+          <div class="faculty-name">{t.data.name.split(' ')[0]} <span class="serif">{t.data.name.split(' ').slice(1).join(' ')}</span></div>
+          <div class="faculty-sub">{t.data.subjects.slice(0, 3).join(' · ')}</div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="section">
+    <div class="section-head center v9-reveal">
+      <span class="eyebrow"><span class="dot"></span>FAQ</span>
+      <h2>Common <span class="serif">questions.</span></h2>
+    </div>
+    <div class="faq-wrap v9-reveal">
+      {homepageFAQs.map((item) => (
+        <details class="faq-item">
+          <summary>
+            <span set:html={item.question} />
+            <span class="faq-plus">+</span>
+          </summary>
+          <div class="faq-body">{item.answer}</div>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="final-cta">
+    <h2 class="v9-reveal">Reserve your <span class="serif">free</span> consult.</h2>
+    <p class="v9-reveal">A 30-minute call covers your timeline, target score, and whether private or group is the better fit.</p>
+    <a href={url('/v9/book/')} class="btn-mega v9-reveal" style="background: var(--v9-ink); color: var(--v9-lime);">
+      Schedule Free Consult
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M2 10H18M18 10L11 3M18 10L11 17" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </section>
+</PageLayout>
+
+<script is:inline>
+  (() => {
+    const buttons = document.querySelectorAll('#formatToggle .toggle-btn');
+    const groups = document.querySelectorAll('[data-show-mode]');
+
+    function setMode(mode) {
+      buttons.forEach((b) => b.classList.toggle('active', b.dataset.mode === mode));
+      groups.forEach((g) => {
+        g.style.display = g.dataset.showMode === mode ? '' : 'none';
+      });
+    }
+
+    buttons.forEach((b) => {
+      b.addEventListener('click', () => setMode(b.dataset.mode));
+    });
+
+    setMode('private');
+  })();
+</script>
+
+<style>
+  /* ───────── Hero ───────── */
+  .hero {
+    padding: 5rem 2rem 4rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .hero-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--v9-ink);
+    color: var(--v9-cream);
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    margin-bottom: 2rem;
+  }
+  .hero-pill .pulse {
+    width: 7px;
+    height: 7px;
+    background: var(--v9-lime);
+    border-radius: 50%;
+    box-shadow: 0 0 6px var(--v9-lime);
+  }
+  .hero h1 {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: clamp(3rem, 9vw, 8.5rem);
+    line-height: 0.88;
+    font-weight: 700;
+    letter-spacing: -0.045em;
+    margin-bottom: 2.5rem;
+    font-variation-settings: "wdth" 85;
+  }
+  .hero h1 .serif {
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  .hero h1 .highlight {
+    position: relative;
+    display: inline-block;
+    z-index: 1;
+    padding: 0 0.15em;
+  }
+  .hero h1 .highlight::before {
+    content: "";
+    position: absolute;
+    inset: 0.12em -0.05em 0.18em;
+    background: var(--v9-lime);
+    z-index: -1;
+    transform: skew(-3deg);
+  }
+  .hero-row {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 4rem;
+    align-items: end;
+  }
+  .hero-sub {
+    font-size: 1.2rem;
+    line-height: 1.55;
+    color: var(--v9-ink-soft);
+    max-width: 540px;
+    margin-bottom: 2rem;
+  }
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .btn-mega {
+    background: var(--v9-lime);
+    color: var(--v9-ink);
+    border: 1.5px solid var(--v9-ink);
+    padding: 1.05rem 1.6rem;
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 999px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .btn-mega:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px -8px rgba(12,12,12,0.3);
+  }
+  .btn-mega svg { transition: transform 0.3s; }
+  .btn-mega:hover svg { transform: translateX(3px); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--v9-ink);
+    border: 1.5px solid var(--v9-ink);
+    padding: 1.05rem 1.6rem;
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 999px;
+    transition: all 0.25s;
+  }
+  .btn-ghost:hover { background: var(--v9-ink); color: var(--v9-cream); }
+
+  .hero-trust {
+    margin-top: 1.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 0.85rem;
+    color: var(--v9-ink-faint);
+    flex-wrap: wrap;
+  }
+  .hero-trust .serif { color: var(--v9-ink); font-size: 1rem; }
+
+  .hero-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .stat-card {
+    border: 1.5px solid var(--v9-ink);
+    border-radius: 18px;
+    padding: 1.5rem 1.6rem;
+    transition: transform 0.3s;
+  }
+  .stat-card:hover { transform: translateY(-3px); }
+  .stat-card.lime { background: var(--v9-lime); color: var(--v9-ink); }
+  .stat-card.ink { background: var(--v9-ink); color: var(--v9-cream); border-color: var(--v9-ink); }
+  .stat-card.tangerine { background: var(--v9-tangerine); color: var(--v9-cream); border-color: var(--v9-ink); }
+  .stat-num {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: 2.6rem;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    display: flex;
+    align-items: baseline;
+    gap: 0.2rem;
+  }
+  .stat-num .small { font-size: 1.2rem; font-weight: 500; }
+  .stat-num .serif { font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; }
+  .stat-text { margin-top: 0.4rem; font-size: 0.92rem; opacity: 0.88; line-height: 1.4; }
+
+  /* ───────── Marquee ───────── */
+  .marquee {
+    background: var(--v9-ink);
+    color: var(--v9-cream);
+    padding: 1.1rem 0;
+    overflow: hidden;
+  }
+  .marquee-track {
+    display: flex;
+    gap: 3rem;
+    white-space: nowrap;
+    animation: v9-marquee 30s linear infinite;
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+  }
+  .marquee-track .serif { color: var(--v9-lime); font-size: 1.5rem; }
+  @keyframes v9-marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ───────── Programs ───────── */
+  .programs-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 6rem 2rem;
+  }
+  .section-head { margin-bottom: 3rem; max-width: 760px; }
+  .section-head.center {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    background: var(--v9-ink);
+    color: var(--v9-lime);
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    margin-bottom: 1.5rem;
+  }
+  .eyebrow .dot {
+    width: 6px;
+    height: 6px;
+    background: var(--v9-lime);
+    border-radius: 50%;
+  }
+  .eyebrow.lime-on-ink { background: var(--v9-lime); color: var(--v9-ink); }
+  .eyebrow.lime-on-ink .dot { background: var(--v9-ink); }
+  .section-head h2 {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+    line-height: 0.98;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    margin-bottom: 1rem;
+    font-variation-settings: "wdth" 86;
+  }
+  .section-head h2 .serif {
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-weight: 400;
+    font-variation-settings: normal;
+  }
+  .section-head p {
+    font-size: 1.1rem;
+    color: var(--v9-ink-soft);
+    line-height: 1.6;
+    max-width: 580px;
+  }
+
+  /* Format toggle */
+  .format-toggle {
+    display: inline-flex;
+    border: 1.5px solid var(--v9-ink);
+    border-radius: 16px;
+    padding: 0.35rem;
+    background: var(--v9-cream-light);
+    margin-bottom: 3rem;
+    gap: 0.35rem;
+  }
+  .toggle-btn {
+    background: transparent;
+    color: var(--v9-ink);
+    border: none;
+    cursor: pointer;
+    padding: 0.85rem 1.5rem;
+    font-family: "Bricolage Grotesque", sans-serif;
+    border-radius: 12px;
+    text-align: left;
+    transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .toggle-label {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+  }
+  .toggle-label .serif {
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-weight: 400;
+  }
+  .toggle-sub {
+    font-family: "Inter", sans-serif;
+    font-size: 0.78rem;
+    color: var(--v9-ink-faint);
+    font-weight: 500;
+  }
+  .toggle-btn.active {
+    background: var(--v9-ink);
+    color: var(--v9-cream);
+  }
+  .toggle-btn.active .toggle-sub { color: var(--v9-lime); }
+
+  /* Private mode: program cards */
+  .programs-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.2rem;
+  }
+  .program-card {
+    border: 1.5px solid var(--v9-ink);
+    border-radius: 22px;
+    padding: 1.8rem 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    min-height: 380px;
+    color: var(--v9-ink);
+    text-decoration: none;
+  }
+  .program-card:hover { transform: translateY(-4px); }
+  .program-card.color-lime { background: var(--v9-lime); }
+  .program-card.color-tangerine { background: var(--v9-tangerine); color: var(--v9-cream); }
+  .program-card.color-ink { background: var(--v9-ink); color: var(--v9-cream); }
+  .program-card.color-cream { background: var(--v9-cream-deep); }
+  .program-tag {
+    align-self: flex-start;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    opacity: 0.85;
+    margin-bottom: 1rem;
+  }
+  .program-card h3 {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: 3rem;
+    line-height: 0.92;
+    font-weight: 700;
+    letter-spacing: -0.045em;
+    margin-bottom: 0.6rem;
+    font-variation-settings: "wdth" 85;
+  }
+  .program-card h3 .serif { font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; }
+  .program-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.8rem;
+    margin-bottom: 0.9rem;
+    font-size: 0.82rem;
+    opacity: 0.85;
+  }
+  .program-meta span { display: inline-flex; align-items: center; gap: 0.3rem; }
+  .program-meta span::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    background: currentColor;
+    border-radius: 50%;
+    opacity: 0.6;
+  }
+  .program-card p {
+    font-size: 0.92rem;
+    line-height: 1.5;
+    margin-bottom: 1.2rem;
+    opacity: 0.88;
+    flex-grow: 1;
+  }
+  .program-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: inherit;
+    border-top: 1.5px solid currentColor;
+    padding-top: 0.85rem;
+    transition: gap 0.3s;
+  }
+  .program-card:hover .program-link { gap: 0.8rem; }
+
+  /* Group mode: cohort table */
+  .cohort-table {
+    border-top: 1.5px solid var(--v9-ink);
+  }
+  .cohort-row {
+    display: grid;
+    grid-template-columns: 1.1fr 1.5fr 0.9fr 0.9fr 0.6fr 0.8fr;
+    gap: 1.2rem;
+    align-items: center;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--v9-border);
+  }
+  .cohort-name {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .cohort-meta {
+    font-size: 0.9rem;
+    color: var(--v9-ink-soft);
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+  .cohort-date { font-size: 0.92rem; color: var(--v9-ink-soft); }
+  .cohort-seats {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--v9-ink);
+    color: var(--v9-lime);
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    justify-self: start;
+  }
+  .seats-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--v9-lime);
+    border-radius: 50%;
+  }
+  .cohort-price {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+  .cohort-reserve {
+    background: var(--v9-lime);
+    color: var(--v9-ink);
+    border: 1.5px solid var(--v9-ink);
+    padding: 0.55rem 1rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.2s;
+  }
+  .cohort-reserve:hover { background: var(--v9-ink); color: var(--v9-lime); }
+
+  /* ───────── Approach ───────── */
+  .approach-section {
+    background: var(--v9-ink);
+    color: var(--v9-cream);
+    padding: 6rem 2rem;
+  }
+  .approach-section > * { max-width: 1400px; margin-left: auto; margin-right: auto; }
+  .approach-section .section-head h2 { color: var(--v9-cream); }
+  .approach-section .section-head h2 .serif { color: var(--v9-lime); }
+  .approach-section .section-head p { color: rgba(247,240,223,0.72); }
+  .approach-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  .approach-card {
+    border: 1px solid rgba(247,240,223,0.16);
+    border-radius: 18px;
+    padding: 1.6rem;
+  }
+  .approach-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: var(--v9-lime);
+    color: var(--v9-ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.1rem;
+  }
+  .approach-icon svg { width: 18px; height: 18px; }
+  .approach-card h4 {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+    color: var(--v9-cream);
+  }
+  .approach-card h4 .serif { font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; color: var(--v9-lime); }
+  .approach-card p {
+    color: rgba(247,240,223,0.72);
+    font-size: 0.93rem;
+    line-height: 1.55;
+  }
+
+  /* ───────── Faculty ───────── */
+  .section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 6rem 2rem;
+  }
+  .faculty-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.2rem;
+  }
+  .faculty-card { transition: transform 0.3s; }
+  .faculty-card:hover { transform: translateY(-5px); }
+  .faculty-photo {
+    aspect-ratio: 4/5;
+    border-radius: 18px;
+    border: 1.5px solid var(--v9-ink);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.9rem;
+  }
+  .faculty-photo.lime { background: linear-gradient(135deg, var(--v9-lime), #a8c93a); color: var(--v9-ink); }
+  .faculty-photo.tangerine { background: linear-gradient(135deg, var(--v9-tangerine), #c84618); color: var(--v9-cream); }
+  .faculty-photo.plum { background: linear-gradient(135deg, var(--v9-plum), #1a0e2e); color: var(--v9-cream); }
+  .faculty-photo.ink { background: linear-gradient(135deg, var(--v9-ink), #2a2a2a); color: var(--v9-cream); }
+  .faculty-mono {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: 4.6rem;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+  }
+  .faculty-tag {
+    position: absolute;
+    bottom: 0.9rem;
+    left: 0.9rem;
+    background: var(--v9-ink);
+    color: var(--v9-lime);
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.74rem;
+    font-weight: 600;
+  }
+  .faculty-name {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    margin-bottom: 0.15rem;
+  }
+  .faculty-name .serif { font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; }
+  .faculty-sub { color: var(--v9-ink-faint); font-size: 0.88rem; }
+
+  /* ───────── FAQ ───────── */
+  .faq-wrap { max-width: 880px; margin: 0 auto; }
+  .faq-item {
+    border-top: 1.5px solid var(--v9-ink);
+    padding: 1.5rem 0;
+    cursor: pointer;
+  }
+  .faq-item:last-of-type { border-bottom: 1.5px solid var(--v9-ink); }
+  .faq-item summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    cursor: pointer;
+    list-style: none;
+    font-variation-settings: "wdth" 90;
+  }
+  .faq-item summary :global(.serif) {
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--v9-tangerine);
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-plus {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    background: var(--v9-lime);
+    border: 1.5px solid var(--v9-ink);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .faq-item[open] .faq-plus { transform: rotate(45deg); background: var(--v9-tangerine); color: var(--v9-cream); }
+  .faq-body {
+    padding-top: 0.9rem;
+    color: var(--v9-ink-soft);
+    font-size: 0.98rem;
+    line-height: 1.6;
+  }
+
+  /* ───────── Final CTA ───────── */
+  .final-cta {
+    background: var(--v9-lime);
+    padding: 6rem 2rem 7rem;
+    text-align: center;
+    border-top: 2px solid var(--v9-ink);
+  }
+  .final-cta h2 {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: clamp(2.5rem, 7vw, 5.5rem);
+    font-weight: 700;
+    letter-spacing: -0.045em;
+    line-height: 0.95;
+    margin-bottom: 1.2rem;
+    font-variation-settings: "wdth" 85;
+  }
+  .final-cta h2 .serif {
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-weight: 400;
+    font-variation-settings: normal;
+  }
+  .final-cta p {
+    color: var(--v9-ink-soft);
+    font-size: 1.18rem;
+    max-width: 580px;
+    margin: 0 auto 2rem;
+    line-height: 1.5;
+  }
+
+  /* ───────── Responsive ───────── */
+  @media (max-width: 1024px) {
+    .hero-row { grid-template-columns: 1fr; gap: 3rem; }
+    .programs-grid, .faculty-grid { grid-template-columns: repeat(2, 1fr); }
+    .approach-grid { grid-template-columns: 1fr; }
+    .cohort-row {
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem 1rem;
+    }
+    .cohort-reserve { grid-column: 1 / -1; justify-self: stretch; }
+  }
+  @media (max-width: 640px) {
+    .hero { padding: 3rem 1.2rem 3rem; }
+    .programs-section, .approach-section, .section { padding: 4rem 1.2rem; }
+    .programs-grid, .faculty-grid { grid-template-columns: 1fr; }
+    .cohort-row { grid-template-columns: 1fr; }
+    .final-cta { padding: 4.5rem 1.2rem; }
+    .format-toggle { flex-direction: column; }
+  }
+</style>

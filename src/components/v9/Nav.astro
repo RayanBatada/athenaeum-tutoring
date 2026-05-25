@@ -1,0 +1,76 @@
+---
+import { url } from '../../lib/url';
+const links = [
+  { href: url('/v9/#programs'), label: 'Programs' },
+  { href: url('/v9/#approach'), label: 'Approach' },
+  { href: url('/v9/#faculty'),  label: 'Faculty' },
+  { href: url('/v9/#faq'),      label: 'FAQ' },
+];
+---
+<nav>
+  <a href={url('/v9/')} class="brand">
+    <span class="brand-mark"></span>
+    Athenaeum
+  </a>
+  <ul class="nav-links">
+    {links.map((link) => (
+      <li><a href={link.href}>{link.label}</a></li>
+    ))}
+  </ul>
+  <a href={url('/v9/book/')} class="nav-cta">Book a Consult →</a>
+</nav>
+
+<style>
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 1.1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(247, 240, 223, 0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--v9-border);
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    letter-spacing: -0.025em;
+    color: var(--v9-ink);
+  }
+  .brand-mark {
+    width: 10px;
+    height: 10px;
+    background: var(--v9-lime);
+    border: 1.5px solid var(--v9-ink);
+    border-radius: 50%;
+  }
+  .nav-links { display: flex; gap: 1.8rem; list-style: none; }
+  .nav-links a {
+    color: var(--v9-ink);
+    font-size: 0.92rem;
+    font-weight: 500;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .nav-cta {
+    background: var(--v9-ink);
+    color: var(--v9-cream);
+    padding: 0.65rem 1.2rem;
+    border-radius: 999px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: all 0.25s;
+  }
+  .nav-cta:hover { background: var(--v9-lime); color: var(--v9-ink); }
+  @media (max-width: 768px) {
+    nav { padding: 0.9rem 1.2rem; }
+    .nav-links { display: none; }
+  }
+</style>

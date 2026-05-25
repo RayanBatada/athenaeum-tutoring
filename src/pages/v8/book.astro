@@ -1,0 +1,76 @@
+---
+import PageLayout from '../../layouts/v8/PageLayout.astro';
+import CalEmbed from '../../components/CalEmbed.astro';
+import { site } from '../../data/site';
+---
+<PageLayout title="Book — Athenaeum" description="Schedule a free 30-min consult.">
+  <section class="book-hero">
+    <div class="v8-reveal">
+      <span class="pill">Book your seat</span>
+      <h1>A free <span class="serif">30-minute</span> consult.</h1>
+      <p>Tell us your timeline, target score, and whether you'd prefer 1-on-1 or a group cohort. We'll review fit and recommend the right plan.</p>
+    </div>
+  </section>
+
+  <section class="cal-section v8-reveal">
+    <div class="cal-card">
+      <CalEmbed calLink={site.consultCalLink} embedId="cal-v8-consult" namespace="v8consult" />
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .book-hero {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 6rem 2rem 3rem;
+    text-align: center;
+  }
+  .pill {
+    display: inline-block;
+    background: var(--v8-bg-soft);
+    border: 1px solid var(--v8-border);
+    color: var(--v8-text-muted);
+    padding: 0.4rem 0.95rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 1.4rem;
+  }
+  .book-hero h1 {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.05;
+    margin-bottom: 1.1rem;
+  }
+  .book-hero h1 .serif {
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--v8-tangerine);
+  }
+  .book-hero p {
+    font-size: 1.1rem;
+    color: var(--v8-text-muted);
+    line-height: 1.55;
+  }
+  .cal-section {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 2rem 2rem 6rem;
+  }
+  .cal-card {
+    background: var(--v8-bg-soft);
+    border: 1.5px solid var(--v8-text);
+    border-radius: 20px;
+    padding: 0.8rem;
+  }
+  @media (max-width: 640px) {
+    .book-hero { padding: 4rem 1.2rem 2rem; }
+    .cal-section { padding: 1rem 1.2rem 4rem; }
+  }
+</style>
